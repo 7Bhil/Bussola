@@ -26,7 +26,7 @@ Les sous-projets suivants sont hébergés sur des dépôts séparés et ne sont 
 ### 1. Cloner ce dépôt principal
 Commencez par récupérer ce dépôt sur votre machine :
 ```bash
-git clone <URL_DE_CE_DEPOT> Bussola
+git clone https://github.com/7Bhil/Bussola.git Bussola
 cd Bussola
 ```
 
