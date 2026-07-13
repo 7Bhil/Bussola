@@ -1,0 +1,77 @@
+<mxfile host="65bd71144e">
+    <diagram id="seq-news" name="Publication d&#39;Actualité">
+        <mxGraphModel dx="1156" dy="795" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="admin" value="Administrateur&#xa;(Frontend)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="40" width="120" height="600" as="geometry"/>
+                </mxCell>
+                <mxCell id="api" value="Backend API&#xa;(newsController)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" parent="1" vertex="1">
+                    <mxGeometry x="220" y="40" width="130" height="600" as="geometry"/>
+                </mxCell>
+                <mxCell id="m8" value="JSON Response (201 Created)" style="verticalAlign=bottom;endArrow=open;dashed=1;html=1;" parent="api" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="64.5" y="361" as="sourcePoint"/>
+                        <mxPoint x="-120.5" y="361" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m4" value="Subscriber.find({}, &#39;email&#39;)" style="verticalAlign=bottom;endArrow=block;html=1;" parent="api" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="67" y="199" as="sourcePoint"/>
+                        <mxPoint x="272" y="199" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m3" value="Document créé" style="verticalAlign=bottom;endArrow=open;dashed=1;html=1;" parent="api" edge="1">
+                    <mxGeometry x="0.0683" relative="1" as="geometry">
+                        <mxPoint x="269.5" y="160" as="sourcePoint"/>
+                        <mxPoint x="64.5" y="160" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="100" y="160"/>
+                        </Array>
+                        <mxPoint x="1" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="db" value="MongoDB&#xa;(News &amp; Subscriber)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" parent="1" vertex="1">
+                    <mxGeometry x="420" y="40" width="140" height="600" as="geometry"/>
+                </mxCell>
+                <mxCell id="m7" value="Statut envoi" style="verticalAlign=bottom;endArrow=open;dashed=1;html=1;" parent="db" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="280" y="319.5" as="sourcePoint"/>
+                        <mxPoint x="-135" y="319.5" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="mailer" value="Nodemailer&#xa;(System Mail)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" parent="1" vertex="1">
+                    <mxGeometry x="640" y="40" width="120" height="600" as="geometry"/>
+                </mxCell>
+                <mxCell id="m1" value="POST /api/news (article data)" style="verticalAlign=bottom;endArrow=block;html=1;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="100" y="120" as="sourcePoint"/>
+                        <mxPoint x="285" y="120" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m2" value="News.create(data)" style="verticalAlign=bottom;endArrow=block;html=1;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="284.5" y="160" as="sourcePoint"/>
+                        <mxPoint x="489.5" y="160" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m6" value="sendNewsletter(emails, news)" style="verticalAlign=bottom;endArrow=block;html=1;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="287" y="320" as="sourcePoint"/>
+                        <mxPoint x="702" y="320" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m5" value="Liste des emails" style="verticalAlign=bottom;endArrow=open;dashed=1;html=1;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="489" y="290" as="sourcePoint"/>
+                        <mxPoint x="284" y="290" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="3" value="Creation de publication" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=20;" vertex="1" parent="1">
+                    <mxGeometry x="290" width="230" height="40" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
