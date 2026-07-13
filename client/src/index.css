@@ -1,0 +1,148 @@
+
+/* Centrage parfait de la Navbar sur Desktop */
+@media (min-width: 992px) {
+  .navbar-brand-fixed { width: 250px !important; }
+  .navbar-button-fixed { width: 250px !important; display: flex !important; justify-content: flex-end !important; }
+}
+
+:root {
+  --bs-primary: #2764ae !important;
+  --bs-secondary: #f79e1b !important;
+  --bs-tertiary: #3ab074 !important;
+  --brand-primary: #2764ae;
+  --brand-secondary: #f79e1b;
+  --brand-tertiary: #3ab074;
+  --brand-dark: #0e2a5c;
+  --brand-sand: #faf9f6;
+  --brand-light: #f8f5ef;
+  --brand-text: #111827;
+}
+
+body {
+  font-family: "Poppins", sans-serif !important;
+}
+
+
+.bg-primary { background-color: var(--bs-primary) !important; }
+.text-primary { color: var(--bs-primary) !important; }
+.btn-primary { background-color: var(--bs-primary) !important; border-color: var(--bs-primary) !important; }
+
+.bg-secondary { background-color: var(--bs-secondary) !important; }
+.text-secondary { color: var(--bs-secondary) !important; }
+.btn-secondary { background-color: var(--bs-secondary) !important; border-color: var(--bs-secondary) !important; color: white !important; }
+
+.bg-tertiary { background-color: var(--bs-tertiary) !important; }
+.text-tertiary { color: var(--bs-tertiary) !important; }
+.border-tertiary { border-color: var(--bs-tertiary) !important; }
+.btn-tertiary { background-color: var(--bs-tertiary) !important; border-color: var(--bs-tertiary) !important; color: white !important; }
+
+.gradient-ice {
+  background: linear-gradient(135deg, #a0e7e5, #70c1b3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes slowRotate {
+  0% { transform: rotate(0deg) scale(1) translate(0, 0); }
+  50% { transform: rotate(180deg) scale(1.2) translate(50px, 50px); }
+  100% { transform: rotate(360deg) scale(1) translate(0, 0); }
+}
+
+@keyframes move {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(150px, 100px) scale(1.15); }
+}
+
+.bg-shape {
+  position: absolute;
+  filter: blur(60px);
+  opacity: 0.1;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.top {
+  background: url("/optimized/bg1.webp") center center no-repeat;
+  background-size: cover;
+  background-color: #ffffff;
+}
+
+/* Dropdown Hover */
+@media (min-width: 992px) {
+  .dropdown-hover:hover > .dropdown-menu {
+    display: block;
+    margin-top: 0;
+  }
+}
+
+/* Animations du Preloader */
+@keyframes pulse-custom {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+/* Newsletter Crossed Bands */
+.animate-roll-left {
+  animation: rollFromLeft 1.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  transform-origin: center;
+}
+
+.animate-roll-right {
+  animation: rollFromRight 1.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  transform-origin: center;
+}
+
+.animate-roll-left, .animate-roll-right {
+  width: 120% !important;
+  left: -10% !important;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+@keyframes rollFromLeft {
+  0% { transform: translateX(-100%) rotate(-6deg); opacity: 0; }
+  100% { transform: translateX(0) rotate(-6deg); opacity: 1; }
+}
+
+@keyframes rollFromRight {
+  0% { transform: translateX(100%) rotate(6deg); opacity: 0; }
+  100% { transform: translateX(0) rotate(6deg); opacity: 1; }
+}
+
+@keyframes progress-custom {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+.animate-pulse {
+  animation: pulse-custom 2s ease-in-out infinite;
+}
+
+.animate-progress {
+  animation: progress-custom 2s forwards ease-in-out;
+}
+
+.animate-ping {
+  animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ping {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}

@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ONG BUSOLA — Le pouvoir d'agir, au cœur de chaque communauté</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --cobalt:#0E2A5C;
+  --cobalt-mid:#1A3F80;
+  --cobalt-bright:#2256B0;
+  --gold:#D4920A;
+  --gold-warm:#F0A820;
+  --gold-pale:#FFF3D4;
+  --sable:#F8F5EF;
+  --cream:#FDFAF4;
+  --rouge:#B03020;
+  --vert:#1D6B3E;
+  --txt:#1A1612;
+  --muted:#6B6560;
+  --border:rgba(14,42,92,.10);
+  --nav-h:70px;
+  --max:1260px;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --cond:'Barlow Condensed',sans-serif;
+  --sans:'Inter',system-ui,sans-serif;
+  --ease:cubic-bezier(.22,.68,0,1.2);
+}
+
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--sans);color:var(--txt);background:var(--cream);overflow-x:hidden;line-height:1.7}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;font-family:var(--sans)}
+
+/* ────────── SCROLLBAR ────────── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--sable)}
+::-webkit-scrollbar-thumb{background:var(--cobalt-bright);border-radius:4px}
+
+/* ────────── NAV ────────── */
+#nav {
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:var(--nav-h);
+  background:rgba(14,42,92,.97);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  display:flex;align-items:center;
+  padding:0 clamp(1rem,4vw,3rem);
+  transition:box-shadow .3s;
+}
+#nav.scrolled{box-shadow:0 4px 40px rgba(0,0,0,.35)}
+
+.nav-inner{max-width:var(--max);width:100%;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:24px}
+
+.nav-brand{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.nav-compass{
+  width:38px;height:38px;background:var(--gold-warm);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--cond);font-size:18px;font-weight:900;color:var(--cobalt);
+  letter-spacing:-1px;
+  box-shadow:0 0 0 0 rgba(240,168,32,.6);
+  animation:ping 3s ease-in-out infinite;
+}
+@keyframes ping{0%,100%{box-shadow:0 0 0 0 rgba(240,168,32,.5)}50%{box-shadow:0 0 0 8px rgba(240,168,32,0)}}
+
+.nav-name{display:flex;flex-direction:column;line-height:1.1}
+.nav-name b{font-family:var(--cond);font-size:19px;font-weight:800;color:#fff;letter-spacing:.5px}
+.nav-name small{font-size:9.5px;color:rgba(240,168,32,.9);letter-spacing:2.5px;text-transform:uppercase}
+
+nav ul{display:flex;list-style:none;align-items:center}
+nav ul a{
+  display:block;padding:0 16px;height:var(--nav-h);line-height:var(--nav-h);
+  font-size:13px;font-weight:500;color:rgba(255,255,255,.78);
+  transition:color .2s;white-space:nowrap;position:relative;
+}
+nav ul a::after{
+  content:'';position:absolute;bottom:0;left:16px;right:16px;height:2px;
+  background:var(--gold-warm);transform:scaleX(0);transform-origin:left;
+  transition:transform .25s var(--ease);
+}
+nav ul a:hover{color:#fff}
+nav ul a:hover::after{transform:scaleX(1)}
+
+.nav-btn{
+  background:var(--gold-warm);color:var(--cobalt);
+  padding:10px 22px;border-radius:2px;
+  font-weight:700;font-size:12.5px;letter-spacing:.5px;text-transform:uppercase;
+  border:none;transition:background .2s,transform .15s;flex-shrink:0;
+  display:inline-block;
+}
+.nav-btn:hover{background:#FFB830;transform:translateY(-1px)}
+
+/* ────────── PAGE SYSTEM ────────── */
+.page{display:none;min-height:100vh;padding-top:var(--nav-h)}
+.page.active{display:block}
+
+/* ────────── HERO ────────── */
+.hero{
+  position:relative;overflow:hidden;
+  min-height:calc(100vh - var(--nav-h));
+  display:flex;align-items:center;
+  background:var(--cobalt);
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:linear-gradient(125deg,#06193A 0%,#0E2A5C 40%,#1A3F80 70%,#0A3070 100%);
+}
+.hero-pattern{
+  position:absolute;inset:0;opacity:.04;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 40px,rgba(255,255,255,1) 40px,rgba(255,255,255,1) 41px),
+    repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(255,255,255,1) 40px,rgba(255,255,255,1) 41px);
+}
+.hero-glow{
+  position:absolute;right:-10%;top:-20%;
+  width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle,rgba(240,168,32,.12) 0%,transparent 70%);
+  animation:breathe 6s ease-in-out infinite;
+}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+
+.hero-content{
+  position:relative;z-index:2;
+  max-width:var(--max);margin:auto;
+  padding:clamp(60px,8vh,120px) clamp(1.5rem,5vw,3rem);
+  display:grid;grid-template-columns:1fr 440px;gap:80px;align-items:center;
+}
+
+.hero-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(240,168,32,.12);border:1px solid rgba(240,168,32,.3);
+  color:var(--gold-warm);font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  padding:7px 14px;border-radius:100px;margin-bottom:28px;
+}
+.hero-tag span{width:5px;height:5px;background:var(--gold-warm);border-radius:50%;animation:ping 2s infinite}
+
+.hero h1{
+  font-family:var(--cond);
+  font-size:clamp(48px,7vw,82px);font-weight:900;line-height:.95;
+  color:#fff;text-transform:uppercase;letter-spacing:-1px;margin-bottom:28px;
+}
+.hero h1 em{color:var(--gold-warm);font-style:normal;display:block}
+
+.hero-sub{
+  font-size:17px;color:rgba(255,255,255,.72);line-height:1.85;margin-bottom:44px;max-width:540px;
+}
+
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn-gold{
+  background:var(--gold-warm);color:var(--cobalt);
+  padding:15px 34px;border-radius:2px;font-weight:700;font-size:13px;
+  letter-spacing:.5px;text-transform:uppercase;border:none;
+  transition:all .2s;display:inline-block;
+}
+.btn-gold:hover{background:#FFB830;transform:translateY(-2px);box-shadow:0 8px 24px rgba(240,168,32,.35)}
+.btn-ghost{
+  border:1.5px solid rgba(255,255,255,.35);color:#fff;
+  padding:14px 28px;border-radius:2px;font-weight:500;font-size:13px;
+  letter-spacing:.5px;text-transform:uppercase;
+  transition:all .2s;display:inline-block;
+}
+.btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+
+.hero-kpis{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:4px;padding:36px 32px;backdrop-filter:blur(8px);
+}
+.kpi-title{
+  font-size:10px;font-weight:600;color:var(--gold-warm);
+  letter-spacing:3px;text-transform:uppercase;margin-bottom:28px;
+  display:flex;align-items:center;gap:10px;
+}
+.kpi-title::before{content:'';flex:1;height:1px;background:rgba(240,168,32,.3)}
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.kpi-item{}
+.kpi-n{
+  font-family:var(--cond);font-size:48px;font-weight:800;
+  color:#fff;line-height:1;margin-bottom:4px;
+}
+.kpi-n span{font-size:28px;color:var(--gold-warm)}
+.kpi-l{font-size:12px;color:rgba(255,255,255,.55);line-height:1.4;max-width:110px}
+
+/* ────────── SCROLL TICKER ────────── */
+.ticker{
+  background:var(--gold-warm);overflow:hidden;padding:10px 0;
+  white-space:nowrap;
+}
+.ticker-track{
+  display:inline-flex;gap:0;animation:ticker 30s linear infinite;
+}
+.ticker-item{
+  font-family:var(--cond);font-size:15px;font-weight:700;
+  color:var(--cobalt);padding:0 40px;letter-spacing:.5px;text-transform:uppercase;
+}
+.ticker-item::after{content:'◆';margin-left:40px;color:rgba(14,42,92,.4)}
+@keyframes ticker{to{transform:translateX(-50%)}}
+
+/* ────────── SECTIONS GENERIC ────────── */
+.sec{padding:clamp(64px,8vh,110px) clamp(1.5rem,5vw,3rem)}
+.w{max-width:var(--max);margin:auto}
+.sec-dark{background:var(--cobalt);color:#fff}
+.sec-sable{background:var(--sable)}
+.sec-cream{background:var(--cream)}
+.sec-cobalt-mid{background:var(--cobalt-mid)}
+
+.label{
+  display:flex;align-items:center;gap:12px;
+  font-size:10.5px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  color:var(--cobalt-bright);margin-bottom:14px;
+}
+.label::before{content:'';width:32px;height:2px;background:var(--gold)}
+.label.light{color:rgba(240,168,32,.85)}
+.label.light::before{background:var(--gold-warm)}
+
+h2.display{
+  font-family:var(--cond);font-size:clamp(38px,5vw,62px);
+  font-weight:900;line-height:.95;text-transform:uppercase;
+  letter-spacing:-1px;margin-bottom:16px;
+}
+h2.serif{
+  font-family:var(--serif);font-size:clamp(32px,4vw,52px);
+  font-weight:700;line-height:1.15;margin-bottom:16px;
+}
+.sub{font-size:17px;color:var(--muted);line-height:1.8;max-width:620px;margin-bottom:48px}
+.sub.light{color:rgba(255,255,255,.65)}
+
+/* ────────── AXES (HOME) ────────── */
+.axes{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:64px}
+.axe{
+  padding:44px 28px;border-right:1px solid var(--border);
+  border-top:3px solid transparent;
+  transition:all .3s;cursor:default;position:relative;overflow:hidden;
+}
+.axe:last-child{border-right:none}
+.axe::before{
+  content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+  background:linear-gradient(180deg,rgba(14,42,92,.04) 0%,transparent 100%);
+  transform:scaleY(0);transform-origin:top;transition:transform .35s;
+}
+.axe:hover{border-top-color:var(--gold);background:var(--cream)}
+.axe:hover::before{transform:scaleY(1)}
+.axe-ico{font-size:28px;margin-bottom:20px}
+.axe-n{
+  font-family:var(--cond);font-size:52px;font-weight:900;
+  color:rgba(14,42,92,.07);line-height:1;margin-bottom:8px;
+}
+.axe h3{font-family:var(--serif);font-size:18px;font-weight:700;color:var(--cobalt);margin-bottom:10px;line-height:1.3}
+.axe p{font-size:13px;color:var(--muted);line-height:1.7}
+
+/* ────────── IMPACT COUNTER ────────── */
+.impact-strip{
+  background:var(--cobalt);padding:80px clamp(1.5rem,5vw,3rem);
+  position:relative;overflow:hidden;
+}
+.impact-strip::before{
+  content:'';position:absolute;left:-200px;top:-200px;
+  width:600px;height:600px;border-radius:50%;
+  background:rgba(240,168,32,.05);
+}
+.impact-grid{
+  max-width:var(--max);margin:auto;
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border:1px solid rgba(255,255,255,.08);
+}
+.impact-item{
+  padding:44px 32px;text-align:center;
+  border-right:1px solid rgba(255,255,255,.08);
+  transition:background .2s;
+}
+.impact-item:last-child{border-right:none}
+.impact-item:hover{background:rgba(255,255,255,.04)}
+.impact-n{
+  font-family:var(--cond);font-size:clamp(44px,5vw,68px);font-weight:900;
+  color:var(--gold-warm);line-height:1;margin-bottom:6px;
+}
+.impact-l{font-size:13px;color:rgba(255,255,255,.6);line-height:1.5}
+.impact-l b{display:block;color:rgba(255,255,255,.9);font-size:14px;font-weight:500;margin-bottom:2px}
+
+/* ────────── PROJETS CARDS ────────── */
+.proj-tabs{display:flex;gap:0;border-bottom:1.5px solid var(--border);margin-bottom:52px;overflow-x:auto}
+.ptab{
+  padding:12px 26px;font-size:12.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--muted);border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-1.5px;
+  transition:all .2s;white-space:nowrap;
+}
+.ptab.on{color:var(--cobalt);border-bottom-color:var(--cobalt)}
+.ptab:hover:not(.on){color:var(--txt)}
+
+.ptabs-content>div{display:none}
+.ptabs-content>div.on{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+
+.pcard{
+  border:1px solid var(--border);border-radius:2px;overflow:hidden;
+  transition:all .25s;
+}
+.pcard:hover{box-shadow:0 12px 48px rgba(14,42,92,.12);transform:translateY(-3px)}
+.pcard-head{background:var(--cobalt);padding:30px 28px;position:relative;overflow:hidden}
+.pcard-head::after{
+  content:attr(data-badge);
+  position:absolute;top:16px;right:16px;
+  background:var(--gold-warm);color:var(--cobalt);
+  font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;
+  padding:5px 12px;border-radius:1px;
+}
+.pcard-head .partner{font-size:11px;color:rgba(255,255,255,.55);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.pcard-head h3{font-family:var(--serif);font-size:22px;font-weight:700;color:#fff;line-height:1.3}
+.pcard-body{padding:28px;background:#fff}
+.pcard-body p{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:20px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{
+  font-size:10.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+  padding:5px 12px;background:var(--sable);color:var(--cobalt-bright);border-radius:1px;
+}
+.tag.gold{background:var(--gold-pale);color:var(--gold)}
+
+/* ────────── TERRAIN / MAP ────────── */
+.terrain-layout{display:grid;grid-template-columns:1fr 420px;gap:80px;align-items:start}
+.zone-li{
+  display:flex;align-items:flex-start;gap:18px;padding:20px 0;
+  border-bottom:1px solid var(--border);cursor:pointer;
+  transition:padding-left .2s;
+}
+.zone-li:hover{padding-left:8px}
+.zone-dot{
+  width:12px;height:12px;border-radius:50%;background:var(--cobalt-bright);
+  flex-shrink:0;margin-top:5px;
+  box-shadow:0 0 0 3px rgba(34,86,176,.2);
+}
+.zone-dot.g{background:var(--gold);box-shadow:0 0 0 3px rgba(212,146,10,.2)}
+.zone-li b{display:block;font-size:15px;font-weight:600;color:var(--cobalt);margin-bottom:4px}
+.zone-li span{font-size:13px;color:var(--muted)}
+
+.benin-svg{background:var(--sable);border:1px solid var(--border);border-radius:4px;padding:32px;display:flex;justify-content:center}
+
+/* ────────── PARTENAIRES BANDEAU ────────── */
+.partners{
+  background:var(--cream);padding:56px clamp(1.5rem,5vw,3rem);
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+}
+.partner-title{text-align:center;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:32px}
+.partner-row{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+.partner-pill{
+  padding:10px 22px;border:1.5px solid var(--border);border-radius:100px;
+  font-size:12.5px;font-weight:600;color:var(--muted);
+  transition:all .2s;
+}
+.partner-pill:hover{border-color:var(--cobalt-bright);color:var(--cobalt)}
+
+/* ────────── TÉMOIGNAGES ────────── */
+.testi{
+  background:linear-gradient(135deg,var(--cobalt) 0%,var(--cobalt-mid) 100%);
+  padding:80px clamp(1.5rem,5vw,3rem);
+  position:relative;overflow:hidden;
+}
+.testi::before{
+  content:'"';font-family:var(--cond);font-size:400px;font-weight:900;
+  position:absolute;left:-20px;top:-60px;color:rgba(255,255,255,.04);
+  line-height:1;pointer-events:none;
+}
+.testi-grid{max-width:var(--max);margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.testi-card{
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
+  border-radius:4px;padding:36px 30px;
+}
+.testi-quote{font-family:var(--serif);font-size:18px;font-style:italic;color:rgba(255,255,255,.88);line-height:1.7;margin-bottom:24px}
+.testi-who{display:flex;align-items:center;gap:12px}
+.testi-av{
+  width:44px;height:44px;border-radius:50%;
+  background:var(--gold-warm);display:flex;align-items:center;justify-content:center;
+  font-family:var(--cond);font-size:16px;font-weight:800;color:var(--cobalt);
+}
+.testi-who b{display:block;font-size:14px;color:#fff;font-weight:600}
+.testi-who small{font-size:12px;color:rgba(255,255,255,.55)}
+
+/* ────────── ACTUALITÉS ────────── */
+.news-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:24px}
+.news-card{cursor:pointer;transition:all .2s}
+.news-card:hover .news-title{color:var(--cobalt-bright)}
+.news-img{
+  aspect-ratio:16/9;border-radius:2px;margin-bottom:16px;
+  overflow:hidden;display:flex;align-items:center;justify-content:center;
+  font-size:48px;
+}
+.news-card.big .news-img{aspect-ratio:16/10;font-size:64px}
+.news-cat{font-size:10.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cobalt-bright);margin-bottom:8px}
+.news-title{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--cobalt);line-height:1.35;margin-bottom:8px;transition:color .2s}
+.news-card.big .news-title{font-size:28px}
+.news-date{font-size:12px;color:var(--muted)}
+.news-excerpt{font-size:14px;color:var(--muted);line-height:1.7;margin-top:8px}
+
+/* ────────── CTA BLOC ────────── */
+.cta-bloc{
+  background:var(--gold-warm);padding:clamp(56px,6vh,90px) clamp(1.5rem,5vw,3rem);
+  text-align:center;position:relative;overflow:hidden;
+}
+.cta-bloc::before,.cta-bloc::after{
+  content:'';position:absolute;border-radius:50%;
+  background:rgba(14,42,92,.07);
+}
+.cta-bloc::before{width:400px;height:400px;left:-100px;top:-100px}
+.cta-bloc::after{width:300px;height:300px;right:-50px;bottom:-50px}
+.cta-bloc h2{
+  font-family:var(--cond);font-size:clamp(40px,5vw,68px);font-weight:900;
+  color:var(--cobalt);text-transform:uppercase;line-height:.95;letter-spacing:-1px;
+  margin-bottom:20px;position:relative;z-index:1;
+}
+.cta-bloc p{font-size:18px;color:rgba(14,42,92,.75);margin-bottom:36px;position:relative;z-index:1}
+.cta-btns{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;position:relative;z-index:1}
+.btn-cobalt{
+  background:var(--cobalt);color:#fff;padding:15px 36px;border-radius:2px;
+  font-weight:700;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  border:none;transition:all .2s;display:inline-block;
+}
+.btn-cobalt:hover{background:var(--cobalt-mid);transform:translateY(-2px)}
+.btn-white{
+  background:#fff;color:var(--cobalt);padding:14px 32px;border-radius:2px;
+  font-weight:700;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  border:none;transition:all .2s;display:inline-block;
+}
+.btn-white:hover{background:var(--gold-pale);transform:translateY(-2px)}
+
+/* ────────── FOOTER ────────── */
+footer{
+  background:var(--cobalt);color:rgba(255,255,255,.65);
+  padding:clamp(56px,6vh,90px) clamp(1.5rem,5vw,3rem) 28px;
+}
+.ft-grid{
+  max-width:var(--max);margin:auto;
+  display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;gap:56px;margin-bottom:48px;
+}
+.ft-brand .name{font-family:var(--cond);font-size:24px;font-weight:900;color:#fff;letter-spacing:.5px}
+.ft-brand .slogan{font-size:10px;color:rgba(240,168,32,.8);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:20px}
+.ft-brand p{font-size:13.5px;line-height:1.8;max-width:310px;margin-bottom:20px}
+.ft-brand address{font-style:normal;font-size:13px;line-height:1.9}
+.ft-brand address a{color:rgba(240,168,32,.9)}
+.ft-col h4{font-size:10.5px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#fff;margin-bottom:20px}
+.ft-col ul{list-style:none}
+.ft-col li{margin-bottom:12px}
+.ft-col a{font-size:13.5px;color:rgba(255,255,255,.6);transition:color .2s}
+.ft-col a:hover{color:#fff}
+.ft-bar{
+  max-width:var(--max);margin:0 auto;
+  padding-top:24px;border-top:1px solid rgba(255,255,255,.1);
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:12px;
+}
+.socials{display:flex;gap:10px}
+.soc{
+  width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.08);
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:800;color:rgba(255,255,255,.7);
+  transition:all .2s;
+}
+.soc:hover{background:var(--gold-warm);color:var(--cobalt)}
+
+/* ────────── PAGE: QUI SOMMES-NOUS ────────── */
+.page-hero{
+  background:linear-gradient(135deg,var(--cobalt) 0%,var(--cobalt-mid) 100%);
+  padding:100px clamp(1.5rem,5vw,3rem) 80px;
+  text-align:center;position:relative;overflow:hidden;
+}
+.page-hero::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23fff' fill-opacity='0.025'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/svg%3E");
+}
+.page-hero h1{
+  font-family:var(--cond);font-size:clamp(48px,7vw,88px);font-weight:900;
+  text-transform:uppercase;letter-spacing:-2px;color:#fff;line-height:.9;
+  position:relative;z-index:1;margin-bottom:20px;
+}
+.page-hero h1 em{color:var(--gold-warm);font-style:normal}
+.page-hero p{font-size:18px;color:rgba(255,255,255,.72);max-width:600px;margin:0 auto;position:relative;z-index:1;line-height:1.75}
+
+.story-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.story-img{
+  aspect-ratio:4/3;background:var(--sable);border-radius:4px;
+  display:flex;align-items:center;justify-content:center;font-size:80px;
+  border:1px solid var(--border);
+}
+.story-text .label{margin-bottom:12px}
+.story-text h2{font-family:var(--serif);font-size:40px;font-weight:700;color:var(--cobalt);line-height:1.2;margin-bottom:20px}
+.story-text p{font-size:16px;color:var(--muted);line-height:1.85;margin-bottom:20px}
+
+.vmv-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--border);margin-top:64px}
+.vmv-card{background:var(--cream);padding:48px 40px}
+.vmv-card h3{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--cobalt);margin-bottom:16px}
+.vmv-card p{font-size:15px;color:var(--muted);line-height:1.85}
+
+.valeurs-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:56px}
+.valeur{
+  padding:40px 24px;text-align:center;
+  border-right:1px solid var(--border);border-top:3px solid var(--gold-warm);
+}
+.valeur:last-child{border-right:none}
+.valeur .ico{font-size:28px;margin-bottom:16px}
+.valeur h4{font-family:var(--cond);font-size:16px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--cobalt);margin-bottom:8px}
+.valeur p{font-size:12.5px;color:var(--muted);line-height:1.6}
+
+.approach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:52px}
+.approach-card{
+  padding:36px 28px;background:var(--cream);border:1px solid var(--border);
+  border-radius:2px;border-top:3px solid var(--cobalt);
+}
+.approach-card .step{
+  font-family:var(--cond);font-size:48px;font-weight:900;color:rgba(14,42,92,.08);line-height:1;margin-bottom:12px;
+}
+.approach-card h3{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--cobalt);margin-bottom:12px}
+.approach-card p{font-size:14px;color:var(--muted);line-height:1.75}
+
+.orgchart{max-width:600px;margin:52px auto 0}
+.org-level{display:flex;justify-content:center;margin-bottom:0}
+.org-box{
+  background:var(--cobalt);color:#fff;padding:16px 28px;border-radius:2px;
+  text-align:center;min-width:180px;
+}
+.org-box b{display:block;font-family:var(--cond);font-size:15px;font-weight:800;letter-spacing:.3px}
+.org-box small{font-size:11px;color:rgba(255,255,255,.6)}
+.org-line{display:flex;justify-content:center}
+.org-vline{width:1px;height:32px;background:var(--border)}
+.org-hline{
+  display:flex;align-items:flex-start;gap:0;justify-content:center;
+  border-top:1px solid var(--border);margin-bottom:0;
+}
+.org-branch{display:flex;flex-direction:column;align-items:center;flex:1}
+.org-branch .org-vline{height:28px}
+.org-box.sm{background:var(--sable);color:var(--cobalt);min-width:140px}
+.org-box.sm b{color:var(--cobalt)}
+
+.docs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+.doc-item{
+  display:flex;align-items:center;gap:16px;
+  padding:20px 24px;background:var(--cream);border:1px solid var(--border);
+  border-radius:2px;cursor:pointer;transition:all .2s;
+}
+.doc-item:hover{border-color:var(--cobalt-bright);background:var(--sable)}
+.doc-ico{
+  width:44px;height:44px;background:var(--sable);border-radius:2px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:22px;
+}
+.doc-item b{display:block;font-size:14px;color:var(--cobalt);font-weight:600;margin-bottom:2px}
+.doc-item small{font-size:12px;color:var(--muted)}
+
+/* ────────── PAGE: NOS ACTIONS ────────── */
+.action-stage{
+  display:grid;grid-template-columns:1fr 1fr;gap:0;
+  border-bottom:1px solid var(--border);
+}
+.action-stage:nth-child(even) .action-text{order:2}
+.action-stage:nth-child(even) .action-vis{order:1}
+.action-text{padding:clamp(48px,5vw,80px) clamp(1.5rem,4vw,64px)}
+.action-text .step-n{
+  font-family:var(--cond);font-size:100px;font-weight:900;
+  color:rgba(14,42,92,.07);line-height:1;margin-bottom:-20px;
+}
+.action-text h3{font-family:var(--cond);font-size:36px;font-weight:900;text-transform:uppercase;color:var(--cobalt);letter-spacing:-.5px;margin-bottom:20px;line-height:1}
+.action-text p{font-size:15.5px;color:var(--muted);line-height:1.85;margin-bottom:28px}
+.action-points{list-style:none}
+.action-points li{
+  font-size:14px;color:var(--muted);padding:10px 0;
+  border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:12px;
+}
+.action-points li::before{content:'→';color:var(--gold);font-weight:700;flex-shrink:0}
+.action-vis{
+  background:var(--sable);display:flex;align-items:center;justify-content:center;
+  font-size:80px;min-height:420px;
+  border-left:1px solid var(--border);
+}
+.action-stage:nth-child(even) .action-vis{border-left:none;border-right:1px solid var(--border)}
+
+.story-box{
+  max-width:900px;margin:80px auto 0;
+  background:var(--cobalt);border-radius:4px;overflow:hidden;
+  display:grid;grid-template-columns:300px 1fr;
+}
+.story-face{
+  background:linear-gradient(180deg,var(--cobalt-mid) 0%,var(--cobalt) 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:48px 32px;text-align:center;
+}
+.story-face .av{
+  width:90px;height:90px;border-radius:50%;background:rgba(240,168,32,.2);
+  border:2px solid var(--gold-warm);display:flex;align-items:center;justify-content:center;
+  font-size:36px;margin-bottom:20px;
+}
+.story-face b{font-family:var(--serif);font-size:20px;font-weight:700;color:#fff}
+.story-face small{font-size:12px;color:rgba(255,255,255,.55)}
+.story-copy{padding:48px}
+.story-copy .big-q{
+  font-family:var(--cond);font-size:80px;font-weight:900;
+  color:rgba(240,168,32,.2);line-height:.8;float:left;margin-right:8px;margin-top:4px;
+}
+.story-copy p{font-family:var(--serif);font-size:18px;font-style:italic;color:rgba(255,255,255,.85);line-height:1.8}
+.story-copy p b{font-style:normal;color:var(--gold-warm)}
+
+/* ────────── PAGE: NOUS SOUTENIR ────────── */
+.don-infos{
+  background:var(--cobalt);border-radius:4px;padding:40px;margin-top:32px;
+  border-left:4px solid var(--gold-warm);
+}
+.don-infos h4{font-family:var(--cond);font-size:20px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;color:var(--gold-warm);margin-bottom:16px}
+.don-infos p{font-size:14px;color:rgba(255,255,255,.8);margin-bottom:8px}
+.don-infos a{color:var(--gold-warm)}
+
+.impact-don{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
+.idon{
+  background:var(--sable);border:1px solid var(--border);
+  border-radius:2px;padding:24px;text-align:center;
+}
+.idon .amount{font-family:var(--cond);font-size:28px;font-weight:900;color:var(--cobalt);margin-bottom:8px}
+.idon p{font-size:13px;color:var(--muted);line-height:1.5}
+
+.join-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:52px}
+.jcard{
+  padding:44px 32px;border:1px solid var(--border);border-radius:2px;text-align:center;
+  transition:all .25s;background:var(--cream);
+}
+.jcard:hover{box-shadow:0 16px 48px rgba(14,42,92,.1);transform:translateY(-4px)}
+.jcard .jico{
+  width:70px;height:70px;border-radius:50%;margin:0 auto 28px;
+  display:flex;align-items:center;justify-content:center;font-size:28px;
+}
+.jcard h3{font-family:var(--serif);font-size:24px;font-weight:700;color:var(--cobalt);margin-bottom:12px}
+.jcard p{font-size:14px;color:var(--muted);line-height:1.75;margin-bottom:28px}
+
+/* ────────── PAGE: ACTUALITÉS ────────── */
+.news-full-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.ncard{border:1px solid var(--border);border-radius:2px;overflow:hidden;cursor:pointer;transition:all .25s}
+.ncard:hover{box-shadow:0 10px 40px rgba(14,42,92,.1);transform:translateY(-3px)}
+.ncard-img{background:var(--sable);aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;font-size:44px}
+.ncard-body{padding:24px}
+.ncard-cat{font-size:10.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cobalt-bright);margin-bottom:8px}
+.ncard h3{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--cobalt);line-height:1.35;margin-bottom:10px}
+.ncard p{font-size:13.5px;color:var(--muted);line-height:1.7;margin-bottom:12px}
+.ncard time{font-size:12px;color:var(--muted)}
+
+/* ────────── PAGE: CONTACT ────────── */
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px}
+.contact-info{}
+.contact-info h3{font-family:var(--serif);font-size:32px;font-weight:700;color:var(--cobalt);margin-bottom:20px}
+.cinfo-item{display:flex;gap:16px;margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid var(--border)}
+.cinfo-ico{width:48px;height:48px;background:var(--sable);border-radius:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px}
+.cinfo-item b{display:block;font-size:14px;color:var(--cobalt);font-weight:600;margin-bottom:4px}
+.cinfo-item p,.cinfo-item a{font-size:14px;color:var(--muted)}
+.cinfo-item a:hover{color:var(--cobalt)}
+
+.contact-form{}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-size:12.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--cobalt);margin-bottom:8px}
+.form-control{
+  width:100%;padding:13px 16px;
+  border:1.5px solid var(--border);border-radius:2px;
+  font-family:var(--sans);font-size:14px;color:var(--txt);background:var(--cream);
+  transition:border-color .2s;
+}
+.form-control:focus{outline:none;border-color:var(--cobalt-bright)}
+textarea.form-control{resize:vertical;min-height:140px}
+.form-select{
+  appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath stroke='%236B6560' stroke-width='1.5' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 16px center;padding-right:40px;cursor:pointer;
+}
+
+/* ────────── ANIMATIONS ────────── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease}
+.reveal.show{opacity:1;transform:none}
+.delay-1{transition-delay:.1s}
+.delay-2{transition-delay:.2s}
+.delay-3{transition-delay:.3s}
+.delay-4{transition-delay:.4s}
+
+/* ────────── RESPONSIVE ────────── */
+@media(max-width:1100px){
+  .axes{grid-template-columns:1fr 1fr;gap:0}
+  .axe:nth-child(2){border-right:none}
+  .axe:nth-child(5){border-right:none}
+  .valeurs-grid{grid-template-columns:1fr 1fr 1fr}
+  .valeur:nth-child(3){border-right:none}
+}
+@media(max-width:960px){
+  nav ul{display:none}
+  .hero-content{grid-template-columns:1fr}
+  .hero-kpis{display:none}
+  .impact-grid{grid-template-columns:1fr 1fr}
+  .terrain-layout{grid-template-columns:1fr}
+  .benin-svg{display:none}
+  .ptabs-content>div.on{grid-template-columns:1fr}
+  .testi-grid{grid-template-columns:1fr}
+  .news-grid{grid-template-columns:1fr}
+  .ft-grid{grid-template-columns:1fr 1fr;gap:32px}
+  .story-layout{grid-template-columns:1fr}
+  .story-img{display:none}
+  .vmv-grid{grid-template-columns:1fr}
+  .valeurs-grid{grid-template-columns:1fr 1fr}
+  .approach-grid{grid-template-columns:1fr}
+  .docs-grid{grid-template-columns:1fr 1fr}
+  .action-stage{grid-template-columns:1fr}
+  .action-stage:nth-child(even) .action-text{order:1}
+  .action-stage:nth-child(even) .action-vis{order:2}
+  .action-vis{min-height:220px}
+  .story-box{grid-template-columns:1fr}
+  .story-face{padding:36px}
+  .impact-don{grid-template-columns:1fr}
+  .join-grid{grid-template-columns:1fr}
+  .news-full-grid{grid-template-columns:1fr 1fr}
+  .contact-layout{grid-template-columns:1fr}
+  .terrain-layout{grid-template-columns:1fr}
+  .axes{grid-template-columns:1fr}
+  .axe{border-right:none}
+}
+@media(max-width:600px){
+  .impact-grid{grid-template-columns:1fr}
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .ft-grid{grid-template-columns:1fr}
+  .vmv-grid{grid-template-columns:1fr}
+  .valeurs-grid{grid-template-columns:1fr}
+  .valeur{border-right:none}
+  .docs-grid{grid-template-columns:1fr}
+  .news-full-grid{grid-template-columns:1fr}
+  .ft-bar{flex-direction:column;gap:16px;text-align:center}
+  .hero h1{font-size:clamp(40px,11vw,56px)}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav id="nav" role="navigation">
+<div class="nav-inner">
+  <a href="#" class="nav-brand" onclick="showPage('home')">
+    <div class="nav-compass">B</div>
+    <div class="nav-name">
+      <b>ONG BUSOLA</b>
+      <small>Parakou · Bénin · 2020</small>
+    </div>
+  </a>
+  <ul>
+    <li><a href="#" onclick="showPage('home')">Accueil</a></li>
+    <li><a href="#" onclick="showPage('about')">Qui sommes-nous</a></li>
+    <li><a href="#" onclick="showPage('actions')">Nos actions</a></li>
+    <li><a href="#" onclick="showPage('soutenir')">Nous soutenir</a></li>
+    <li><a href="#" onclick="showPage('news')">Actualités</a></li>
+    <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+  </ul>
+  <button class="nav-btn" onclick="showPage('soutenir')">Faire un don</button>
+</div>
+</nav>
+
+<!-- ═══════════════ PAGE: ACCUEIL ═══════════════ -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-pattern"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <div>
+        <div class="hero-tag"><span></span>ONG dirigée par des jeunes · Bénin</div>
+        <h1>Le pouvoir<br>d'agir,<br><em>au cœur</em><br>de chaque<br>communauté</h1>
+        <p class="hero-sub">Depuis 2020, ONG BUSOLA œuvre aux côtés des femmes et des jeunes du Nord-Bénin pour construire un avenir de dignité, d'égalité et de paix.</p>
+        <div class="hero-btns">
+          <button class="btn-gold" onclick="showPage('soutenir')">Soutenir notre action</button>
+          <button class="btn-ghost" onclick="showPage('actions')">Découvrir nos projets</button>
+        </div>
+      </div>
+      <div class="hero-kpis">
+        <div class="kpi-title">Impact 2025</div>
+        <div class="kpi-grid">
+          <div class="kpi-item"><div class="kpi-n">6<span>K+</span></div><div class="kpi-l">jeunes et adolescents sensibilisés</div></div>
+          <div class="kpi-item"><div class="kpi-n">500<span>+</span></div><div class="kpi-l">femmes en parcours d'autonomisation</div></div>
+          <div class="kpi-item"><div class="kpi-n">150<span>+</span></div><div class="kpi-l">leaders communautaires engagés</div></div>
+          <div class="kpi-item"><div class="kpi-n">10<span>+</span></div><div class="kpi-l">partenaires nationaux et internationaux</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track" id="ticker-track">
+      <span class="ticker-item">TEDIDJO 3 — Espaces Sûrs Nikki & Karimama</span>
+      <span class="ticker-item">PAGEDA II — 100% de réussite à l'évaluation</span>
+      <span class="ticker-item">48H Contre le Cancer du Sein — 350 femmes touchées</span>
+      <span class="ticker-item">Grant UNFPA 2025 — Formation plaidoyer & Fake News</span>
+      <span class="ticker-item">Programme RESPECT II — Plaidoyer VBG</span>
+      <span class="ticker-item">Projet YES III — 200 personnes sensibilisées par le théâtre</span>
+      <span class="ticker-item">TEDIDJO 3 — Espaces Sûrs Nikki & Karimama</span>
+      <span class="ticker-item">PAGEDA II — 100% de réussite à l'évaluation</span>
+      <span class="ticker-item">48H Contre le Cancer du Sein — 350 femmes touchées</span>
+      <span class="ticker-item">Grant UNFPA 2025 — Formation plaidoyer & Fake News</span>
+      <span class="ticker-item">Programme RESPECT II — Plaidoyer VBG</span>
+      <span class="ticker-item">Projet YES III — 200 personnes sensibilisées par le théâtre</span>
+    </div>
+  </div>
+
+  <!-- AXES -->
+  <section class="sec sec-cream">
+    <div class="w">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:24px;margin-bottom:0">
+        <div>
+          <div class="label">Notre Mission</div>
+          <h2 class="display">5 AXES<br>STRATÉGIQUES</h2>
+        </div>
+        <p style="font-size:16px;color:var(--muted);max-width:420px;line-height:1.8">Une ONG portée par la conviction que la dignité et l'égalité ne sont pas des options — elles sont des droits fondamentaux.</p>
+      </div>
+      <div class="axes">
+        <div class="axe reveal"><div class="axe-ico"><i class="fa-solid fa-heart-pulse"></i></div><div class="axe-n">01</div><h3>Santé & Droits Sexuels et Reproductifs</h3><p>Éducation complète, accès aux services, prévention des grossesses précoces pour les 10–24 ans.</p></div>
+        <div class="axe reveal delay-1"><div class="axe-ico"><i class="fa-solid fa-shield-halved"></i></div><div class="axe-n">02</div><h3>Prévention & Réponse aux VBG</h3><p>Plaidoyer, collecte de données, formation des acteurs et appui aux mécanismes de protection.</p></div>
+        <div class="axe reveal delay-2"><div class="axe-ico"><i class="fa-solid fa-star"></i></div><div class="axe-n">03</div><h3>Leadership & Autonomisation</h3><p>AGR, renforcement des compétences, mouvements de jeunes catalyseurs pour un plaidoyer à haut impact.</p></div>
+        <div class="axe reveal delay-3"><div class="axe-ico"><i class="fa-solid fa-handshake"></i></div><div class="axe-n">04</div><h3>Paix & Cohésion Sociale</h3><p>Médiation, dialogue intercommunautaire, lutte contre la désinformation et prévention des conflits.</p></div>
+        <div class="axe reveal delay-4"><div class="axe-ico"><i class="fa-solid fa-seedling"></i></div><div class="axe-n">05</div><h3>Justice Climatique</h3><p>Maraîchage résilient, agro-écologie, adaptation au changement climatique avec les femmes rurales.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPACT CHIFFRES -->
+  <div class="impact-strip">
+    <div class="label light" style="justify-content:center;margin-bottom:12px">Bilan cumulatif</div>
+    <h2 class="display" style="text-align:center;color:#fff;margin-bottom:52px">NOTRE IMPACT<br><em style="color:var(--gold-warm)">EN CHIFFRES</em></h2>
+    <div class="impact-grid">
+      <div class="impact-item reveal"><div class="impact-n">6<span style="font-size:36px;color:rgba(240,168,32,.6)">000+</span></div><div class="impact-l"><b>Jeunes & adolescents sensibilisés</b>depuis 2020</div></div>
+      <div class="impact-item reveal delay-1"><div class="impact-n">500<span style="font-size:32px;color:rgba(240,168,32,.6)">+</span></div><div class="impact-l"><b>Femmes en parcours</b>d'autonomisation économique</div></div>
+      <div class="impact-item reveal delay-2"><div class="impact-n">96</div><div class="impact-l"><b>Femmes dépistées</b>cancer du sein — oct. 2025</div></div>
+      <div class="impact-item reveal delay-3"><div class="impact-n">40<span style="font-size:32px;color:rgba(240,168,32,.6)">M+</span></div><div class="impact-l"><b>FCFA mobilisés</b>en financements 2025</div></div>
+    </div>
+  </div>
+
+  <!-- PROJETS 2025 -->
+  <section class="sec sec-sable">
+    <div class="w">
+      <div class="label">Interventions 2025</div>
+      <h2 class="display">NOS PROJETS</h2>
+      <p class="sub">Des actions concrètes, portées par des partenaires de confiance et une équipe engagée sur le terrain.</p>
+      <div class="proj-tabs">
+        <button class="ptab on" onclick="switchPTab(this,'ext')">Financement externe</button>
+        <button class="ptab" onclick="switchPTab(this,'own')">Fonds propres</button>
+      </div>
+      <div class="ptabs-content">
+        <div id="ptab-ext" class="on">
+          <div class="pcard reveal"><div class="pcard-head" data-badge="En cours"><p class="partner">CARE Bénin/Togo · FJSI</p><h3>TEDIDJO 3 — « Baani Gordo » (Le lieu du bien-être)</h3></div><div class="pcard-body"><p>Espaces sûrs pour 1 500 adolescentes de 12 à 24 ans dans les communes de Nikki et Karimama. Prévention des VBG, SSR et renforcement du leadership féminin. Août 2025 – Juillet 2026.</p><div class="tags"><span class="tag">SSR</span><span class="tag">VBG</span><span class="tag">Nikki</span><span class="tag">Karimama</span><span class="tag gold">1 500 bénéficiaires</span></div></div></div>
+          <div class="pcard reveal delay-1"><div class="pcard-head" data-badge="Clôturé 100%"><p class="partner">UNFPA · Ambassade Pays-Bas</p><h3>Grant UNFPA 2025 — Renforcement de capacités</h3></div><div class="pcard-body"><p>Plaidoyer et redevabilité sociale en SSR (25 participants, nov. 2025). Lutte contre les Fake News et communication digitale avec création d'une cellule interne de veille opérationnelle.</p><div class="tags"><span class="tag">Plaidoyer</span><span class="tag">Communication digitale</span><span class="tag gold">7,1M FCFA</span></div></div></div>
+          <div class="pcard reveal"><div class="pcard-head" data-badge="Clôturé 100%"><p class="partner">Médecins du Monde · ROAJELF Bénin</p><h3>Programme RESPECT Phase II</h3></div><div class="pcard-body"><p>Collecte de données VBG, clarification des valeurs avec leaders religieux, réalisation d'un téléfilm de plaidoyer, déjeuner de plaidoyer pour l'ouverture permanente des CIPEC-VBG les week-ends.</p><div class="tags"><span class="tag">VBG</span><span class="tag">Plaidoyer</span><span class="tag">Droits</span><span class="tag gold">3,5M FCFA</span></div></div></div>
+          <div class="pcard reveal delay-1"><div class="pcard-head" data-badge="Clôturé 100%"><p class="partner">Coopération Suisse · SIA N'SON</p><h3>PAGEDA II — Alphabétisation Copargo</h3></div><div class="pcard-body"><p>Relance opérationnelle le 4 avril 2025 à la mairie de Copargo. Mobilisation des facilitateurs en 4 langues locales. Résultat exceptionnel : 100% de réussite à l'évaluation finale des apprenants.</p><div class="tags"><span class="tag">Éducation</span><span class="tag">Copargo</span><span class="tag gold">100% réussite</span></div></div></div>
+        </div>
+        <div id="ptab-own">
+          <div class="pcard reveal"><div class="pcard-head" data-badge="Fonds propres"><p class="partner">Déc. 2024 – Mai 2025</p><h3>Campagnes SSRAJ en milieu scolaire</h3></div><div class="pcard-body"><p>20+ actions pédagogiques dans 3 établissements. Plus de 800 apprenants touchés à Parakou. Distribution de serviettes hygiéniques réutilisables au Complexe Scolaire Roger Lafia.</p><div class="tags"><span class="tag">SSRAJ</span><span class="tag gold">800+ apprenants</span></div></div></div>
+          <div class="pcard reveal delay-1"><div class="pcard-head" data-badge="Fonds propres"><p class="partner">22–23 octobre 2025</p><h3>48H contre le Cancer du Sein — 2e édition</h3></div><div class="pcard-body"><p>Marchés Arzèkè et Dépôt de Parakou. 350+ femmes sensibilisées en langues locales. 96 femmes orientées vers des centres de dépistage. Partenariat avec des centres de santé locaux.</p><div class="tags"><span class="tag">Santé</span><span class="tag">Octobre Rose</span><span class="tag gold">96 dépistées</span></div></div></div>
+          <div class="pcard reveal"><div class="pcard-head" data-badge="Fonds propres"><p class="partner">7–8 mars 2025 · Journée Internationale des Femmes</p><h3>JIF 2025 — Autonomisation & Protection des Femmes</h3></div><div class="pcard-body"><p>Formation pratique en techniques de pépinière pour 30 élèves/étudiantes. Atelier sur le circuit de dénonciation des VBG avec 40 participantes et acteurs étatiques (GUPS, OCPM, Justice).</p><div class="tags"><span class="tag">Autonomisation</span><span class="tag">AGR</span><span class="tag">VBG</span></div></div></div>
+          <div class="pcard reveal delay-1"><div class="pcard-head" data-badge="Fonds propres"><p class="partner">10–11 décembre 2025 · DDISP Borgou-Alibori</p><h3>Cohésion Sociale — Zem & Taxi Moto</h3></div><div class="pcard-body"><p>Formation de 20 leaders de groupements de conducteurs contre les fake news. Campagne de masse touchant ~400 conducteurs de taxi et Zémidjan transformés en "Ambassadeurs de paix" en période électorale.</p><div class="tags"><span class="tag">Cohésion sociale</span><span class="tag">Fake news</span><span class="tag gold">400+ conducteurs</span></div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TERRAIN -->
+  <section class="sec sec-cream">
+    <div class="w">
+      <div class="terrain-layout">
+        <div>
+          <div class="label">Géographie d'action</div>
+          <h2 class="serif">Là où nous<br>intervenons</h2>
+          <p class="sub">Nord-Bénin, là où les besoins sont les plus grands et où le changement est possible.</p>
+          <ul style="list-style:none">
+            <li class="zone-li"><span class="zone-dot g"></span><div><b>Parakou</b><span>Siège social · Sensibilisation scolaire · JPO · JIF · Cancer du sein</span></div></li>
+            <li class="zone-li"><span class="zone-dot"></span><div><b>Karimama</b><span>TEDIDJO 2 & 3 · Projet YES · Mouvements de jeunes catalyseurs</span></div></li>
+            <li class="zone-li"><span class="zone-dot"></span><div><b>Nikki</b><span>TEDIDJO 3 — Espaces Sûrs "Baani Gordo"</span></div></li>
+            <li class="zone-li"><span class="zone-dot"></span><div><b>Copargo</b><span>PAGEDA II — 25 centres d'alphabétisation · Yom, Dendi, Fulfuldé, Lokpa</span></div></li>
+            <li class="zone-li"><span class="zone-dot"></span><div><b>Karigui & Fadama</b><span>Projet YES III — Bootcamp & Théâtre communautaire</span></div></li>
+          </ul>
+        </div>
+        <div class="benin-svg">
+          <svg viewBox="0 0 180 320" width="280" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <filter id="gs"><feGaussianBlur stdDeviation="3"/></filter>
+            </defs>
+            <!-- Bénin shape approximate -->
+            <path d="M50 15 L130 15 L145 45 L155 90 L148 130 L140 170 L132 210 L118 250 L100 295 L82 250 L68 210 L55 170 L45 130 L35 90 L45 45 Z"
+              fill="#E8EFF8" stroke="#1A3F80" stroke-width="1.5"/>
+            <!-- Fleuve -->
+            <path d="M38 95 Q70 88 100 95 Q130 102 150 95" fill="none" stroke="#90C8E8" stroke-width="1.5" stroke-dasharray="4 2" opacity=".6"/>
+            <!-- Parakou ★ -->
+            <circle cx="95" cy="165" r="9" fill="#D4920A" stroke="#fff" stroke-width="2"/>
+            <text x="107" y="170" font-family="Inter,sans-serif" font-size="11" fill="#0E2A5C" font-weight="700">Parakou</text>
+            <!-- Karimama -->
+            <circle cx="128" cy="72" r="6" fill="#1A3F80" stroke="#fff" stroke-width="1.5"/>
+            <text x="71" y="70" font-family="Inter,sans-serif" font-size="10" fill="#1A3F80">Karimama</text>
+            <!-- Nikki -->
+            <circle cx="120" cy="118" r="6" fill="#1A3F80" stroke="#fff" stroke-width="1.5"/>
+            <text x="126" y="122" font-family="Inter,sans-serif" font-size="10" fill="#1A3F80">Nikki</text>
+            <!-- Copargo -->
+            <circle cx="62" cy="108" r="6" fill="#1A3F80" stroke="#fff" stroke-width="1.5"/>
+            <text x="24" y="105" font-family="Inter,sans-serif" font-size="10" fill="#1A3F80">Copargo</text>
+            <!-- Karigui -->
+            <circle cx="115" cy="58" r="5" fill="#2256B0" stroke="#fff" stroke-width="1.5"/>
+            <text x="120" y="56" font-family="Inter,sans-serif" font-size="9" fill="#2256B0">Karigui</text>
+            <!-- Legend -->
+            <circle cx="40" cy="290" r="5" fill="#D4920A"/>
+            <text x="50" y="294" font-family="Inter,sans-serif" font-size="10" fill="#0E2A5C">Siège</text>
+            <circle cx="95" cy="290" r="5" fill="#1A3F80"/>
+            <text x="105" y="294" font-family="Inter,sans-serif" font-size="10" fill="#0E2A5C">Zone d'action</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TÉMOIGNAGES -->
+  <div class="testi">
+    <div class="w">
+      <div class="label light" style="justify-content:center;margin-bottom:12px">Voix du terrain</div>
+      <h2 class="display" style="color:#fff;text-align:center;margin-bottom:48px">ILS TÉMOIGNENT</h2>
+      <div class="testi-grid">
+        <div class="testi-card reveal">
+          <p class="testi-quote">« Avant le projet TEDIDJO, je ne savais pas comment protéger ma santé. Aujourd'hui, j'ai une activité génératrice de revenus et je sensibilise les autres filles de mon quartier. »</p>
+          <div class="testi-who"><div class="testi-av">F</div><div><b>Fatima, 22 ans</b><small>Bénéficiaire TEDIDJO 2 · Karimama</small></div></div>
+        </div>
+        <div class="testi-card reveal delay-1">
+          <p class="testi-quote">« La formation en gestion de projet que Busola nous a donnée a transformé notre façon de travailler. Nous sommes maintenant capables de monter et gérer nos propres initiatives communautaires. »</p>
+          <div class="testi-who"><div class="testi-av">M</div><div><b>Moussa, Volontaire</b><small>Renforcement de capacités 2025</small></div></div>
+        </div>
+        <div class="testi-card reveal delay-2">
+          <p class="testi-quote">« Être bénévole chez Busola, c'est plus qu'une activité. C'est une famille. On apprend, on agit, et on voit l'impact de notre engagement chaque jour sur le terrain. »</p>
+          <div class="testi-who"><div class="testi-av">A</div><div><b>Aminata, Bénévole</b><small>Équipe Busola · Parakou</small></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PARTENAIRES -->
+  <div class="partners">
+    <p class="partner-title">Ils nous font confiance</p>
+    <div class="partner-row">
+      <div class="partner-pill">CARE Bénin/Togo</div>
+      <div class="partner-pill">UNFPA Bénin</div>
+      <div class="partner-pill">Médecins du Monde</div>
+      <div class="partner-pill">Coopération Suisse</div>
+      <div class="partner-pill">ROAJELF Bénin</div>
+      <div class="partner-pill">Vie et Environnement</div>
+      <div class="partner-pill">SIA N'SON ONG</div>
+      <div class="partner-pill">Ambassade des Pays-Bas</div>
+      <div class="partner-pill">Foundation for a Just Society (FJSI)</div>
+    </div>
+  </div>
+
+  <!-- NEWS PREVIEW -->
+  <section class="sec sec-sable">
+    <div class="w">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;flex-wrap:wrap;gap:20px">
+        <div><div class="label">Dernières nouvelles</div><h2 class="display">ACTUALITÉS</h2></div>
+        <button class="btn-cobalt" onclick="showPage('news')">Toutes les actualités →</button>
+      </div>
+      <div class="news-grid">
+        <div class="news-card big reveal">
+          <div class="news-img" style="background:var(--sable)"><i class="fa-solid fa-graduation-cap"></i></div>
+          <span class="news-cat">Formation · Nov. 2025</span>
+          <h3 class="news-title">Grant UNFPA : 25 membres formés au plaidoyer et à la lutte contre les Fake News en SSR</h3>
+          <p class="news-excerpt">Deux sessions stratégiques en novembre 2025 pour professionnaliser les interventions de l'ONG : plaidoyer/lobbying et communication digitale responsable.</p>
+          <p class="news-date">Novembre 2025 · Parakou</p>
+        </div>
+        <div>
+          <div class="news-card reveal" style="margin-bottom:28px">
+            <div class="news-img" style="background:var(--sable);aspect-ratio:16/9"><i class="fa-solid fa-ribbon"></i></div>
+            <span class="news-cat">Santé · Oct. 2025</span>
+            <h3 class="news-title">48H contre le Cancer du Sein : 96 femmes orientées vers le dépistage</h3>
+            <p class="news-date">22–23 oct. 2025</p>
+          </div>
+          <div class="news-card reveal delay-1">
+            <div class="news-img" style="background:var(--sable);aspect-ratio:16/9"><i class="fa-solid fa-globe"></i></div>
+            <span class="news-cat">Lancement · Août 2025</span>
+            <h3 class="news-title">TEDIDJO 3 lance ses Espaces Sûrs pour 1 500 adolescentes</h3>
+            <p class="news-date">Août 2025</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-bloc">
+    <h2>DEVENEZ<br>UN ACTEUR<br>DU CHANGEMENT</h2>
+    <p>Votre soutien est le moteur de notre action sur le terrain.</p>
+    <div class="cta-btns">
+      <button class="btn-cobalt" onclick="showPage('soutenir')">Faire un don</button>
+      <button class="btn-white" onclick="showPage('soutenir')">Devenir partenaire</button>
+      <button class="btn-white" onclick="showPage('contact')">Nous contacter</button>
+    </div>
+  </div>
+
+</div><!-- /page-home -->
+
+<!-- ═══════════════ PAGE: QUI SOMMES-NOUS ═══════════════ -->
+<div id="page-about" class="page">
+
+  <div class="page-hero">
+    <h1>QUI<br>SOMMES-<br><em>NOUS</em> ?</h1>
+    <p>Une organisation née du terrain, pour le terrain — guidée par la boussole de la justice et de la dignité.</p>
+  </div>
+
+  <!-- HISTOIRE -->
+  <section class="sec sec-cream">
+    <div class="w">
+      <div class="story-layout">
+        <div class="story-img"><i class="fa-solid fa-globe"></i></div>
+        <div class="story-text">
+          <div class="label">Notre origine</div>
+          <h2>Notre histoire : une conviction née à Parakou</h2>
+          <p>L'ONG Busola n'est pas née d'un concept, mais d'un constat. Fondée en mars 2020 par des acteurs du développement social profondément attachés au Nord-Bénin, notre organisation est une réponse citoyenne aux défis rencontrés par les femmes et les jeunes de nos communautés.</p>
+          <p>Le nom <strong>« Busola »</strong>, la boussole en yoruba, incarne notre vocation : guider, orienter et accompagner chaque individu vers un avenir où il a le plein pouvoir d'agir. Nous sommes une organisation née du terrain, pour le terrain, enregistrée sous le numéro <strong>2020-4/016/PDB/SG/SAG</strong>.</p>
+          <p>En 5 ans d'existence, nous avons prouvé qu'une ONG jeune, locale et engagée peut porter des projets à impact réel, mobiliser des partenaires de confiance et transformer des vies concrètes dans les communes les plus éloignées du Bénin.</p>
+          <div style="display:flex;gap:32px;margin-top:28px;flex-wrap:wrap">
+            <div><div style="font-family:var(--cond);font-size:42px;font-weight:900;color:var(--cobalt)">2020</div><div style="font-size:13px;color:var(--muted)">Année de création</div></div>
+            <div><div style="font-family:var(--cond);font-size:42px;font-weight:900;color:var(--cobalt)">5<span style="font-size:24px">ans</span></div><div style="font-size:13px;color:var(--muted)">d'impact continu</div></div>
+            <div><div style="font-family:var(--cond);font-size:42px;font-weight:900;color:var(--cobalt)">9</div><div style="font-size:13px;color:var(--muted)">projets en 2025</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISION MISSION VALEURS -->
+  <section class="sec sec-sable" style="padding-top:0">
+    <div class="w">
+      <div class="vmv-grid">
+        <div class="vmv-card">
+          <div class="label" style="margin-bottom:16px">Notre cap</div>
+          <h3>Notre Vision</h3>
+          <p>Un Bénin où le potentiel de chaque femme et de chaque jeune est libéré pour bâtir des communautés justes, pacifiques et autonomes.</p>
+        </div>
+        <div class="vmv-card" style="background:var(--cobalt);color:#fff">
+          <div class="label light" style="margin-bottom:16px">Notre engagement</div>
+          <h3 style="color:#fff">Notre Mission</h3>
+          <p style="color:rgba(255,255,255,.75)">Renforcer le pouvoir d'agir des communautés, en particulier des femmes et des jeunes, en co-construisant des solutions locales pour la santé, la protection, l'autonomisation et la paix.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALEURS -->
+  <section class="sec sec-cream">
+    <div class="w">
+      <div style="text-align:center;margin-bottom:0">
+        <div class="label" style="justify-content:center">Ce qui nous anime</div>
+        <h2 class="display">NOS VALEURS</h2>
+      </div>
+      <div class="valeurs-grid">
+        <div class="valeur"><div class="ico"><i class="fa-solid fa-landmark"></i></div><h4>Dignité</h4><p>Placer chaque personne au cœur de l'action, sans exception.</p></div>
+        <div class="valeur"><div class="ico"><i class="fa-solid fa-magnifying-glass"></i></div><h4>Intégrité</h4><p>Agir avec transparence et redevabilité envers nos partenaires et bénéficiaires.</p></div>
+        <div class="valeur"><div class="ico"><i class="fa-solid fa-handshake"></i></div><h4>Collaboration</h4><p>Ensemble, pour un impact durable et une intelligence collective.</p></div>
+        <div class="valeur"><div class="ico"><i class="fa-solid fa-bolt"></i></div><h4>Engagement</h4><p>Être une force audacieuse pour la justice et l'égalité de genre.</p></div>
+        <div class="valeur" style="border-right:none"><div class="ico"><i class="fa-solid fa-rocket"></i></div><h4>Autonomisation</h4><p>Libérer les potentiels, inspirer et transmettre pour un avenir durable.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPROCHE -->
+  <section class="sec sec-sable">
+    <div class="w">
+      <div class="label">Méthodologie</div>
+      <h2 class="display">NOTRE APPROCHE :<br>FAIRE « AVEC »,<br>PAS « POUR »</h2>
+      <p class="sub">Nous ne croyons pas aux solutions importées. Notre approche est celle de l'ingénierie du développement social, fondée sur l'écoute et la co-construction.</p>
+      <div class="approach-grid">
+        <div class="approach-card reveal"><div class="step">01</div><h3>Proximité & Immersion</h3><p>Nos équipes sont sur le terrain, au contact direct des réalités, pour comprendre les dynamiques locales avant d'agir. Pas de solution venue d'ailleurs — chaque intervention naît du dialogue avec la communauté.</p></div>
+        <div class="approach-card reveal delay-1"><div class="step">02</div><h3>Partenariat Stratégique</h3><p>Nous travaillons en synergie avec les communautés, les autorités locales, les leaders traditionnels et d'autres organisations. C'est l'intelligence collective qui crée les changements les plus profonds.</p></div>
+        <div class="approach-card reveal delay-2"><div class="step">03</div><h3>Renforcement du Pouvoir d'Agir</h3><p>Notre but ultime est de rendre les communautés autonomes. Chaque projet est conçu pour transférer des compétences et renforcer les capacités locales pour une pérennité des actions.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GOUVERNANCE -->
+  <section class="sec sec-cream">
+    <div class="w">
+      <div class="label">Structure</div>
+      <h2 class="display">GOUVERNANCE<br>& TRANSPARENCE</h2>
+      <p class="sub">Une gouvernance solide, une gestion rigoureuse et redevable. Nous croyons que la confiance se bâtit sur la transparence.</p>
+      <div class="orgchart">
+        <div class="org-level"><div class="org-box"><b>Assemblée Générale</b><small>Organe suprême de décision</small></div></div>
+        <div class="org-line"><div class="org-vline"></div></div>
+        <div class="org-level"><div class="org-box"><b>Conseil d'Administration</b><small>Vision stratégique · Présidente : SANNI Sybgath</small></div></div>
+        <div class="org-line"><div class="org-vline"></div></div>
+        <div class="org-hline">
+          <div class="org-branch"><div class="org-vline"></div><div class="org-box sm"><b>Direction Exécutive</b><small>Mise en œuvre opérationnelle</small></div></div>
+        </div>
+      </div>
+      <h3 style="font-family:var(--serif);font-size:26px;font-weight:700;color:var(--cobalt);margin:64px 0 8px;text-align:center">Documents Institutionnels</h3>
+      <p style="text-align:center;color:var(--muted);margin-bottom:0">Téléchargez nos documents clés pour renforcer votre confiance.</p>
+      <div class="docs-grid">
+        <div class="doc-item"><div class="doc-ico"><i class="fa-solid fa-file-lines"></i></div><div><b>Rapport Annuel 2025</b><small>PDF · 22 pages</small></div></div>
+        <div class="doc-item"><div class="doc-ico"><i class="fa-solid fa-file-lines"></i></div><div><b>Rapport Annuel 2024</b><small>PDF · 13 pages</small></div></div>
+        <div class="doc-item"><div class="doc-ico"><i class="fa-solid fa-chart-simple"></i></div><div><b>Rapports Financiers</b><small>Exécution budgétaire détaillée</small></div></div>
+        <div class="doc-item"><div class="doc-ico"><i class="fa-solid fa-clipboard-list"></i></div><div><b>Nos Statuts</b><small>Enregistrement 2020</small></div></div>
+        <div class="doc-item"><div class="doc-ico"><i class="fa-solid fa-shield-halved"></i></div><div><b>Politique de Protection (PEAS)</b><small>Safeguarding · Protection des données</small></div></div>
+        <div class="doc-item"><div class="doc-ico"><i class="fa-solid fa-link"></i></div><div><b>N° d'enregistrement</b><small>2020-4/016/PDB/SG/SAG · 20 mars 2020</small></div></div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page-about -->
+
+<!-- ═══════════════ PAGE: NOS ACTIONS ═══════════════ -->
+<div id="page-actions" class="page">
+
+  <div class="page-hero">
+    <h1>NOS<br><em>ACTIONS</em></h1>
+    <p>Transformer le potentiel en puissance. Nous ne voyons pas des bénéficiaires — nous voyons des actrices et acteurs du changement.</p>
+  </div>
+
+  <!-- 3 ÉTAPES -->
+  <div>
+    <div class="action-stage">
+      <div class="action-text">
+        <div class="step-n">01</div>
+        <div class="label">Première étape</div>
+        <h3>ÉDUQUER<br>pour libérer<br>l'esprit</h3>
+        <p>Le changement commence par le savoir. Avant d'agir, il faut comprendre. Dans les écoles, les ateliers ou au sein des communautés, nous ouvrons des espaces de dialogue pour briser les tabous et donner les clés de la connaissance. Nous parlons de santé, de droits, de respect, de citoyenneté.</p>
+        <ul class="action-points">
+          <li>Causeries sur la Santé Sexuelle et Reproductive (DSSR)</li>
+          <li>Ateliers sur la dignité menstruelle et l'hygiène menstruelle</li>
+          <li>Sessions d'alphabétisation fonctionnelle pour les femmes adultes</li>
+          <li>Formation des jeunes aux enjeux de la citoyenneté numérique</li>
+          <li>Éducation Complète à la Sexualité (ECS) en milieu scolaire</li>
+        </ul>
+      </div>
+      <div class="action-vis"><i class="fa-solid fa-book"></i></div>
+    </div>
+    <div class="action-stage">
+      <div class="action-vis"><i class="fa-solid fa-shield-halved"></i></div>
+      <div class="action-text">
+        <div class="step-n">02</div>
+        <div class="label">Deuxième étape</div>
+        <h3>PROTÉGER<br>pour garantir<br>la sécurité</h3>
+        <p>L'épanouissement est impossible sans la sécurité. Notre mission est de construire un environnement protecteur. Nous luttons contre les VBG en transformant les mentalités à la racine, en engageant les leaders communautaires et en créant des ponts de confiance pour que chaque victime sache où trouver de l'aide.</p>
+        <ul class="action-points">
+          <li>Dialogue avec les leaders religieux pour la transformation des normes sociales</li>
+          <li>Création de mécanismes d'alerte et référencement pour les survivantes</li>
+          <li>Plaidoyer pour l'ouverture permanente des CIPEC-VBG les week-ends</li>
+          <li>Médiation et prévention des conflits communautaires</li>
+          <li>Campagne digitale — 16 jours d'activisme contre les VBG numériques</li>
+        </ul>
+      </div>
+    </div>
+    <div class="action-stage">
+      <div class="action-text">
+        <div class="step-n">03</div>
+        <div class="label">Troisième étape</div>
+        <h3>AUTONOMISER<br>pour bâtir<br>l'avenir</h3>
+        <p>La véritable liberté est économique. Notre action vise à donner aux femmes et aux jeunes les outils pour construire leur propre indépendance. De la formation professionnelle à l'agro-écologie, nous soutenons des initiatives qui génèrent des revenus, renforcent la sécurité alimentaire et respectent l'environnement.</p>
+        <ul class="action-points">
+          <li>Formation aux AGR et remise de kits matériels pour les femmes vulnérables</li>
+          <li>Formation pratique en techniques de pépinière et agro-écologie</li>
+          <li>Appui au leadership et à la participation à la vie publique</li>
+          <li>Bootcamp de renforcement des capacités des jeunes catalyseurs</li>
+          <li>Théâtre communautaire comme outil de plaidoyer et sensibilisation</li>
+        </ul>
+      </div>
+      <div class="action-vis"><i class="fa-solid fa-seedling"></i></div>
+    </div>
+  </div>
+
+  <!-- HISTOIRE BÉNÉFICIAIRE -->
+  <section class="sec sec-sable">
+    <div class="w">
+      <div style="text-align:center;margin-bottom:48px">
+        <div class="label" style="justify-content:center">Impact humain</div>
+        <h2 class="display">UNE VIE<br>TRANSFORMÉE</h2>
+      </div>
+      <div class="story-box">
+        <div class="story-face">
+          <div class="av"><i class="fa-solid fa-user"></i></div>
+          <b>Mariam, 24 ans</b>
+          <small>Bénéficiaire TEDIDJO 2<br>Karimama, Nord-Bénin</small>
+        </div>
+        <div class="story-copy">
+          <span class="big-q">"</span>
+          <p>Quand nous avons rencontré Mariam, elle était déscolarisée et sans perspective. Grâce à nos sessions d'<b>éducation</b>, elle a repris confiance en elle et compris ses droits fondamentaux. Intégrée dans un espace <b>protégé</b>, elle a pu parler des violences qu'elle subissait et bénéficier d'un accompagnement juridique. Aujourd'hui, grâce à une formation en couture et gestion, elle est <b>autonome</b>. Elle a monté sa propre petite activité et est devenue une source d'inspiration pour les autres jeunes filles de son quartier. Son histoire, c'est la raison d'être de notre action."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page-actions -->
+
+<!-- ═══════════════ PAGE: NOUS SOUTENIR ═══════════════ -->
+<div id="page-soutenir" class="page">
+
+  <div class="page-hero">
+    <h1>VOTRE<br>ENGAGEMENT<br><em>FAIT LA</em><br>DIFFÉRENCE</h1>
+    <p>Chaque vie changée est le fruit d'un effort collectif. Que vous soyez un citoyen, une entreprise ou une institution, votre soutien est le moteur de notre action.</p>
+  </div>
+
+  <!-- DON -->
+  <section class="sec sec-cream">
+    <div class="w">
+      <div class="label">Le levier le plus direct</div>
+      <h2 class="display">FAIRE UN DON</h2>
+      <p class="sub">Votre don est transformé en action immédiate sur le terrain. Ce n'est pas une simple contribution — c'est un investissement dans la dignité et l'avenir.</p>
+      <div class="impact-don">
+        <div class="idon"><div class="amount">5 000 FCFA</div><p>= 1 kit de dignité menstruelle complet pour une collégienne</p></div>
+        <div class="idon"><div class="amount">25 000 FCFA</div><p>= 1 journée de formation en gestion pour une femme entrepreneure</p></div>
+        <div class="idon"><div class="amount">50 000 FCFA</div><p>= Organisation d'une causerie sur les VBG pour 35 jeunes</p></div>
+      </div>
+      <div class="don-infos">
+        <h4><i class="fa-solid fa-credit-card"></i> Coordonnées de don</h4>
+        <p><strong>Mobile Money :</strong> <a href="tel:+22901953333 44">+229 01 95 33 33 44</a> / <a href="tel:+22901973749 55">+229 01 97 37 49 55</a></p>
+        <p><strong>Email pour virement :</strong> <a href="mailto:ongbusola@gmail.com">ongbusola@gmail.com</a></p>
+        <p><strong>Adresse :</strong> Parakou, Arafat — non loin de l'hôtel Marie Rose, Bénin</p>
+        <p style="margin-top:16px;color:rgba(255,255,255,.55);font-size:12px">Nous accusons réception de chaque don et fournissons un reçu sur demande. Votre confiance nous honore.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTENARIAT + BÉNÉVOLAT -->
+  <section class="sec sec-sable">
+    <div class="w">
+      <div class="label">Engagez-vous</div>
+      <h2 class="display">TROIS FAÇONS<br>D'AGIR</h2>
+      <div class="join-grid">
+        <div class="jcard reveal">
+          <div class="jico" style="background:var(--cobalt)"><i class="fa-solid fa-handshake"></i></div>
+          <h3>Devenir Partenaire</h3>
+          <p>Vous êtes une entreprise, une fondation, une institution ? Collaborons pour démultiplier notre impact. Mettons en commun nos expertises, nos réseaux et nos ressources pour concevoir et déployer des projets innovants.</p>
+          <button class="btn-cobalt" onclick="showPage('contact')">Proposer un partenariat</button>
+        </div>
+        <div class="jcard reveal delay-1">
+          <div class="jico" style="background:var(--gold-warm)"><i class="fa-solid fa-star"></i></div>
+          <h3>Devenir Bénévole</h3>
+          <p>Notre plus grande richesse, c'est notre capital humain. Compétences en animation, communication, gestion de projet, santé — votre engagement est précieux. Rejoignez une équipe dynamique et diverse.</p>
+          <button class="btn-gold" onclick="showPage('contact')">Rejoindre l'équipe</button>
+        </div>
+        <div class="jcard reveal delay-2">
+          <div class="jico" style="background:var(--vert)"><i class="fa-solid fa-bullhorn"></i></div>
+          <h3>Sensibiliser Autour de Vous</h3>
+          <p>Partagez nos actions sur les réseaux sociaux, parlez de nous à votre entourage. Amplifiez nos messages sur les droits des femmes et des jeunes. Chaque partage compte et peut changer une vie.</p>
+          <a href="https://web.facebook.com/profile.php?id=100064788966440" target="_blank" rel="noopener" class="btn-cobalt" style="background:var(--vert)">Suivre sur Facebook</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTENAIRES ACTUELS -->
+  <div class="partners">
+    <p class="partner-title">Ils nous font déjà confiance — Rejoignez-les</p>
+    <div class="partner-row">
+      <div class="partner-pill">CARE Bénin/Togo</div><div class="partner-pill">UNFPA Bénin</div>
+      <div class="partner-pill">Médecins du Monde</div><div class="partner-pill">Coopération Suisse</div>
+      <div class="partner-pill">ROAJELF Bénin</div><div class="partner-pill">Vie et Environnement</div>
+      <div class="partner-pill">SIA N'SON ONG</div><div class="partner-pill">Ambassade des Pays-Bas</div>
+    </div>
+  </div>
+
+</div><!-- /page-soutenir -->
+
+<!-- ═══════════════ PAGE: ACTUALITÉS ═══════════════ -->
+<div id="page-news" class="page">
+
+  <div class="page-hero">
+    <h1>AU CŒUR<br>DE <em>L'ACTION</em></h1>
+    <p>Les dernières nouvelles de l'ONG BUSOLA — terrain, formations, plaidoyer et célébrations.</p>
+  </div>
+
+  <section class="sec sec-sable">
+    <div class="w">
+      <div class="news-full-grid">
+        <div class="ncard reveal"><div class="ncard-img"><i class="fa-solid fa-graduation-cap"></i></div><div class="ncard-body"><div class="ncard-cat">Formation · Nov. 2025</div><h3>Grant UNFPA 2025 : 25 membres formés au plaidoyer et à la lutte contre les Fake News</h3><p>Deux sessions stratégiques pour professionnaliser les interventions : plaidoyer/lobbying SSR et communication digitale avec création d'une cellule de veille interne.</p><time>Novembre 2025 · Parakou</time></div></div>
+        <div class="ncard reveal delay-1"><div class="ncard-img"><i class="fa-solid fa-ribbon"></i></div><div class="ncard-body"><div class="ncard-cat">Santé publique · Oct. 2025</div><h3>48H contre le Cancer du Sein : 96 femmes orientées vers le dépistage</h3><p>Marchés Arzèkè et Dépôt, Parakou. 350 femmes sensibilisées en langues locales dans le cadre d'Octobre Rose.</p><time>22–23 octobre 2025</time></div></div>
+        <div class="ncard reveal delay-2"><div class="ncard-img"><i class="fa-solid fa-globe"></i></div><div class="ncard-body"><div class="ncard-cat">Lancement · Août 2025</div><h3>TEDIDJO 3 « Baani Gordo » : espaces sûrs pour 1 500 adolescentes à Nikki et Karimama</h3><p>Nouveau projet financé par la FJSI et coordonné par CARE Bénin/Togo. Durée : août 2025 – juillet 2026.</p><time>Août 2025</time></div></div>
+        <div class="ncard reveal"><div class="ncard-img"><i class="fa-solid fa-masks-theater"></i></div><div class="ncard-body"><div class="ncard-cat">Projet YES III · Sept. 2025</div><h3>Bootcamp YES III : le théâtre communautaire comme outil de plaidoyer à Karigui</h3><p>50 jeunes formés du 19 au 21 septembre 2025. Plus de 200 personnes sensibilisées par des pièces de théâtre éducatives sur les droits des adolescentes.</p><time>Septembre 2025</time></div></div>
+        <div class="ncard reveal delay-1"><div class="ncard-img"><i class="fa-solid fa-shield-halved"></i></div><div class="ncard-body"><div class="ncard-cat">Cohésion sociale · Déc. 2025</div><h3>Zem & Taxi Moto : 400 conducteurs transformés en Ambassadeurs de paix</h3><p>Campagne contre les fake news en période électorale, en partenariat avec la DDISP Borgou-Alibori. Formation de 20 leaders de groupements.</p><time>10–11 décembre 2025</time></div></div>
+        <div class="ncard reveal delay-2"><div class="ncard-img"><i class="fa-solid fa-seedling"></i></div><div class="ncard-body"><div class="ncard-cat">JIF · Mars 2025</div><h3>JIF 2025 : pépinière et circuit VBG pour 70 femmes à Parakou</h3><p>Formation pratique en techniques de pépinière (30 étudiantes) et atelier sur le circuit de dénonciation des VBG avec acteurs étatiques (40 participantes).</p><time>7–8 mars 2025</time></div></div>
+        <div class="ncard reveal"><div class="ncard-img"><i class="fa-solid fa-school"></i></div><div class="ncard-body"><div class="ncard-cat">Éducation · Avr. 2025</div><h3>PAGEDA II : relance des activités à Copargo avec 100% de réussite à l'évaluation finale</h3><p>Cérémonie officielle le 4 avril 2025. Mobilisation des facilitateurs en 4 langues locales : Yom, Dendi, Fulfuldé et Lokpa.</p><time>Avril 2025</time></div></div>
+        <div class="ncard reveal delay-1"><div class="ncard-img"><i class="fa-solid fa-cake-candles"></i></div><div class="ncard-body"><div class="ncard-cat">Anniversaire · Mars 2025</div><h3>JPO 2025 : ONG BUSOLA célèbre 5 ans d'impact au GUPS 1 de Parakou</h3><p>Journée Portes Ouvertes le 20 mars 2025, combinant présentation institutionnelle, activités récréatives et quiz thématiques pour les jeunes.</p><time>20 mars 2025</time></div></div>
+        <div class="ncard reveal delay-2"><div class="ncard-img"><i class="fa-solid fa-laptop-code"></i></div><div class="ncard-body"><div class="ncard-cat">Digital · Nov.–Déc. 2025</div><h3>16 Jours d'activisme : campagne digitale contre les violences numériques faites aux femmes</h3><p>En alignement avec l'Institut National de la Femme (INF). Thème 2025 : « Tous unis pour mettre fin aux violences numériques faites aux femmes et aux filles. »</p><time>Novembre–Décembre 2025</time></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIENS RÉSEAUX -->
+  <div class="cta-bloc">
+    <h2>SUIVEZ<br>NOS ACTIONS<br>EN DIRECT</h2>
+    <p>Rejoignez notre communauté sur les réseaux sociaux pour ne rien manquer.</p>
+    <div class="cta-btns">
+      <a href="https://web.facebook.com/profile.php?id=100064788966440" target="_blank" rel="noopener" class="btn-cobalt">Facebook ONG BUSOLA</a>
+      <a href="https://www.linkedin.com/company/ong-busola" target="_blank" rel="noopener" class="btn-white">LinkedIn</a>
+    </div>
+  </div>
+
+</div><!-- /page-news -->
+
+<!-- ═══════════════ PAGE: CONTACT ═══════════════ -->
+<div id="page-contact" class="page">
+
+  <div class="page-hero">
+    <h1>NOUS<br><em>CONTACTER</em></h1>
+    <p>Une question, un projet de partenariat, une candidature bénévole ? Nous répondons à chaque message avec attention.</p>
+  </div>
+
+  <section class="sec sec-cream">
+    <div class="w">
+      <div class="contact-layout">
+        <div class="contact-info">
+          <div class="label">Trouvez-nous</div>
+          <h3>Parlons ensemble</h3>
+          <p style="color:var(--muted);margin-bottom:32px">Nous sommes une équipe à taille humaine, portée par l'énergie des jeunes. Chaque message est lu et traité personnellement.</p>
+          <div class="cinfo-item"><div class="cinfo-ico"><i class="fa-solid fa-location-dot"></i></div><div><b>Siège Social</b><p>Parakou, Arafat — non loin de l'hôtel Marie Rose<br>Borgou, République du Bénin</p></div></div>
+          <div class="cinfo-item"><div class="cinfo-ico"><i class="fa-solid fa-phone"></i></div><div><b>Téléphones</b><a href="tel:+22901953333 44">+229 01 95 33 33 44</a><br><a href="tel:+22901973749 55">+229 01 97 37 49 55</a></div></div>
+          <div class="cinfo-item"><div class="cinfo-ico"><i class="fa-solid fa-envelope"></i></div><div><b>Email</b><a href="mailto:ongbusola@gmail.com">ongbusola@gmail.com</a></div></div>
+          <div class="cinfo-item"><div class="cinfo-ico"><i class="fa-solid fa-user"></i></div><div><b>Présidente du CA</b><p>SANNI Sybgath<br><a href="tel:+22901904446 90">+229 01 90 44 46 90</a><br><a href="mailto:sylgathsanni@gmail.com">sylgathsanni@gmail.com</a></p></div></div>
+          <div style="margin-top:28px">
+            <p style="font-size:12.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:14px">Réseaux sociaux</p>
+            <div style="display:flex;gap:12px">
+              <a href="https://web.facebook.com/profile.php?id=100064788966440" target="_blank" class="soc" style="background:var(--sable);border:1px solid var(--border)"><i class="fa-brands fa-facebook-f"></i></a>
+              <a href="https://www.linkedin.com/company/ong-busola" target="_blank" class="soc" style="background:var(--sable);border:1px solid var(--border)"><i class="fa-brands fa-linkedin-in"></i></a>
+              <a href="http://www.busolaong.com" target="_blank" class="soc" style="background:var(--sable);border:1px solid var(--border)"><i class="fa-solid fa-globe"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="contact-form">
+          <div class="label" style="margin-bottom:16px">Formulaire de contact</div>
+          <div class="form-group"><label>Votre nom complet</label><input class="form-control" type="text" placeholder="Ex : Jean-Paul Ahouansou"></div>
+          <div class="form-group"><label>Email</label><input class="form-control" type="email" placeholder="votre@email.com"></div>
+          <div class="form-group"><label>Objet de votre message</label>
+            <select class="form-control form-select">
+              <option>— Sélectionnez un sujet —</option>
+              <option>Proposition de partenariat</option>
+              <option>Candidature bénévole</option>
+              <option>Don ou soutien financier</option>
+              <option>Question sur nos projets</option>
+              <option>Demande d'information</option>
+              <option>Presse & médias</option>
+              <option>Autre</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Votre message</label><textarea class="form-control" placeholder="Décrivez votre demande ou votre proposition..."></textarea></div>
+          <button class="btn-gold" style="width:100%;padding:16px;font-size:14px">Envoyer le message →</button>
+          <p style="font-size:12px;color:var(--muted);margin-top:12px;text-align:center">Nous répondons sous 48h ouvrées. Votre message est lu avec attention.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page-contact -->
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer role="contentinfo">
+  <div class="ft-grid">
+    <div class="ft-brand">
+      <div class="name">ONG BUSOLA</div>
+      <div class="slogan">Changer des vies, Inspirer l'avenir</div>
+      <p>Organisation Non Gouvernementale dirigée par des jeunes, enregistrée au Bénin depuis le 20 mars 2020. Nous croyons que la dignité et l'égalité de genre ne sont pas négociables — elles sont des droits fondamentaux.</p>
+      <address>
+        <div><i class="fa-solid fa-location-dot"></i> Parakou, Arafat — hôtel Marie Rose, Bénin</div>
+        <div><i class="fa-solid fa-phone"></i> <a href="tel:+22901953333 44">+229 01 95 33 33 44</a></div>
+        <div><i class="fa-solid fa-envelope"></i> <a href="mailto:ongbusola@gmail.com">ongbusola@gmail.com</a></div>
+        <div><i class="fa-solid fa-globe"></i> <a href="http://www.busolaong.com" target="_blank">www.busolaong.com</a></div>
+      </address>
+    </div>
+    <div class="ft-col">
+      <h4>L'organisation</h4>
+      <ul>
+        <li><a href="#" onclick="showPage('about')">Notre histoire</a></li>
+        <li><a href="#" onclick="showPage('about')">Vision & Mission</a></li>
+        <li><a href="#" onclick="showPage('about')">Nos valeurs</a></li>
+        <li><a href="#" onclick="showPage('about')">Notre équipe</a></li>
+        <li><a href="#" onclick="showPage('about')">Gouvernance</a></li>
+        <li><a href="#" onclick="showPage('about')">Documents & rapports</a></li>
+      </ul>
+    </div>
+    <div class="ft-col">
+      <h4>Nos actions</h4>
+      <ul>
+        <li><a href="#" onclick="showPage('actions')">Éduquer</a></li>
+        <li><a href="#" onclick="showPage('actions')">Protéger</a></li>
+        <li><a href="#" onclick="showPage('actions')">Autonomiser</a></li>
+        <li><a href="#" onclick="showPage('home')">Projets 2025</a></li>
+        <li><a href="#" onclick="showPage('home')">Zones d'intervention</a></li>
+        <li><a href="#" onclick="showPage('news')">Actualités terrain</a></li>
+      </ul>
+    </div>
+    <div class="ft-col">
+      <h4>Nous soutenir</h4>
+      <ul>
+        <li><a href="#" onclick="showPage('soutenir')">Faire un don</a></li>
+        <li><a href="#" onclick="showPage('soutenir')">Devenir partenaire</a></li>
+        <li><a href="#" onclick="showPage('soutenir')">Devenir bénévole</a></li>
+        <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+        <li><a href="https://web.facebook.com/profile.php?id=100064788966440" target="_blank">Facebook</a></li>
+        <li><a href="https://www.linkedin.com/company/ong-busola" target="_blank">LinkedIn</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft-bar">
+    <p>© 2026 ONG BUSOLA · N° 2020-4/016/PDB/SG/SAG · Tous droits réservés</p>
+    <div class="socials">
+      <a href="https://web.facebook.com/profile.php?id=100064788966440" target="_blank" class="soc" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="https://www.linkedin.com/company/ong-busola" target="_blank" class="soc" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── PAGE ROUTING ──
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const pg = document.getElementById('page-' + id);
+  if (pg) {
+    pg.classList.add('active');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    triggerReveal();
+  }
+}
+
+// ── PROJECT TABS ──
+function switchPTab(btn, id) {
+  document.querySelectorAll('.ptab').forEach(b => b.classList.remove('on'));
+  document.querySelectorAll('.ptabs-content > div').forEach(d => d.classList.remove('on'));
+  btn.classList.add('on');
+  const el = document.getElementById('ptab-' + id);
+  if (el) el.classList.add('on');
+}
+
+// ── SCROLL REVEAL ──
+function triggerReveal() {
+  setTimeout(() => {
+    const els = document.querySelectorAll('.reveal:not(.show)');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('show'); } });
+    }, { threshold: 0.1 });
+    els.forEach(el => obs.observe(el));
+  }, 100);
+}
+
+// ── NAV SCROLL ──
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 30);
+});
+
+// ── COUNTER ANIMATION ──
+function animateCounters() {
+  document.querySelectorAll('.impact-n, .kpi-n').forEach(el => {
+    const target = parseFloat(el.textContent.replace(/[^0-9.]/g,''));
+    if (!target || isNaN(target)) return;
+    let start = 0;
+    const duration = 1800;
+    const step = (timestamp) => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(eased * target * 10) / 10;
+      const suffix = el.textContent.replace(/[0-9.]/g,'');
+      el.childNodes[0].textContent = (Number.isInteger(current) ? current : current.toFixed(1));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  });
+}
+
+// ── NAV ACTIVE LINK ──
+document.querySelectorAll('nav ul a').forEach(a => {
+  a.addEventListener('click', function(e) {
+    e.preventDefault();
+    document.querySelectorAll('nav ul a').forEach(l => l.classList.remove('active-nav'));
+    this.classList.add('active-nav');
+  });
+});
+
+// ── INIT ──
+triggerReveal();
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 200) animateCounters();
+}, { once: true });
+
+// Observe page changes for counters
+const pageObs = new MutationObserver(() => triggerReveal());
+document.querySelectorAll('.page').forEach(p => pageObs.observe(p, {attributes: true, attributeFilter: ['class']}));
+</script>
+</body>
+</html>

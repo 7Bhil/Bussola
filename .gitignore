@@ -1,7 +1,5 @@
 # Subprojects cloned via setup.sh
-/admin/
-/server/
-/client/
+/client/public/
 
 # Dependency directories
 node_modules/
