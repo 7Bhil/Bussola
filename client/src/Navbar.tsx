@@ -9,19 +9,7 @@ export default function Navbar() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
 
-  useEffect(() => {
-    const API_URL = import.meta.env.VITE_API_URL || '';
-    
-    // 1. Track Page View (every time a page is loaded)
-    fetch(`${API_URL}/api/traffic/track-pageview`, { method: 'POST' }).catch(() => {});
 
-    // 2. Track Unique Visit (only once per session)
-    if (!sessionStorage.getItem('visted_session')) {
-      fetch(`${API_URL}/api/traffic/track-visit`, { method: 'POST' })
-        .then(() => sessionStorage.setItem('visted_session', 'true'))
-        .catch(() => {});
-    }
-  }, [pathname]);
 
   const closeDrawer = () => {
     setDrawerOpen(false);
