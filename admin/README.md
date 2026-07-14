@@ -20,3 +20,4 @@ npm run dev
 Note sur Tailwind : la série 14 n'était pas stable à ma dernière vérification — ici nous installons explicitement Tailwind CSS 3.x qui est stable et largement utilisée.
 
 # BusolaAdmin
+# Bussola-admin

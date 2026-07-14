@@ -11,16 +11,12 @@ const newsRoutes = require('./routes/newsRoutes');
 const actionRoutes = require('./routes/actionRoutes');
 const projectRoutes = require('./routes/projectRoutes');
 const formRoutes = require('./routes/formRoutes');
-const trafficRoutes = require('./routes/trafficRoutes');
 const testimonialRoutes = require('./routes/testimonialRoutes');
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-
-// --- Middlewares ---
-app.use(helmet());
 
 // Configuration CORS pour supporter plusieurs origines (Client, Admin et Localhost)
 const allowedOrigins = [
@@ -44,12 +40,21 @@ const corsOptions = {
       callback(new Error(`CORS Error: Origin ${origin} not allowed`));
     }
   },
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 204
 };
+
+// CORS doit être avant helmet pour que les requêtes preflight OPTIONS passent
 app.use(cors(corsOptions));
+// Répondre explicitement aux preflight OPTIONS pour toutes les routes
+app.options('*', cors(corsOptions));
+
+// --- Middlewares ---
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: 'cross-origin' }
+}));
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
@@ -74,7 +79,6 @@ app.use('/api/news', newsRoutes);
 app.use('/api/actions', actionRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/testimonials', testimonialRoutes);
-app.use('/api/traffic', trafficRoutes);
 app.use('/api', formRoutes); // Newsletter et Contact
 
 app.get('/', (req, res) => {
