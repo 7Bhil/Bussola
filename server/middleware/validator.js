@@ -69,12 +69,18 @@ const schemas = {
     coverImage: Joi.string().allow('', null),
     color: Joi.string().allow('', null),
     order: Joi.number().integer().min(0).default(0),
+    pillar: Joi.string().valid('dssr', 'paix', 'leadership').allow('', null),
     archived: Joi.boolean().default(false)
   })
 };
 
 const validate = (schemaName, isUpdate = false) => {
   return (req, res, next) => {
+    // Ignorer les requêtes OPTIONS preflight CORS
+    if (req.method === 'OPTIONS') {
+      return next();
+    }
+
     let schema = schemas[schemaName];
     
     // Si c'est une mise à jour (PATCH), on rend tous les champs optionnels

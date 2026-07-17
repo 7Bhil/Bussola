@@ -82,6 +82,11 @@ export default function AlbumPage() {
 
   if (loading) return <div className="wrapper"><Navbar /><div className="container py-5 text-center" style={{paddingTop: '150px'}}>Chargement de l'album...</div><Footer /></div>;
 
+  const projectId = action?.project
+    ? (typeof action.project === 'string' ? action.project : action.project._id)
+    : null;
+  const backLink = projectId ? `/galerie/${projectId}` : '/galerie';
+
   if (!action) {
     return (
       <div className="wrapper">
@@ -127,7 +132,7 @@ export default function AlbumPage() {
               <h1 className="display-5 fw-black text-uppercase mb-2" style={{ color: 'var(--brand-text)' }}>{action.title}</h1>
               <p className="text-muted mb-0"><ImageIcon size={18} className="me-2 d-inline" />{action.images.length} photos dans cet album</p>
             </div>
-            <Link to="/galerie" className="btn btn-outline-primary rounded-pill px-4 mt-3 mt-md-0"><ArrowLeft size={18} className="me-2" /> Retour</Link>
+            <Link to={backLink} className="btn btn-outline-primary rounded-pill px-4 mt-3 mt-md-0"><ArrowLeft size={18} className="me-2" /> Retour</Link>
           </div>
         </div>
       </div>
