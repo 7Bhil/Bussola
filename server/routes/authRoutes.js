@@ -4,6 +4,17 @@ const authController = require('../controllers/authController');
 const validate = require('../middleware/validator');
 const rateLimit = require('express-rate-limit');
 
+// Rate limiter spécifique pour le login (protection brute force)
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // 5 tentatives
+  message: { message: 'Trop de tentatives de connexion. Réessayez dans 15 minutes.' },
+  skip: (req) => req.method === 'OPTIONS',
+  standardHeaders: true,
+  legacyHeaders: false
+});
+
+// Rate limiter pour les autres routes sensibles
 const strictLimiter = rateLimit({
   windowMs: 60 * 60 * 1000,
   max: 10,
@@ -14,7 +25,7 @@ const strictLimiter = rateLimit({
 const auth = require('../middleware/auth');
 
 router.post('/register', strictLimiter, validate('auth'), authController.register);
-router.post('/login', strictLimiter, validate('auth'), authController.login);
+router.post('/login', loginLimiter, validate('auth'), authController.login);
 router.get('/me', auth, authController.me);
 router.put('/update', auth, authController.updateProfile);
 router.delete('/:id', auth, authController.deleteUser);
