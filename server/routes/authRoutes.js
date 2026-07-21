@@ -10,6 +10,7 @@ const loginLimiter = rateLimit({
   max: 5, // 5 tentatives
   message: { message: 'Trop de tentatives de connexion. Réessayez dans 15 minutes.' },
   skip: (req) => req.method === 'OPTIONS',
+  skipSuccessfulRequests: true,
   standardHeaders: true,
   legacyHeaders: false
 });
