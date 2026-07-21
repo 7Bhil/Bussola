@@ -1,6 +1,6 @@
-# 🧭 Bussola - Portail Web de l'ONG Busola
+# Busola - Portail Web de l'ONG Busola
 
-**Bussola** est une plateforme web intégrée conçue pour l'ONG **Busola**, basée à Parakou (Nord-Bénin). L'ONG œuvre activement dans les domaines de l'autonomisation des femmes, de la citoyenneté des jeunes, de la santé sexuelle et reproductive (DSSR), de la lutte contre les violences basées sur le genre (VBG) et de la cohésion sociale.
+**Busola** est une plateforme web intégrée conçue pour l'ONG **Busola**, basée à Parakou (Nord-Bénin). L'ONG œuvre activement dans les domaines de l'autonomisation des femmes, de la citoyenneté des jeunes, de la santé sexuelle et reproductive (DSSR), de la lutte contre les violences basées sur le genre (VBG) et de la cohésion sociale.
 
 Cette plateforme regroupe trois composants principaux (Client, Serveur, Admin) au sein d'un dépôt unique structuré sous forme de monorepo, facilitant le développement et le déploiement.
 
