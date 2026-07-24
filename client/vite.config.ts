@@ -11,15 +11,19 @@ export default defineConfig({
       registerType: 'autoUpdate',
       injectRegister: 'auto',
       workbox: {
-        // Augmentation de la limite à 4 MiB et exclusion des PNG non optimisés
-        maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,woff,woff2}'],
         globIgnores: [
           '**/ONGBusola-front/**',
-          '**/*.png',            // Exclure les PNG bruts (on garde les .webp optimisés)
           '**/sw.js.bak',
+          '**/About.png',
+          '**/pageda.png',
+          '**/de.png',
+          '**/cc.png',
+          '**/tedjido.png',
+          '**/yes.png',
+          '**/news-*.jpg',
         ],
-        // Précache les assets statiques du build
-        globPatterns: ['**/*.{js,css,html,ico,svg,webp,woff,woff2}'],
         // Ne pas intercepter les appels API
         navigateFallbackDenylist: [/^\/api\//],
         // Stratégie réseau d'abord pour les pages navigables
