@@ -16,6 +16,7 @@ import GalleryPage from './GalleryPage'
 import SupportPage from './SupportPage'
 import Chatbot from './Chatbot'
 import AlbumPage from './AlbumPage'
+import InstallPwaBanner from './InstallPwaBanner'
 import { registerSW } from 'virtual:pwa-register'
 
 // Enregistrement du Service Worker PWA avec rechargement automatique
@@ -48,5 +49,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/soutenir" element={<SupportPage />} />
       </Routes>
       <Chatbot />
+      <InstallPwaBanner />
     </BrowserRouter>
 )
