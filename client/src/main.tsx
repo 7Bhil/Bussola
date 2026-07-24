@@ -3,18 +3,6 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import App from './App'
 import './index.css'
-import { registerSW } from 'virtual:pwa-register'
-
-// Enregistrement du Service Worker PWA avec rechargement automatique
-registerSW({
-  onNeedRefresh() {
-    // L'app a une nouvelle version — rechargement silencieux
-    window.location.reload()
-  },
-  onOfflineReady() {
-    console.log('[PWA] Application prête pour une utilisation hors-ligne.')
-  },
-})
 import AboutPage from './AboutPage'
 import TeamPage from './TeamPage'
 import ResourcePage from './ResourcePage'
@@ -28,6 +16,18 @@ import GalleryPage from './GalleryPage'
 import SupportPage from './SupportPage'
 import Chatbot from './Chatbot'
 import AlbumPage from './AlbumPage'
+import { registerSW } from 'virtual:pwa-register'
+
+// Enregistrement du Service Worker PWA avec rechargement automatique
+registerSW({
+  onNeedRefresh() {
+    // L'app a une nouvelle version — rechargement silencieux
+    window.location.reload()
+  },
+  onOfflineReady() {
+    console.log('[PWA] Application prête pour une utilisation hors-ligne.')
+  },
+})
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <BrowserRouter basename="/">
