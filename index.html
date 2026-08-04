@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <title>ONG Busola - Autonomisation, Santé et Paix au Nord-Bénin</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="description" content="ONG Busola œuvre pour l'autonomisation des femmes, la santé sexuelle et reproductive des jeunes et la cohésion sociale au Nord-Bénin depuis 2020.">
+    <meta name="keywords" content="ONG Busola, Bénin, Parakou, autonomisation femmes, DSSR, VBG, santé reproductive, PAGEDA, YES, TEDIDJO">
+    <meta name="author" content="ONG Busola">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Réseaux sociaux -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://bussola-client.vercel.app/">
+    <meta property="og:title" content="ONG Busola - Autonomisation, Santé et Paix au Nord-Bénin">
+    <meta property="og:description" content="Depuis 2020, ONG Busola œuvre aux côtés des femmes et jeunes du Nord-Bénin pour construire un avenir de dignité, d'égalité et de paix.">
+    <meta property="og:image" content="/optimized/hero-slider.webp">
+    <meta property="twitter:card" content="summary_large_image">
+
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.webmanifest">
+    <meta name="theme-color" content="#2864ae">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Busola">
+    <link rel="apple-touch-icon" href="/optimized/pwa-192.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/optimized/pwa-192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/optimized/pwa-192.png">
+    <meta name="msapplication-TileImage" content="/optimized/pwa-192.png">
+    <meta name="msapplication-TileColor" content="#2864ae">
+
+    <!-- Favicon -->
+    <link href="ICON_LOGO-03.svg" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600;1,700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link href="animate.min.css" rel="stylesheet">
+    <link href="owl.carousel.min.css" rel="stylesheet">
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <style>
+      /*** Spinner Visibility Logic ***/
+      #spinner {
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity .5s ease-out, visibility 0s linear .5s;
+          z-index: 99999;
+      }
+      #spinner.show {
+          transition: opacity .5s ease-out, visibility 0s linear 0s;
+          visibility: visible;
+          opacity: 1;
+      }
+    </style>
+    <!-- Stylesheets (Ancien template désactivé pour prioriser l'UI moderne)
+    <link href="style.css" rel="stylesheet">
+    -->
+    <script type="module" crossorigin src="/assets/index-DFn5igos.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-Dzur2UzU.css">
+  <link rel="manifest" href="/manifest.webmanifest"></head>
+  <body>
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+      <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
+    </div>
+    
+    <script>
+      // Force le masquage après 5 secondes au cas où React ne se chargerait pas
+      setTimeout(function() {
+        var spinner = document.getElementById('spinner');
+        if (spinner && spinner.classList.contains('show')) {
+          spinner.classList.remove('show');
+        }
+      }, 5000);
+    </script>
+    <div id="root"></div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="bootstrap.bundle.min.js"></script>
+    <script src="wow.min.js"></script>
+    <script src="easing.min.js"></script>
+    <script src="waypoints.min.js"></script>
+    <script src="owl.carousel.min.js"></script>
+    <script src="counterup.min.js"></script>
+  </body>
+</html>
