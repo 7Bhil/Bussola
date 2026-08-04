@@ -3,6 +3,10 @@
 @media (min-width: 992px) {
   .navbar-brand-fixed { width: 250px !important; }
   .navbar-button-fixed { width: 250px !important; display: flex !important; justify-content: flex-end !important; }
+  .custom-about-bounds {
+    padding-left: clamp(30px, 11vw, 160px) !important;
+    padding-right: clamp(30px, 11vw, 160px) !important;
+  }
 }
 
 :root {
@@ -18,14 +22,37 @@
   --brand-text: #111827;
 }
 
-body {
-  font-family: "Poppins", sans-serif !important;
+body, html {
+  font-family: "Poppins", system-ui, -apple-system, sans-serif !important;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Poppins", "Barlow Condensed", sans-serif;
+}
+
+/* Boutons au survol : Écriture blanche */
+.btn:hover, button.btn:hover, a.btn:hover,
+.btn-primary:hover, .btn-secondary:hover, .btn-tertiary:hover,
+.btn-outline-primary:hover, .btn-outline-secondary:hover, .btn-outline-tertiary:hover {
+  color: #ffffff !important;
+}
+
+/* Écriture sur fond bleu en blanc & lignes blanches */
+.bg-primary, .bg-blue, [style*="background: #2864ae"], [style*="backgroundColor: var(--brand-primary)"], [style*="background-color: var(--brand-primary)"] {
+  color: #ffffff !important;
+}
+
+.bg-primary p, .bg-primary span, .bg-primary h1, .bg-primary h2, .bg-primary h3, .bg-primary h4 {
+  color: #ffffff !important;
+}
+
+.bg-primary .border-line-white {
+  background-color: #ffffff !important;
+}
 
 .bg-primary { background-color: var(--bs-primary) !important; }
 .text-primary { color: var(--bs-primary) !important; }
-.btn-primary { background-color: var(--bs-primary) !important; border-color: var(--bs-primary) !important; }
+.btn-primary { background-color: var(--bs-primary) !important; border-color: var(--bs-primary) !important; color: #ffffff !important; }
 
 .bg-secondary { background-color: var(--bs-secondary) !important; }
 .text-secondary { color: var(--bs-secondary) !important; }

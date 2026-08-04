@@ -171,18 +171,43 @@ export default function GalleryPage() {
     <div className="wrapper">
       <Navbar />
 
-      {/* ── HERO ── */}
+      {/* Premium Hero Header Banner */}
       <div
         className="container-fluid position-relative d-flex align-items-center justify-content-center text-white py-5 shadow-sm"
         style={{
-          minHeight: '350px',
-          background: `linear-gradient(135deg, rgba(39, 100, 174, 0.9) 0%, rgba(39, 176, 116, 0.9) 100%), url('/optimized/cta-2.webp') center/cover`,
-          paddingTop: '100px'
+          minHeight: '400px',
+          background: 'linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%)',
+          paddingTop: '120px',
+          paddingBottom: '60px',
+          overflow: 'hidden'
         }}
       >
-        <div className="container text-center" style={{ zIndex: 2 }}>
-          <h1 className="display-4 fw-black text-uppercase text-white mb-2">Galerie d'impact</h1>
-          <p className="lead text-white opacity-95">Les moments forts de nos interventions sur le terrain.</p>
+        {/* Subtle decorative circles */}
+        <div className="position-absolute bg-white rounded-circle" style={{ width: '200px', height: '200px', top: '-100px', left: '-100px', opacity: 0.08 }}></div>
+        <div className="position-absolute bg-white rounded-circle" style={{ width: '300px', height: '300px', bottom: '-150px', right: '-150px', opacity: 0.08 }}></div>
+
+        <div className="container text-center position-relative" style={{ zIndex: 2 }}>
+          {/* Breadcrumbs */}
+          <nav aria-label="breadcrumb" className="mb-3">
+            <ol className="breadcrumb justify-content-center mb-0 bg-transparent p-0">
+              <li className="breadcrumb-item">
+                <Link to="/" className="text-white text-decoration-none opacity-75 hover-opacity-100 fw-medium" style={{ fontSize: '0.95rem' }}>Accueil</Link>
+              </li>
+              <li className="breadcrumb-item active fw-bold text-warning" aria-current="page" style={{ fontSize: '0.95rem' }}>
+                Galerie d'impact
+              </li>
+            </ol>
+          </nav>
+
+          <h1 className="display-4 fw-black text-uppercase text-white mb-3" style={{ letterSpacing: '2px', textShadow: '0 2px 10px rgba(0,0,0,0.15)' }}>
+            Galerie d'impact
+          </h1>
+          
+          <div className="mx-auto mb-4" style={{ width: '85px', height: '4px', backgroundColor: 'var(--brand-secondary)', borderRadius: '2px' }}></div>
+
+          <p className="lead text-white opacity-95 mx-auto" style={{ maxWidth: '850px', fontSize: '1.15rem', lineHeight: '1.7', textShadow: '0 1px 5px rgba(0,0,0,0.1)' }}>
+            Les moments forts de nos interventions sur le terrain.
+          </p>
         </div>
       </div>
 

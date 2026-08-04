@@ -49,8 +49,8 @@ export default function ResourcePage() {
       <div
         className="container-fluid position-relative d-flex align-items-center justify-content-center text-white py-5 shadow-sm"
         style={{
-          minHeight: '500px',
-          background: `linear-gradient(135deg, rgba(40, 100, 174, 0.9) 0%, rgba(39, 176, 116, 0.85) 100%), url('/optimized/hero-slider.webp') center/cover`,
+          minHeight: '400px',
+          background: 'linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-tertiary) 100%)',
           paddingTop: '120px',
           paddingBottom: '60px',
           overflow: 'hidden'

@@ -55,7 +55,7 @@ const cream = '#ffffff';
 const muted = '#555555';
 const border = 'rgba(40, 100, 174, 0.1)';
 const serif = '"Poppins", Georgia, serif';
-const cond = '"Barlow Condensed", "Arial Black", Impact, sans-serif';
+const cond = '"Poppins", system-ui, sans-serif';
 const sans = '"Inter", system-ui, sans-serif';
 
 export default function AboutSection() {
@@ -102,26 +102,26 @@ export default function AboutSection() {
             </h2>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center' }}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '50px', alignItems: 'stretch' }}
                className="story-layout-responsive">
 
-            {/* Image */}
-            <div style={{ aspectRatio: '4/3', background: sable, borderRadius: '4px', border: `1px solid ${border}`, overflow: 'hidden' }}>
+            {/* Image (même hauteur que le bloc de texte) */}
+            <div style={{ height: '100%', minHeight: '380px', background: sable, borderRadius: '24px', border: `1px solid ${border}`, overflow: 'hidden', boxShadow: '0 15px 35px rgba(39, 100, 174, 0.12)' }}>
               <img
                 src="/optimized/about.webp"
-                alt="Équipe Busola"
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                alt="Équipe Busola avec cadre"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%', display: 'block' }}
                loading="lazy" decoding="async" />
             </div>
 
             {/* Texte */}
-            <div>
-              <p style={{ fontSize: '16px', color: muted, lineHeight: 2.2, marginBottom: '24px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <p style={{ fontSize: '15.5px', color: muted, lineHeight: 1.85, marginBottom: '20px' }}>
                 Créée en 2020 à Parakou, BUSOLA est le fruit d'un engagement citoyen et associatif porté par des femmes et des jeunes acteurs du développement, convaincus que les réponses aux défis sociaux devaient être locales, inclusives et ancrées dans les communautés.
               </p>
-              <p style={{ fontSize: '16px', color: muted, lineHeight: 2.2, marginBottom: '24px' }}>
+              <p style={{ fontSize: '15.5px', color: muted, lineHeight: 1.85, marginBottom: '20px' }}>
                 Le nom <strong>Busola</strong>, qui signifie <strong>augmenter le prestige</strong> en yoruba, incarne notre vocation : accompagner chaque individu vers un avenir où il dispose pleinement du pouvoir d'agir, de décider et de transformer positivement sa communauté. Nous sommes une organisation née du terrain, pour le terrain, guidée par la promesse de : Unir, Eduquer, Protéger et Autonomiser.              </p>
-              <p style={{ fontSize: '16px', color: muted, lineHeight: 2.2, marginBottom: '32px' }}>
+              <p style={{ fontSize: '15.5px', color: muted, lineHeight: 1.85, marginBottom: '28px' }}>
                 En 6 ans d'existence, nous avons prouvé qu'une ONG jeune, locale et engagée peut porter des projets à impact réel, mobiliser des partenaires de confiance et transformer des vies concrètes dans les communes les plus éloignées du Bénin.
               </p>
 

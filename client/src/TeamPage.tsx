@@ -73,8 +73,8 @@ export default function TeamPage() {
       <div
         className="container-fluid position-relative d-flex align-items-center justify-content-center text-white py-5 shadow-sm"
         style={{
-          minHeight: '500px',
-          background: `linear-gradient(135deg, rgba(39, 100, 174, 0.85) 0%, rgba(245, 159, 35, 0.85) 100%), url('/optimized/team-3.webp') center/cover`,
+          minHeight: '400px',
+          background: 'linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%)',
           paddingTop: '120px',
           paddingBottom: '60px',
           overflow: 'hidden'
@@ -103,7 +103,7 @@ export default function TeamPage() {
           <h1 className="display-4 fw-black text-uppercase text-white mb-3" style={{ letterSpacing: '2px', textShadow: '0 2px 10px rgba(0,0,0,0.15)' }}>
             Notre équipe
           </h1>
-          
+
           <div className="mx-auto mb-4" style={{ width: '85px', height: '4px', backgroundColor: 'var(--brand-tertiary)', borderRadius: '2px' }}></div>
 
           <p className="lead text-white opacity-95 mx-auto" style={{ maxWidth: '850px', fontSize: '1.15rem', lineHeight: '1.7', textShadow: '0 1px 5px rgba(0,0,0,0.1)' }}>
@@ -115,11 +115,11 @@ export default function TeamPage() {
       {/* Blue Sub-banner */}
       <div className="container-fluid p-0 d-flex position-relative shadow-sm" style={{ backgroundColor: 'var(--brand-primary)', minHeight: '120px' }}>
         <div className="container d-flex align-items-center justify-content-center text-white text-center px-4" style={{ minHeight: '120px' }}>
-          <h5 className="mb-0 fw-bold" style={{ fontSize: '1.25rem', lineHeight: 1.5 }}>
-             - Contribuer a l'émergence des dynamiques du développement communautaire
+          <h5 className="mb-0 fw-bold text-white opacity-100" style={{ fontSize: '1.25rem', lineHeight: 1.5, color: '#ffffff' }}>
+            - Contribuer à l'émergence des dynamiques du développement communautaire
           </h5>
         </div>
-        <div 
+        <div
           className="d-none d-lg-flex flex-column align-items-center justify-content-center position-absolute end-0 h-100"
           style={{ width: '80px', backgroundColor: 'var(--brand-secondary)', writingMode: 'vertical-lr', transform: 'rotate(180deg)' }}
         >
@@ -128,14 +128,14 @@ export default function TeamPage() {
       </div>
 
       {/* Green Rolling Band */}
-      <div 
+      <div
         className="container-fluid bg-tertiary text-white py-3 overflow-hidden shadow-sm"
         style={{ whiteSpace: 'nowrap', zIndex: 5 }}
       >
         <marquee behavior="scroll" direction="left" scrollamount="6" style={{ fontSize: '1.05rem', fontWeight: 'bold', letterSpacing: '0.5px' }}>
           {[1, 2, 3, 4].map(i => (
             <span key={i} className="mx-5 text-uppercase">
-              L'ONG BUSOLA EST UNE ORGANISATION STRUCTURÉE, DOTÉE DE PROCÉDURES CLAIRES QUI GARANTISSENT UNE GESTION RIGOUREUSE ET REDEVABLE.
+              BUSOLA EST UNE ORGANISATION STRUCTURÉE, DOTÉE DE PROCÉDURES CLAIRES QUI GARANTISSENT UNE GESTION RIGOUREUSE ET REDEVABLE.
             </span>
           ))}
         </marquee>
@@ -161,23 +161,23 @@ export default function TeamPage() {
           <div className="row g-4 justify-content-center">
             {/* Card 1: Assemblée Générale */}
             <div className="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-              <div className="h-100 p-4 bg-white border shadow-sm transition-all" 
-                   style={{ 
-                     borderTop: '5px solid var(--brand-primary)', 
-                     transition: 'all 0.3s ease',
-                     borderRadius: '16px'
-                   }}
-                   onMouseEnter={(e) => {
-                     e.currentTarget.style.transform = 'translateY(-8px)';
-                     e.currentTarget.style.boxShadow = '0 15px 30px rgba(39, 100, 174, 0.15)';
-                   }}
-                   onMouseLeave={(e) => {
-                     e.currentTarget.style.transform = 'translateY(0)';
-                     e.currentTarget.style.boxShadow = '0 .125rem .25rem rgba(0,0,0,.075)';
-                   }}
+              <div className="h-100 p-4 bg-white border shadow-sm transition-all"
+                style={{
+                  borderTop: '5px solid var(--brand-primary)',
+                  transition: 'all 0.3s ease',
+                  borderRadius: '16px'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-8px)';
+                  e.currentTarget.style.boxShadow = '0 15px 30px rgba(39, 100, 174, 0.15)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 .125rem .25rem rgba(0,0,0,.075)';
+                }}
               >
-                <div className="d-flex align-items-center justify-content-center rounded-circle mb-4" 
-                     style={{ width: '70px', height: '70px', backgroundColor: '#eef4fc' }}>
+                <div className="d-flex align-items-center justify-content-center rounded-circle mb-4"
+                  style={{ width: '70px', height: '70px', backgroundColor: '#eef4fc' }}>
                   <ClipboardCheck size={32} style={{ color: 'var(--brand-primary)' }} />
                 </div>
                 <div className="d-flex align-items-center gap-2 mb-3">
@@ -193,23 +193,23 @@ export default function TeamPage() {
 
             {/* Card 2: Conseil d'Administration */}
             <div className="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
-              <div className="h-100 p-4 bg-white border shadow-sm transition-all" 
-                   style={{ 
-                     borderTop: '5px solid var(--brand-secondary)', 
-                     transition: 'all 0.3s ease',
-                     borderRadius: '16px'
-                   }}
-                   onMouseEnter={(e) => {
-                     e.currentTarget.style.transform = 'translateY(-8px)';
-                     e.currentTarget.style.boxShadow = '0 15px 30px rgba(245, 159, 35, 0.15)';
-                   }}
-                   onMouseLeave={(e) => {
-                     e.currentTarget.style.transform = 'translateY(0)';
-                     e.currentTarget.style.boxShadow = '0 .125rem .25rem rgba(0,0,0,.075)';
-                   }}
+              <div className="h-100 p-4 bg-white border shadow-sm transition-all"
+                style={{
+                  borderTop: '5px solid var(--brand-secondary)',
+                  transition: 'all 0.3s ease',
+                  borderRadius: '16px'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-8px)';
+                  e.currentTarget.style.boxShadow = '0 15px 30px rgba(245, 159, 35, 0.15)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 .125rem .25rem rgba(0,0,0,.075)';
+                }}
               >
-                <div className="d-flex align-items-center justify-content-center rounded-circle mb-4" 
-                     style={{ width: '70px', height: '70px', backgroundColor: '#fdf5e8' }}>
+                <div className="d-flex align-items-center justify-content-center rounded-circle mb-4"
+                  style={{ width: '70px', height: '70px', backgroundColor: '#fdf5e8' }}>
                   <Settings size={32} style={{ color: 'var(--brand-secondary)' }} />
                 </div>
                 <div className="d-flex align-items-center gap-2 mb-3">
@@ -225,23 +225,23 @@ export default function TeamPage() {
 
             {/* Card 3: Direction Exécutive */}
             <div className="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-              <div className="h-100 p-4 bg-white border shadow-sm transition-all" 
-                   style={{ 
-                     borderTop: '5px solid var(--brand-tertiary)', 
-                     transition: 'all 0.3s ease',
-                     borderRadius: '16px'
-                   }}
-                   onMouseEnter={(e) => {
-                     e.currentTarget.style.transform = 'translateY(-8px)';
-                     e.currentTarget.style.boxShadow = '0 15px 30px rgba(59, 177, 67, 0.15)';
-                   }}
-                   onMouseLeave={(e) => {
-                     e.currentTarget.style.transform = 'translateY(0)';
-                     e.currentTarget.style.boxShadow = '0 .125rem .25rem rgba(0,0,0,.075)';
-                   }}
+              <div className="h-100 p-4 bg-white border shadow-sm transition-all"
+                style={{
+                  borderTop: '5px solid var(--brand-tertiary)',
+                  transition: 'all 0.3s ease',
+                  borderRadius: '16px'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-8px)';
+                  e.currentTarget.style.boxShadow = '0 15px 30px rgba(59, 177, 67, 0.15)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 .125rem .25rem rgba(0,0,0,.075)';
+                }}
               >
-                <div className="d-flex align-items-center justify-content-center rounded-circle mb-4" 
-                     style={{ width: '70px', height: '70px', backgroundColor: '#eefcf0' }}>
+                <div className="d-flex align-items-center justify-content-center rounded-circle mb-4"
+                  style={{ width: '70px', height: '70px', backgroundColor: '#eefcf0' }}>
                   <Briefcase size={32} style={{ color: 'var(--brand-tertiary)' }} />
                 </div>
                 <div className="d-flex align-items-center gap-2 mb-3">
@@ -268,11 +268,11 @@ export default function TeamPage() {
               <div style={{ height: "1px", background: "var(--brand-tertiary)", width: "40px" }}></div>
             </div>
             <h1 className="fw-black mb-4" style={{ lineHeight: 1.2, fontSize: '2.5rem', color: 'var(--brand-text)' }}>
-              <span className="text-uppercase fw-black" style={{ color: 'var(--brand-text)', letterSpacing: '-0.5px' }}>Découvrez quelques membres du C.A.</span><br/>
+              <span className="text-uppercase fw-black" style={{ color: 'var(--brand-text)', letterSpacing: '-0.5px' }}>Découvrez quelques membres du C.A.</span><br />
               <span className="text-uppercase fw-black" style={{ color: 'var(--brand-text)', letterSpacing: '-0.5px' }}>et la Direction Exécutive de BUSOLA</span>
             </h1>
           </div>
-          
+
           <h3 className="fw-bold mb-4 text-center wow fadeInUp" data-wow-delay="0.1s" style={{ color: 'var(--brand-primary)' }}>Conseil d'Administration (C.A.)</h3>
           <div className="row g-4 justify-content-center mb-5">
             {team.filter(m => m.name !== 'Zoulfath ZIME ' && m.name !== 'Fadel KASSALI' && m.name !== 'Abouyaïdou MAMA').map((m, i) => (
@@ -281,7 +281,7 @@ export default function TeamPage() {
                   <div className="d-flex" style={{ height: '350px' }}>
                     {/* Img Container */}
                     <div className="w-100 position-relative overflow-hidden">
-                      <img className="img-fluid w-100 h-100" src={m.photo} style={{ objectFit: 'cover', objectPosition: 'top center' }} alt={m.name}  loading="lazy" decoding="async" />
+                      <img className="img-fluid w-100 h-100" src={m.photo} style={{ objectFit: 'cover', objectPosition: 'top center' }} alt={m.name} loading="lazy" decoding="async" />
                     </div>
                     {/* Social Container Beige */}
                     <div className="d-flex flex-column justify-content-end align-items-center py-4 flex-shrink-0" style={{ width: '60px', backgroundColor: '#fcf8ec' }}>
@@ -307,7 +307,7 @@ export default function TeamPage() {
                   <div className="d-flex" style={{ height: '350px' }}>
                     {/* Img Container */}
                     <div className="w-100 position-relative overflow-hidden">
-                      <img className="img-fluid w-100 h-100" src={m.photo} style={{ objectFit: 'cover', objectPosition: 'top center' }} alt={m.name}  loading="lazy" decoding="async" />
+                      <img className="img-fluid w-100 h-100" src={m.photo} style={{ objectFit: 'cover', objectPosition: 'top center' }} alt={m.name} loading="lazy" decoding="async" />
                     </div>
                     {/* Social Container Beige */}
                     <div className="d-flex flex-column justify-content-end align-items-center py-4 flex-shrink-0" style={{ width: '60px', backgroundColor: '#fcf8ec' }}>

@@ -188,73 +188,43 @@ export default function ActionPage() {
     <div className="wrapper" style={{ fontFamily: cond }}>
       <Navbar />
 
-      {/* ── HERO ── */}
+      {/* Premium Hero Header Banner */}
       <div
-        className="container-fluid position-relative d-flex align-items-center justify-content-center text-white"
+        className="container-fluid position-relative d-flex align-items-center justify-content-center text-white py-5 shadow-sm"
         style={{
-          minHeight: '500px',
-          background: `linear-gradient(135deg, rgba(40,100,174,0.92) 0%, rgba(30,75,131,0.92) 100%), url('/optimized/action-1.webp') center/cover no-repeat`,
+          minHeight: '400px',
+          background: 'linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-tertiary) 100%)',
           paddingTop: '120px',
           paddingBottom: '60px',
+          overflow: 'hidden'
         }}
       >
-        {/* Motif background */}
-        <div style={{
-          position: 'absolute', inset: 0,
-          backgroundImage: `url('/logo-hands.png')`,
-          backgroundSize: '200px',
-          backgroundRepeat: 'repeat',
-          opacity: 0.04,
-          pointerEvents: 'none'
-        }} />
+        {/* Subtle decorative circles */}
+        <div className="position-absolute bg-white rounded-circle" style={{ width: '200px', height: '200px', top: '-100px', left: '-100px', opacity: 0.08 }}></div>
+        <div className="position-absolute bg-white rounded-circle" style={{ width: '300px', height: '300px', bottom: '-150px', right: '-150px', opacity: 0.08 }}></div>
 
         <div className="container text-center position-relative" style={{ zIndex: 2 }}>
+          {/* Breadcrumbs */}
           <nav aria-label="breadcrumb" className="mb-3">
             <ol className="breadcrumb justify-content-center mb-0 bg-transparent p-0">
               <li className="breadcrumb-item">
-                <Link to="/" className="text-white text-decoration-none opacity-75 fw-medium" style={{ fontSize: '0.95rem' }}>Accueil</Link>
+                <Link to="/" className="text-white text-decoration-none opacity-75 hover-opacity-100 fw-medium" style={{ fontSize: '0.95rem' }}>Accueil</Link>
               </li>
-              <li className="breadcrumb-item active fw-bold" style={{ color: gold, fontSize: '0.95rem' }} aria-current="page">
+              <li className="breadcrumb-item active fw-bold text-warning" aria-current="page" style={{ fontSize: '0.95rem' }}>
                 Nos actions
               </li>
             </ol>
           </nav>
 
-          {/* Label */}
-          <div className="d-flex align-items-center justify-content-center mb-3">
-            <div style={{ height: '2px', width: '40px', background: gold }} />
-            <span className="text-uppercase mx-3 fw-bold" style={{ color: gold, fontSize: '0.85rem', letterSpacing: '3px' }}>Ce que nous faisons</span>
-            <div style={{ height: '2px', width: '40px', background: gold }} />
-          </div>
-
-          <h1 style={{
-            fontFamily: cond,
-            fontSize: 'clamp(3.5rem, 9vw, 7rem)',
-            fontWeight: 900,
-            textTransform: 'uppercase',
-            lineHeight: 0.9,
-            letterSpacing: '-2px',
-            color: '#fff',
-            marginBottom: '32px'
-          }}>
-            NOS ACTIONS
+          <h1 className="display-4 fw-black text-uppercase text-white mb-3" style={{ letterSpacing: '2px', textShadow: '0 2px 10px rgba(0,0,0,0.15)' }}>
+            Nos actions
           </h1>
+          
+          <div className="mx-auto mb-4" style={{ width: '85px', height: '4px', backgroundColor: 'var(--brand-secondary)', borderRadius: '2px' }}></div>
 
-          <p className="mx-auto" style={{
-            fontFamily: serif,
-            maxWidth: '700px',
-            fontSize: '1.1rem',
-            lineHeight: '1.75',
-            color: 'rgba(255,255,255,0.88)',
-            fontStyle: 'italic'
-          }}>
+          <p className="lead text-white opacity-95 mx-auto" style={{ maxWidth: '850px', fontSize: '1.15rem', lineHeight: '1.7', textShadow: '0 1px 5px rgba(0,0,0,0.1)' }}>
             Nous ne voyons pas des bénéficiaires — nous voyons des actrices et acteurs du changement.
           </p>
-
-          {/* Scroll cue */}
-          <div className="mt-5" style={{ opacity: 0.6 }}>
-            <div style={{ width: '1px', height: '60px', background: 'rgba(255,255,255,0.5)', margin: '0 auto' }} />
-          </div>
         </div>
       </div>
 

@@ -103,8 +103,8 @@ function App() {
   const [homeActions, setHomeActions] = useState<any[]>(STATIC_HOME_ACTIONS);
   const [homeNews, setHomeNews] = useState<any[]>(STATIC_HOME_NEWS);
   const [chatHistory, setChatHistory] = useState<{ role: 'bot' | 'user', text: string, actions?: { label: string, target: string }[] }[]>([
-    { 
-      role: 'bot', 
+    {
+      role: 'bot',
       text: "Bonjour ! Je suis l'assistant de l'ONG Busola. Comment puis-je vous aider aujourd'hui ?",
       actions: [
         { label: "Nos programmes", target: "actions" },
@@ -127,7 +127,7 @@ function App() {
       let suggestions: { label: string, target: string }[] = [];
 
       const input = userMsg.toLowerCase();
-      
+
       if (input.includes('pageda')) {
         botResponse = "Le programme PAGEDA se concentre sur l'autonomisation des femmes par l'alphabétisation fonctionnelle et l'accès aux droits fonciers au Nord-Bénin.";
         suggestions = [{ label: "Voir les programmes", target: "actions" }];
@@ -366,7 +366,7 @@ function App() {
 
   return (
     <div className="wrapper">
-      
+
       {/* Spinner is in index.html */}
 
       {/* Navbar */}
@@ -408,18 +408,45 @@ function App() {
       </div>
 
 
-      {/* About Section - Balanced Magazine Design */}
+      {/* About Section - Precise Alignment Design */}
       <div id="apropos" className="container-fluid py-5 bg-white" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
-        <div className="container py-5">
-          <div className="row g-5">
-            {/* Left Column: Image + Values (Tablet only) */}
-            <div className="col-lg-5 wow fadeIn mb-5 mb-lg-0" data-wow-delay="0.1s">
-              <div className="position-relative mb-5">
-                <div className="rounded-5 shadow-sm overflow-hidden" style={{ height: "550px", position: "relative" }}>
-                  <img src="/optimized/about.webp" className="w-100 h-100" style={{ objectFit: 'cover' }} alt="L'équipe Busola" />
+        <div className="container-fluid px-3 px-lg-5 py-5">
+          <div className="row g-4 g-lg-5 align-items-stretch custom-about-bounds">
+            {/* Left Column: Image + Stats (Pushed to match logo end) */}
+            <div className="col-lg-6 wow fadeIn mb-5 mb-lg-0 d-flex flex-column" data-wow-delay="0.1s">
+              <div className="position-relative h-100 min-vh-40">
+                {/* Decorative Offset Glow */}
+                <div 
+                  className="position-absolute w-100 h-100 d-none d-lg-block"
+                  style={{
+                    top: '12px',
+                    left: '-12px',
+                    background: 'linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%)',
+                    opacity: 0.15,
+                    borderRadius: '24px',
+                    zIndex: 0
+                  }}
+                />
+                <div 
+                  className="shadow-lg overflow-hidden h-100 position-relative transition-all"
+                  style={{ 
+                    zIndex: 1,
+                    position: "relative", 
+                    minHeight: "440px",
+                    borderRadius: '24px',
+                    border: '1px solid rgba(39, 100, 174, 0.15)',
+                    boxShadow: '0 18px 40px rgba(39, 100, 174, 0.12)'
+                  }}
+                >
+                  <img 
+                    src="/optimized/about.webp" 
+                    className="w-100 h-100 transition-all hover-scale" 
+                    style={{ objectFit: 'cover', objectPosition: 'center 20%' }} 
+                    alt="L'équipe Busola avec cadre" 
+                  />
                   {/* Compact & Impactful Stats Badge */}
                   <div className="position-absolute bottom-0 end-0 m-4 shadow-lg" style={{ zIndex: 10 }}>
-                    <div className="bg-white rounded-4 d-flex align-items-center p-3" style={{ borderLeft: "8px solid var(--bs-primary)", minWidth: "180px" }}>
+                    <div className="bg-white rounded-4 d-flex align-items-center p-3" style={{ borderLeft: "8px solid var(--bs-primary)", minWidth: "180px", boxShadow: '0 10px 25px rgba(0,0,0,0.12)' }}>
                       <div className="me-3 d-flex align-items-center justify-content-center bg-light rounded-circle" style={{ width: "45px", height: "45px" }}>
                         <Users className="text-primary" size={22} />
                       </div>
@@ -431,34 +458,32 @@ function App() {
                   </div>
                 </div>
               </div>
-
             </div>
 
-            {/* Right Column: Narrative Text + Values (Desktop) */}
-            <div className="col-lg-7 wow fadeIn" data-wow-delay="0.3s">
-              <div className="ps-lg-5">
-                <div className="position-relative mb-5">
-                  <div className="position-absolute" style={{ top: "-25px", left: "20px", zIndex: 2 }}>
+            {/* Right Column: Narrative Text + Values (Pushed to match Nous soutenir start) */}
+            <div className="col-lg-6 wow fadeIn d-flex flex-column justify-content-center" data-wow-delay="0.3s">
+              <div className="ps-lg-3 d-flex flex-column justify-content-center h-100">
+                <div className="position-relative mb-4">
+                  <div className="position-absolute" style={{ top: "-20px", left: "20px", zIndex: 2 }}>
                     <span className="badge bg-tertiary text-white px-4 py-2 fw-bold text-uppercase" style={{ borderRadius: "4px", fontSize: "0.85rem", letterSpacing: "1px" }}>Qui sommes-nous ?</span>
                   </div>
-                  <div className="bg-primary p-5 rounded-4 shadow-lg d-flex align-items-center justify-content-between" style={{ borderLeft: "10px solid var(--bs-secondary)" }}>
-                    <h2 className="fw-black mb-0 text-uppercase" style={{ fontSize: "3rem", color: "#fff", fontWeight: "900" }}>ONG BUSOLA</h2>
-                    <img src="/logo-hands.png" className="img-fluid d-none d-lg-block" style={{ maxHeight: "100px", filter: "brightness(0) invert(1)" }} alt="Logo" />
+                  <div className="bg-primary p-4 p-md-5 rounded-4 shadow-lg d-flex align-items-center justify-content-between" style={{ borderLeft: "10px solid var(--bs-secondary)" }}>
+                    <h2 className="fw-black mb-0 text-uppercase" style={{ fontSize: "2.5rem", color: "#fff", fontWeight: "900" }}>ONG BUSOLA</h2>
+                    <img src="/logo-hands.png" className="img-fluid d-none d-lg-block" style={{ maxHeight: "80px", filter: "brightness(0) invert(1)" }} alt="Logo" />
                   </div>
                 </div>
 
-                <div className="text-muted fs-5 mb-5" style={{ textAlign: 'justify', lineHeight: '1.8' }}>
+                <div className="text-muted fs-5 mb-4" style={{ textAlign: 'justify', lineHeight: '1.85' }}>
                   <p className="mb-4">
-                    Créée en <span className="text-primary fw-bold">2020 à Parakou</span>, l’ONG Busola est le fruit d’un engagement citoyen et associatif porté par des femmes et des jeunes acteurs du développement, convaincus que les réponses aux défis sociaux devaient être locales, inclusives et ancrées dans les communautés.
+                    <span className="text-primary fw-bold">BUSOLA</span> est le fruit d’un engagement citoyen et associatif porté par des femmes et des jeunes acteurs du développement, convaincus que les réponses aux défis sociaux devaient être locales, inclusives et ancrées dans les communautés.
                   </p>
-                  <p className="mb-4">
+                  <p className="mb-0">
                     Les fondateurs et fondatrices, issus d’expériences de terrain en santé communautaire, éducation, prévention des violences et mobilisation sociale, ont constaté un manque de cadres structurés capables de relier droits humains, autonomisation, paix et développement durable.
                   </p>
                 </div>
 
-
-                <div className="d-flex align-items-center">
-                  <a href="#!" className="btn btn-primary rounded-pill px-5 py-3 fw-bold shadow-lg transition-all hover-up me-4">
+                <div className="d-flex align-items-center mt-2">
+                  <a href="/about" className="btn btn-primary rounded-pill px-5 py-3 fw-bold shadow-lg transition-all hover-up me-4">
                     Notre histoire <ArrowRight size={20} className="ms-2" />
                   </a>
                 </div>
@@ -492,7 +517,7 @@ function App() {
 
       {/* Principales Actions Menées (Programmes) */}
       <div id="actions" className="container-fluid py-5 bg-white position-relative overflow-hidden" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
-        
+
         {/* Subtle Animated Background Shapes */}
         <div className="position-absolute bg-primary rounded-circle" style={{ width: '600px', height: '600px', top: '-20%', left: '-10%', filter: 'blur(120px)', opacity: 0.08, animation: 'move 15s infinite alternate', zIndex: 0 }}></div>
         <div className="position-absolute bg-secondary rounded-circle" style={{ width: '500px', height: '500px', bottom: '-10%', right: '-5%', filter: 'blur(120px)', opacity: 0.08, animation: 'move 20s infinite alternate-reverse', zIndex: 0 }}></div>
@@ -506,7 +531,7 @@ function App() {
                 <div style={{ height: "1px", background: "var(--brand-tertiary)", width: "40px" }}></div>
               </div>
               <h1 className="fw-bold mb-0" style={{ lineHeight: 1.4, fontSize: '2.5rem' }}>
-                <span className="gradient-ice fw-black" style={{ letterSpacing: '-0.5px' }}>Principales actions</span><br/>
+                <span className="gradient-ice fw-black" style={{ letterSpacing: '-0.5px' }}>Principales actions</span><br />
                 <span className="text-uppercase fw-black" style={{ color: 'var(--brand-text)', letterSpacing: '-0.5px' }}>Menées</span>
               </h1>
             </div>
@@ -571,23 +596,23 @@ function App() {
               <div style={{ height: "1px", background: "var(--brand-tertiary)", width: "40px" }}></div>
             </div>
             <h1 className="fw-black mb-4" style={{ lineHeight: 1.2, fontSize: '2.75rem', color: 'var(--brand-text)' }}>
-              <span className="text-uppercase fw-black" style={{ color: 'var(--brand-text)', letterSpacing: '-0.5px' }}>Ensemble, pour</span><br/>
+              <span className="text-uppercase fw-black" style={{ color: 'var(--brand-text)', letterSpacing: '-0.5px' }}>Ensemble, pour</span><br />
               <span className="text-uppercase fw-black" style={{ color: 'var(--brand-text)', letterSpacing: '-0.5px' }}>un impact durable</span>
             </h1>
           </div>
           <div className="row align-items-center justify-content-center">
             {[
-              'unfpa.png', 'unicef.png', 'unicri.svg', 
-              'logo-uk.jpg', 'canada.png', 'logo-suisse.png', 
-              'logo-mdm.png', 'logo-care.png', 'engender.png', 
+              'unfpa.png', 'unicef.png', 'unicri.svg',
+              'logo-uk.jpg', 'canada.png', 'logo-suisse.png',
+              'logo-mdm.png', 'logo-care.png', 'engender.png',
               'roajelf.jpeg', 'sianson.png'
             ].map((img, i) => (
               <div key={i} className="col-4 col-md-3 col-lg-2 p-3 text-center">
-                <img src={img.endsWith(".svg") ? "/" + img : "/optimized/" + img.split(".")[0] + ".webp"} className="img-fluid transition-all" 
-                     style={{ maxHeight: "120px", objectFit: "contain" }} 
-                     onMouseOver={e => { e.currentTarget.style.transform = 'scale(1.1)'; }}
-                     onMouseOut={e => { e.currentTarget.style.transform = 'scale(1)'; }}
-                     alt="partner" />
+                <img src={img.endsWith(".svg") ? "/" + img : "/optimized/" + img.split(".")[0] + ".webp"} className="img-fluid transition-all"
+                  style={{ maxHeight: "120px", objectFit: "contain" }}
+                  onMouseOver={e => { e.currentTarget.style.transform = 'scale(1.1)'; }}
+                  onMouseOut={e => { e.currentTarget.style.transform = 'scale(1)'; }}
+                  alt="partner" />
               </div>
             ))}
           </div>
@@ -597,8 +622,8 @@ function App() {
       {/* Crossed Bands Section - Animated Paint Roll (X-Cross) */}
       <div className="container-fluid overflow-hidden position-relative my-5" style={{ height: "400px", display: "flex", alignItems: "center" }}>
         {/* Orange Band - Roll from Left */}
-        <a href="#newsletter" className="position-absolute bg-secondary text-white py-4 shadow animate-roll-left text-decoration-none wow slideInLeft" 
-             style={{ top: "50%", marginTop: "-50px", zIndex: 1, whiteSpace: "nowrap", cursor: "pointer" }}>
+        <a href="#newsletter" className="position-absolute bg-secondary text-white py-4 shadow animate-roll-left text-decoration-none wow slideInLeft"
+          style={{ top: "50%", marginTop: "-50px", zIndex: 1, whiteSpace: "nowrap", cursor: "pointer" }}>
           <marquee behavior="scroll" direction="left" scrollamount="7" style={{ fontSize: "32px", fontWeight: "900" }}>
             <span className="me-5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
             {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
@@ -607,8 +632,8 @@ function App() {
           </marquee>
         </a>
         {/* Green Band - Roll from Right */}
-        <a href="#newsletter" className="position-absolute bg-tertiary text-white py-4 shadow animate-roll-right text-decoration-none wow slideInRight" 
-             style={{ top: "50%", marginTop: "-50px", zIndex: 2, whiteSpace: "nowrap", cursor: "pointer" }}>
+        <a href="#newsletter" className="position-absolute bg-tertiary text-white py-4 shadow animate-roll-right text-decoration-none wow slideInRight"
+          style={{ top: "50%", marginTop: "-50px", zIndex: 2, whiteSpace: "nowrap", cursor: "pointer" }}>
           <marquee behavior="scroll" direction="right" scrollamount="9" style={{ fontSize: "32px", fontWeight: "900" }}>
             <span className="me-5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
             {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
@@ -628,7 +653,7 @@ function App() {
               <div style={{ height: "1px", background: "var(--brand-tertiary)", width: "40px" }}></div>
             </div>
             <h1 className="fw-black mb-4" style={{ lineHeight: 1.2, fontSize: '2.75rem', color: 'var(--brand-text)' }}>
-              <span className="text-uppercase fw-black" style={{ color: 'var(--brand-text)', letterSpacing: '-0.5px' }}>Soyez au courant de</span><br/>
+              <span className="text-uppercase fw-black" style={{ color: 'var(--brand-text)', letterSpacing: '-0.5px' }}>Soyez au courant de</span><br />
               <span className="text-uppercase fw-black" style={{ color: 'var(--brand-text)', letterSpacing: '-0.5px' }}>Notre actualité en temps réel.</span>
             </h1>
           </div>
@@ -637,11 +662,11 @@ function App() {
               <div key={news.id} className="col-md-4 wow fadeIn" data-wow-delay={`${0.1 + idx * 0.2}s`}>
                 <div className="event-item h-100 p-4 shadow-sm bg-white rounded-4 border transition-all hover-up overflow-hidden d-flex flex-column">
                   <div className="overflow-hidden rounded-4 mb-4" style={{ height: "220px" }}>
-                    <img 
-                      className="img-fluid w-100 h-100 transition-all hover-scale" 
-                      src={news.img} 
-                      style={{ objectFit: "cover" }} 
-                      alt={news.title} 
+                    <img
+                      className="img-fluid w-100 h-100 transition-all hover-scale"
+                      src={news.img}
+                      style={{ objectFit: "cover" }}
+                      alt={news.title}
                       onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/optimized/news-1.webp'; }}
                     />
                   </div>
@@ -681,7 +706,7 @@ function App() {
               <div style={{ height: "1px", background: "var(--brand-tertiary)", width: "40px" }}></div>
             </div>
             <h1 className="fw-black mb-4" style={{ lineHeight: 1.2, fontSize: '2.75rem', color: 'var(--brand-text)' }}>
-              <span className="text-uppercase fw-black" style={{ color: 'var(--brand-text)', letterSpacing: '-0.5px' }}>L'Équipe</span><br/>
+              <span className="text-uppercase fw-black" style={{ color: 'var(--brand-text)', letterSpacing: '-0.5px' }}>L'Équipe</span><br />
               <span className="text-uppercase fw-black" style={{ color: 'var(--brand-text)', letterSpacing: '-0.5px' }}>Busola</span>
             </h1>
             <p className="text-muted fs-5 mt-4">Des hommes et des femmes d'exception engagés pour la dignité et l'égalité au Nord-Bénin.</p>
@@ -723,7 +748,7 @@ function App() {
               <div style={{ height: "1px", background: "var(--brand-tertiary)", width: "40px" }}></div>
             </div>
             <h1 className="fw-black mb-4" style={{ lineHeight: 1.2, fontSize: '2.75rem', color: 'var(--brand-text)' }}>
-              <span className="text-uppercase fw-black" style={{ color: 'var(--brand-text)', letterSpacing: '-0.5px' }}>Ils nous</span><br/>
+              <span className="text-uppercase fw-black" style={{ color: 'var(--brand-text)', letterSpacing: '-0.5px' }}>Ils nous</span><br />
               <span className="text-uppercase fw-black" style={{ color: 'var(--brand-text)', letterSpacing: '-0.5px' }}>font confiance</span>
             </h1>
             <p className="text-muted fs-5 mb-4 mt-4">La voix de nos bénéficiaires et partenaires est notre plus belle récompense et notre moteur au quotidien.</p>
@@ -740,21 +765,21 @@ function App() {
                 </div>
                 <div className="col-lg-7">
                   <div className="testimonial-title">
-                     <div className="d-flex mb-3">
-                       {[1,2,3,4,5].map(s => <Star key={s} size={20} fill="#f89d2a" stroke="none" />)}
-                     </div>
-                     <p className="text-muted mb-4 fs-5">
-                        Grâce à l'ONG Busola, j'ai pu participer à des ateliers de formation où les femmes et les jeunes étaient pleinement impliqués. J'ai renforcé mes compétences en Plaidoyer, Redevabilité et Fake News. J'ai gagné en confiance et compris que notre voix peut réellement contribuer au changement dans notre communauté.
-                     </p>
-                     <div className="d-flex align-items-center mt-4">
-                        <div className="bg-secondary d-flex align-items-center justify-content-center" style={{ width: '60px', height: '60px' }}>
-                           <Quote size={30} className="text-white" />
-                        </div>
-                        <div className="ms-4">
-                           <h5 className="text-primary mb-1">Makou Menadèle Murielle</h5>
-                           <span className="text-secondary fw-bold text-uppercase" style={{ fontSize: '0.85rem' }}>Bénéficiaire du programme YES</span>
-                        </div>
-                     </div>
+                    <div className="d-flex mb-3">
+                      {[1, 2, 3, 4, 5].map(s => <Star key={s} size={20} fill="#f89d2a" stroke="none" />)}
+                    </div>
+                    <p className="text-muted mb-4 fs-5">
+                      Grâce à l'ONG Busola, j'ai pu participer à des ateliers de formation où les femmes et les jeunes étaient pleinement impliqués. J'ai renforcé mes compétences en Plaidoyer, Redevabilité et Fake News. J'ai gagné en confiance et compris que notre voix peut réellement contribuer au changement dans notre communauté.
+                    </p>
+                    <div className="d-flex align-items-center mt-4">
+                      <div className="bg-secondary d-flex align-items-center justify-content-center" style={{ width: '60px', height: '60px' }}>
+                        <Quote size={30} className="text-white" />
+                      </div>
+                      <div className="ms-4">
+                        <h5 className="text-primary mb-1">Makou Menadèle Murielle</h5>
+                        <span className="text-secondary fw-bold text-uppercase" style={{ fontSize: '0.85rem' }}>Bénéficiaire du programme YES</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -770,21 +795,21 @@ function App() {
                 </div>
                 <div className="col-lg-7">
                   <div className="testimonial-title">
-                     <div className="d-flex mb-3">
-                       {[1,2,3,4,5].map(s => <Star key={s} size={20} fill="#f89d2a" stroke="none" />)}
-                     </div>
-                     <p className="text-muted mb-4 fs-5">
-                        L'accompagnement de Busola a été un véritable tremplin pour moi. J'ai pu acquérir des compétences concrètes grâce au programme d'alphabétisation fonctionnelle. Aujourd'hui, je gère ma propre activité de façon plus autonome et je participe activement aux décisions dans mon foyer.
-                     </p>
-                     <div className="d-flex align-items-center mt-4">
-                        <div className="bg-secondary d-flex align-items-center justify-content-center" style={{ width: '60px', height: '60px' }}>
-                           <Quote size={30} className="text-white" />
-                        </div>
-                        <div className="ms-4">
-                           <h5 className="text-primary mb-1">Fadilatou Bani</h5>
-                           <span className="text-secondary fw-bold text-uppercase" style={{ fontSize: '0.85rem' }}>Bénéficiaire du programme PAGEDA</span>
-                        </div>
-                     </div>
+                    <div className="d-flex mb-3">
+                      {[1, 2, 3, 4, 5].map(s => <Star key={s} size={20} fill="#f89d2a" stroke="none" />)}
+                    </div>
+                    <p className="text-muted mb-4 fs-5">
+                      L'accompagnement de Busola a été un véritable tremplin pour moi. J'ai pu acquérir des compétences concrètes grâce au programme d'alphabétisation fonctionnelle. Aujourd'hui, je gère ma propre activité de façon plus autonome et je participe activement aux décisions dans mon foyer.
+                    </p>
+                    <div className="d-flex align-items-center mt-4">
+                      <div className="bg-secondary d-flex align-items-center justify-content-center" style={{ width: '60px', height: '60px' }}>
+                        <Quote size={30} className="text-white" />
+                      </div>
+                      <div className="ms-4">
+                        <h5 className="text-primary mb-1">Fadilatou Bani</h5>
+                        <span className="text-secondary fw-bold text-uppercase" style={{ fontSize: '0.85rem' }}>Bénéficiaire du programme PAGEDA</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -822,11 +847,11 @@ function App() {
                 <div style={{ height: "1px", background: "var(--brand-tertiary)", width: "40px" }}></div>
               </div>
               <h1 className="fw-black mb-4" style={{ lineHeight: 1.2, fontSize: '2.75rem', color: 'var(--brand-text)' }}>
-                <span className="text-uppercase fw-black" style={{ color: 'var(--brand-text)', letterSpacing: '-0.5px' }}>Restez</span><br/>
+                <span className="text-uppercase fw-black" style={{ color: 'var(--brand-text)', letterSpacing: '-0.5px' }}>Restez</span><br />
                 <span className="text-uppercase fw-black" style={{ color: 'var(--brand-text)', letterSpacing: '-0.5px' }}>Branchés !</span>
               </h1>
               <p className="text-muted fs-5 mb-5 mt-4">Suivez nos victoires et nos prochains défis au quotidien sur nos plateformes numériques.</p>
-              
+
               <div className="d-flex gap-3">
                 {[
                   { icon: <Facebook />, color: '#1877F2', url: 'https://www.facebook.com/profile.php?id=100064788966440' },
@@ -834,8 +859,8 @@ function App() {
                   { icon: <Twitter />, color: '#1DA1F2', url: '#' },
                   { icon: <Star />, color: '#E4405F', url: '#' }
                 ].map((social, i) => (
-                  <a key={i} href={social.url} className="btn btn-square rounded-circle shadow-lg p-0 d-flex align-items-center justify-content-center transition-all hover-up" 
-                     style={{ backgroundColor: social.color, color: 'white', width: '60px', height: '60px' }}>
+                  <a key={i} href={social.url} className="btn btn-square rounded-circle shadow-lg p-0 d-flex align-items-center justify-content-center transition-all hover-up"
+                    style={{ backgroundColor: social.color, color: 'white', width: '60px', height: '60px' }}>
                     {social.icon}
                   </a>
                 ))}
@@ -877,11 +902,11 @@ function App() {
         </div>
       </div>
 
-    {/* Footer Original */}
+      {/* Footer Original */}
       <Footer />
       {/* Back to Top Button */}
-      <a href="#accueil" className="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top shadow-lg transition-all hover-up d-flex align-items-center justify-content-center position-fixed bottom-0 end-0 m-4" 
-         style={{ width: '55px', height: '55px', zIndex: 99 }}>
+      <a href="#accueil" className="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top shadow-lg transition-all hover-up d-flex align-items-center justify-content-center position-fixed bottom-0 end-0 m-4"
+        style={{ width: '55px', height: '55px', zIndex: 99 }}>
         <ArrowUp size={24} />
       </a>
 
@@ -903,9 +928,9 @@ function App() {
                 )}
                 <div className="mb-3">
                   <label className="form-label">Type de partenariat</label>
-                  <select 
-                    className="form-select" 
-                    value={formData.subject} 
+                  <select
+                    className="form-select"
+                    value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                     required
                   >
@@ -918,30 +943,30 @@ function App() {
                 <div className="row">
                   <div className="col-md-6 mb-3">
                     <label className="form-label">Nom complet</label>
-                    <input 
-                      className="form-control" 
-                      value={formData.name} 
+                    <input
+                      className="form-control"
+                      value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      required 
+                      required
                     />
                   </div>
                   <div className="col-md-6 mb-3">
                     <label className="form-label">Email</label>
-                    <input 
-                      type="email" 
-                      className="form-control" 
-                      value={formData.email} 
+                    <input
+                      type="email"
+                      className="form-control"
+                      value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      required 
+                      required
                     />
                   </div>
                 </div>
                 <div className="mb-3">
                   <label className="form-label">Message</label>
-                  <textarea 
-                    className="form-control" 
-                    rows={4} 
-                    value={formData.message} 
+                  <textarea
+                    className="form-control"
+                    rows={4}
+                    value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     required
                   ></textarea>
@@ -972,39 +997,39 @@ function App() {
                 <div className="row">
                   <div className="col-md-6 mb-3">
                     <label className="form-label">Nom complet</label>
-                    <input 
-                      className="form-control" 
-                      value={formData.name} 
+                    <input
+                      className="form-control"
+                      value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      required 
+                      required
                     />
                   </div>
                   <div className="col-md-6 mb-3">
                     <label className="form-label">Email</label>
-                    <input 
-                      type="email" 
-                      className="form-control" 
-                      value={formData.email} 
+                    <input
+                      type="email"
+                      className="form-control"
+                      value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      required 
+                      required
                     />
                   </div>
                 </div>
                 <div className="mb-3">
                   <label className="form-label">Compétences / Domaine d'intérêt</label>
-                  <input 
-                    className="form-control" 
-                    value={formData.subject} 
+                  <input
+                    className="form-control"
+                    value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                    required 
+                    required
                   />
                 </div>
                 <div className="mb-3">
                   <label className="form-label">Message de motivation</label>
-                  <textarea 
-                    className="form-control" 
-                    rows={4} 
-                    value={formData.message} 
+                  <textarea
+                    className="form-control"
+                    rows={4}
+                    value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     required
                   ></textarea>
