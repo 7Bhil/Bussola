@@ -1,0 +1,7 @@
+@startuml fig06_etat_message
+title Diagramme d'états — Message de contact (statuts réels du code)
+[*] --> nouveau : message reçu
+nouveau --> lu : consulté par l'administrateur
+lu --> traite : traité / répondu
+traite --> [*]
+@enduml

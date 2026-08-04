@@ -1,0 +1,86 @@
+@startuml fig03_diagramme_classe
+' Diagramme de classes — reconstruit à partir du CODE RÉEL (modèles Mongoose)
+skinparam classAttributeIconSize 0
+hide empty members
+
+enum StatutAction {
+  En_attente
+  En_cours
+  Termine
+}
+enum StatutMessage {
+  nouveau
+  lu
+  traite
+}
+
+class User {
+  - username : string
+  - password : string (bcrypt)
+  - role : string = admin
+  - lastLoginAt : date
+  - lastDevice : string
+}
+class News {
+  - title : string
+  - content : string
+  - summary : string
+  - image : string
+  - category : string
+  - author : string
+  - date : date
+  - published : bool
+  - archived : bool
+}
+class Action {
+  - title : string
+  - description : string
+  - images : [string]
+  - status : StatutAction
+  - location : string
+  - category : string
+  - startDate : date
+  - endDate : date
+  - beneficiaries : int
+  - archived : bool
+}
+class Project {
+  - title : string (unique)
+  - description : string
+  - coverImage : string
+  - color : string
+  - order : int
+}
+class Testimonial {
+  - name : string
+  - role : string
+  - message : string
+  - image : string
+  - rating : int
+  - showOnHome : bool
+  - archived : bool
+}
+class Subscriber {
+  - email : string (unique)
+}
+class Message {
+  - type : string
+  - name : string
+  - email : string
+  - subject : string
+  - message : string
+  - status : StatutMessage
+}
+class Traffic {
+  - date : date (unique)
+  - visits : int
+  - pageViews : int
+  - adminVisits : int
+  - logins : int
+}
+
+User "1" --> "*" News : publie >
+User "1" --> "*" Action : publie >
+User "1" --> "*" Testimonial : modère >
+Project "1" --> "*" Action : regroupe >
+@enduml

@@ -1,0 +1,9 @@
+@startuml fig07_etat_action
+title Diagramme d'états — Action (statuts réels du code)
+[*] --> En_attente : action planifiée
+En_attente --> En_cours : démarrage
+En_cours --> Termine : achèvement
+En_cours --> archived : archivage
+Termine --> archived : archivage
+archived --> [*]
+@enduml

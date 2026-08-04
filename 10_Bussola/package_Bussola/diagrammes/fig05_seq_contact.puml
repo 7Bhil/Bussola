@@ -1,0 +1,24 @@
+@startuml fig05_seq_contact
+title Séquence — Envoi d'un message de contact
+actor Visiteur as V
+boundary "Site public (React)" as IHM
+control "API Form (Express)" as API
+control "Validation Joi" as MW
+entity "MongoDB" as BD
+V -> IHM : remplir le formulaire (type, nom, e-mail, message)
+activate IHM
+IHM -> MW : POST /form/contact
+activate MW
+MW -> MW : valider les champs (Joi)
+alt données valides
+    MW -> API : requête validée
+    activate API
+    API -> BD : enregistrer le message (status = nouveau)
+    API --> IHM : confirmation d'envoi
+    deactivate API
+else invalide
+    MW --> IHM : erreurs de validation
+end
+deactivate MW
+deactivate IHM
+@enduml

@@ -1,0 +1,26 @@
+@startuml fig02_uc_admin
+left to right direction
+skinparam actorStyle awesome
+actor "Administrateur (unique)" as A
+rectangle "Plateforme ONG BUSOLA — Administration" {
+  usecase "S'authentifier (JWT)" as AUTH
+  usecase "Gérer les actualités (CRUD)" as NEWS
+  usecase "Gérer les actions (CRUD)" as ACT
+  usecase "Gérer les projets (CRUD)" as PROJ
+  usecase "Modérer les témoignages" as TEMO
+  usecase "Traiter les messages reçus" as MSG
+  usecase "Gérer les abonnés à la newsletter" as SUB
+  usecase "Notifier les abonnés lors d'une publication" as NOTIF
+  usecase "Consulter les statistiques d'audience" as STAT
+}
+A --> NEWS
+A --> ACT
+A --> PROJ
+A --> TEMO
+A --> MSG
+A --> SUB
+A --> STAT
+NEWS ..> AUTH : <<include>>
+NEWS ..> NOTIF : <<include>>
+ACT ..> NOTIF : <<include>>
+@enduml

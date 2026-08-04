@@ -1,0 +1,20 @@
+@startuml fig08_deploiement
+title Déploiement — Architecture physique de la plateforme BUSOLA
+node "Appareil visiteur\n(navigateur / PWA)" <<device>> as CLIENT {
+  artifact "Site public React (PWA)" as PUB
+}
+node "Poste administrateur" <<device>> as ADMINPC {
+  artifact "Panneau admin React" as ADM
+}
+node "Serveur applicatif" <<execution environment>> as SRV {
+  artifact "API Node.js / Express (helmet, rate-limit, JWT)" as API
+  database "MongoDB (Mongoose)" as DB
+}
+cloud "Service e-mail (SMTP)" as SMTP {
+  artifact "Nodemailer" as MAIL
+}
+PUB --> API : HTTPS (REST, CORS)
+ADM --> API : HTTPS (REST, JWT)
+API --> DB : requêtes Mongoose
+API --> MAIL : envoi des notifications
+@enduml

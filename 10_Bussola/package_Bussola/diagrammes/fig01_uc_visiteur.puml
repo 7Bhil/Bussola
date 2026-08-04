@@ -1,0 +1,19 @@
+@startuml fig01_uc_visiteur
+left to right direction
+skinparam actorStyle awesome
+actor "Visiteur (public)" as V
+rectangle "Plateforme ONG BUSOLA — Espace public" {
+  usecase "Consulter les actualités" as NEWS
+  usecase "Consulter les actions et projets" as ACT
+  usecase "Consulter les témoignages" as TEMO
+  usecase "S'abonner à la newsletter" as SUB
+  usecase "Envoyer un message (contact / partenariat / bénévolat)" as MSG
+  usecase "Installer la PWA (hors-ligne partiel)" as PWA
+}
+V --> NEWS
+V --> ACT
+V --> TEMO
+V --> SUB
+V --> MSG
+V --> PWA
+@enduml

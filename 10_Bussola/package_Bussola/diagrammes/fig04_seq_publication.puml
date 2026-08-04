@@ -1,0 +1,26 @@
+@startuml fig04_seq_publication
+title Séquence — Publication d'une actualité et notification des abonnés
+actor Administrateur as A
+boundary "Panneau admin (React)" as IHM
+control "API News (Express)" as API
+control "Middleware auth (JWT) + Joi" as MW
+entity "MongoDB" as BD
+control "Nodemailer" as MAIL
+actor "Abonnés" as SUB
+
+A -> IHM : rédiger et publier une actualité
+activate IHM
+IHM -> MW : POST /news (jeton JWT)
+activate MW
+MW -> MW : vérifier le jeton + valider (Joi)
+MW -> API : requête validée
+deactivate MW
+activate API
+API -> BD : enregistrer l'actualité (published = true)
+API -> BD : récupérer la liste des abonnés
+API -> MAIL : envoyer la notification par e-mail
+MAIL --> SUB : e-mail de notification
+API --> IHM : actualité publiée
+deactivate API
+deactivate IHM
+@enduml
