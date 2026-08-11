@@ -207,29 +207,28 @@ export default function NewsDetailPage() {
 
       {/* Page Header Banner */}
       <div
-        className="container-fluid d-flex flex-column align-items-center justify-content-center"
+        className="container-fluid position-relative d-flex flex-column align-items-center justify-content-center text-white py-5 shadow-sm"
         style={{
-          minHeight: '280px',
-          background: `url('/motif-logo.png') center/cover`,
-          opacity: 0.9,
+          minHeight: '320px',
+          background: "linear-gradient(135deg, rgba(40,100,174,0.92) 0%, rgba(30,75,131,0.92) 100%), url('/motif-logo.png') center/cover",
           position: 'relative',
-          paddingTop: '80px',
-          paddingBottom: '40px'
+          paddingTop: '100px',
+          paddingBottom: '50px'
         }}
       >
         <div className="text-center position-relative w-100" style={{ zIndex: 1 }}>
-          <h1 className="display-4 fw-bold mb-3 text-uppercase" style={{ color: 'var(--brand-primary)' }}>
+          <h1 className="display-4 fw-bold mb-3 text-uppercase text-white" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
             ACTUALITÉS
           </h1>
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb justify-content-center mb-0 bg-transparent p-0">
               <li className="breadcrumb-item">
-                <Link to="/" className="text-decoration-none fw-medium" style={{ color: 'var(--brand-tertiary)', fontSize: '1.05rem' }}>Accueil</Link>
+                <Link to="/" className="text-white text-decoration-none opacity-75 hover-opacity-100 fw-medium" style={{ fontSize: '1.05rem' }}>Accueil</Link>
               </li>
               <li className="breadcrumb-item">
-                <Link to="/actualites" className="text-decoration-none fw-medium" style={{ color: 'var(--brand-tertiary)', fontSize: '1.05rem' }}>Actualités</Link>
+                <Link to="/actualites" className="text-white text-decoration-none opacity-75 hover-opacity-100 fw-medium" style={{ fontSize: '1.05rem' }}>Actualités</Link>
               </li>
-              <li className="breadcrumb-item active fw-medium" aria-current="page" style={{ color: 'var(--brand-primary)', fontSize: '1.05rem' }}>
+              <li className="breadcrumb-item active fw-bold text-warning" aria-current="page" style={{ fontSize: '1.05rem' }}>
                 Détails
               </li>
             </ol>

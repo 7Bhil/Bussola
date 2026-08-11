@@ -40,7 +40,7 @@ export default function AboutPage() {
         className="container-fluid position-relative d-flex align-items-center justify-content-center text-white py-5 shadow-sm"
         style={{
           minHeight: '400px',
-          background: 'linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-tertiary) 100%)',
+          background: "linear-gradient(135deg, rgba(40,100,174,0.92) 0%, rgba(39,176,116,0.92) 100%), url('/motif-logo.png') center/cover",
           paddingTop: '120px',
           paddingBottom: '60px',
           overflow: 'hidden'

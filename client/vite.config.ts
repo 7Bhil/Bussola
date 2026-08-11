@@ -29,11 +29,11 @@ export default defineConfig({
         // Stratégie réseau d'abord pour les pages navigables
         runtimeCaching: [
           {
-            // Images optimisées — Cache d'abord, réseau ensuite
+            // Images optimisées — Réseau & Cache à jour (StaleWhileRevalidate)
             urlPattern: /\/optimized\/.*\.webp$/,
-            handler: 'CacheFirst',
+            handler: 'StaleWhileRevalidate',
             options: {
-              cacheName: 'busola-images-v1',
+              cacheName: 'busola-images-v2',
               expiration: {
                 maxEntries: 80,
                 maxAgeSeconds: 60 * 60 * 24 * 30, // 30 jours
@@ -117,7 +117,7 @@ export default defineConfig({
         ],
       },
       devOptions: {
-        enabled: true,
+        enabled: false,
         type: 'module',
       },
     }),

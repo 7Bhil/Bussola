@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, Users, Handshake, ShieldCheck, MapPin, Phone, Mail, Facebook, Linkedin, Twitter, Youtube, ArrowRight, MessageCircle, Send, X, Menu, ArrowUp, BookOpen, Star, PlusCircle, ChevronDown, Quote } from 'lucide-react';
+import { Heart, Users, Handshake, ShieldCheck, MapPin, Phone, Mail, Facebook, Linkedin, Twitter, Youtube, ArrowRight, MessageCircle, Send, X, Menu, ArrowUp, BookOpen, Star, PlusCircle, ChevronDown, Quote, Camera } from 'lucide-react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
@@ -30,39 +30,39 @@ interface TeamMember {
 const STATIC_HOME_ACTIONS = [
   {
     id: 'pageda',
-    title: 'PAGEDA — Alphabétisation fonctionnelle',
+    title: 'PAGEDA — Alphabétisation',
     tag: 'Autonomisation',
     tagColor: 'bg-primary',
     img: '/optimized/action-1.webp',
-    desc: "Programme de lutte contre la pauvreté par l'alphabétisation fonctionnelle liée à la formation professionnelle. 27 communes couvertes, financement Coopération Suisse.",
-    badges: ['30 000 apprenants', 'Nord-Bénin'],
+    desc: "Le Programme d’Appui à la Gestion Décentralisée de l’Alphabétisation (PAGEDA) est une initiative multiforme visant à renforcer l’alphabétisation et promouvoir l’accès à l’éducation de base dans la commune de Copargo et au Nord-Bénin.",
+    badges: ['Copargo', 'Nord-Bénin'],
     badgeColor: 'text-primary',
-    linkTo: '/galerie?filter=leadership',
-    linkLabel: 'Voir la galerie photos'
+    linkTo: '/actions/pageda',
+    linkLabel: 'En savoir plus'
   },
   {
     id: 'yes',
-    title: 'YES — Youth Engagement for SRH Rights',
+    title: 'YES — Youth Engagement for Sexual and Reproductive Health Rights',
     tag: 'Jeunesse',
     tagColor: 'bg-secondary',
     img: '/optimized/action-2.webp',
     desc: "Initiative renforçant l'autonomisation des jeunes, promouvant l'accès aux droits en santé sexuelle et reproductive et prévenant les violences basées sur le genre.",
     badges: ['DSSR', 'VBG'],
     badgeColor: 'text-secondary',
-    linkTo: '/galerie?filter=paix',
-    linkLabel: 'Voir la galerie photos'
+    linkTo: '/actions/yes',
+    linkLabel: 'En savoir plus'
   },
   {
     id: 'tedidjo',
-    title: 'TEDIDJO — Santé reproductive & protection',
+    title: 'TEDIDJO — Santé reproductive et VBG',
     tag: 'DSSR & VBG',
     tagColor: 'bg-tertiary',
     img: '/optimized/action-3.webp',
     desc: "Amélioration de la santé sexuelle et reproductive des adolescents, prévention des VBG et renforcement de l'autonomisation des filles — Borgou & Alibori.",
     badges: ['CARE Bénin', 'Borgou'],
     badgeColor: 'text-tertiary',
-    linkTo: '/galerie?filter=dssr',
-    linkLabel: 'Voir la galerie photos'
+    linkTo: '/actions/tedidjo',
+    linkLabel: 'En savoir plus'
   }
 ];
 
@@ -439,10 +439,10 @@ function App() {
                   }}
                 >
                   <img 
-                    src="/optimized/about.webp" 
+                    src="/optimized/about.webp?v=3" 
                     className="w-100 h-100 transition-all hover-scale" 
-                    style={{ objectFit: 'cover', objectPosition: 'center 20%' }} 
-                    alt="L'équipe Busola avec cadre" 
+                    style={{ objectFit: 'cover', objectPosition: 'center' }} 
+                    alt="L'équipe Busola" 
                   />
                   {/* Compact & Impactful Stats Badge */}
                   <div className="position-absolute bottom-0 end-0 m-4 shadow-lg" style={{ zIndex: 10 }}>
@@ -545,13 +545,15 @@ function App() {
               <div key={action.id} className="col-lg-4 wow fadeInUp" data-wow-delay={`${0.1 + idx * 0.2}s`}>
                 <div className="card border rounded-0 overflow-hidden h-100 transition-all hover-up" style={{ borderColor: '#eaeaea' }}>
                   <div className="position-relative" style={{ height: '220px', overflow: 'hidden' }}>
-                    <img
-                      src={action.img}
-                      className="img-fluid w-100 h-100 transition-all hover-scale"
-                      style={{ objectFit: 'cover' }}
-                      alt={action.title}
-                      onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/optimized/action-1.webp'; }}
-                    />
+                    <Link to={action.linkTo || `/actions/${action.id}`}>
+                      <img
+                        src={action.img}
+                        className="img-fluid w-100 h-100 transition-all hover-scale"
+                        style={{ objectFit: 'cover' }}
+                        alt={action.title}
+                        onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/optimized/action-1.webp'; }}
+                      />
+                    </Link>
                     <span
                       className={`badge position-absolute top-0 start-0 m-3 ${action.tagColor} text-white text-uppercase small px-3 py-2 rounded-pill`}
                       style={{ fontSize: '10px', letterSpacing: '1px', zIndex: 2 }}
@@ -563,7 +565,9 @@ function App() {
                     <div className="mb-3">
                       <ArrowRight className={action.badgeColor} size={28} />
                     </div>
-                    <h5 className="fw-bold mb-3 text-dark">{action.title}</h5>
+                    <Link to={action.linkTo || `/actions/${action.id}`} className="text-decoration-none text-dark">
+                      <h5 className="fw-bold mb-3 text-dark hover-primary">{action.title}</h5>
+                    </Link>
                     <p className="text-muted small mb-4" style={{ textAlign: 'justify', lineHeight: '1.6' }}>
                       {action.desc.length > 160 ? action.desc.slice(0, 160) + '…' : action.desc}
                     </p>
@@ -574,9 +578,18 @@ function App() {
                         ))}
                       </div>
                     )}
-                    <Link to={action.linkTo} className={`${action.badgeColor} fw-bold text-decoration-none small d-inline-flex align-items-center`}>
-                      {action.linkLabel} <ArrowRight size={16} className="ms-2" />
-                    </Link>
+                    <div className="d-flex justify-content-between align-items-center pt-3 border-top mt-auto">
+                      <Link to={action.linkTo} className={`${action.badgeColor} fw-bold text-decoration-none small d-inline-flex align-items-center`}>
+                        {action.linkLabel} <ArrowRight size={16} className="ms-1" />
+                      </Link>
+                      <Link
+                        to={`/galerie/${action.id === 'tedidjo' ? 'dssr' : action.id === 'yes' ? 'paix' : 'leadership'}`}
+                        className="text-muted fw-semibold text-decoration-none small d-inline-flex align-items-center hover-primary"
+                        style={{ fontSize: '0.85rem' }}
+                      >
+                        <Camera size={14} className="me-1" /> Galerie photos
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>

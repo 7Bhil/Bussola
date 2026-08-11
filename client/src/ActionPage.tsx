@@ -17,7 +17,7 @@ export const staticActions = [
   },
   {
     id: 'tedidjo',
-    title: 'TEDIDJO',
+    title: 'TEDIDJO — Santé reproductive et VBG',
     tag: 'DSSR & VBG',
     img: '/optimized/tedjido.webp',
     desc: "Le projet TEDIDJO est une initiative de développement communautaire visant à améliorer la santé sexuelle et reproductive (SSR) des adolescents et des jeunes, à prévenir les violences basées sur le genre (VBG) et à renforcer l'autonomisation des filles et des jeunes femmes, notamment dans les départements du nord du Bénin.",
@@ -25,7 +25,7 @@ export const staticActions = [
   },
   {
     id: 'yes',
-    title: 'YES',
+    title: 'YES — Youth Engagement for Sexual and Reproductive Health Rights',
     tag: 'Autonomisation des jeunes',
     img: '/optimized/yes.webp',
     desc: "Le projet YES (Youth Engagement for Sexual and Reproductive Health Rights) est une initiative visant à renforcer l'autonomisation des jeunes, à promouvoir l'accès aux droits en santé sexuelle et reproductive (SSR) et à prévenir les violences basées sur le genre (VBG).",
@@ -33,10 +33,10 @@ export const staticActions = [
   },
   {
     id: 'pageda',
-    title: 'PAGEDA',
+    title: 'PAGEDA — Alphabétisation',
     tag: 'Leadership et Autonomisation',
     img: '/optimized/pageda.webp',
-    desc: "Le Programme PAGEDA a pour objectif de lutter contre la pauvreté par l'Alphabétisation fonctionnelle, en liant les cours à la formation professionnelle, elle s'étend sur 27 communes du Nord Bénin. Ce programme est financé par la Coopération Suisse et vise l'autonomisation de 30 000 apprenants dans le Nord Bénin.",
+    desc: "Le Programme d’Appui à la Gestion Décentralisée de l’Alphabétisation (PAGEDA) est une initiative multiforme visant à renforcer l’alphabétisation des populations exclues du système éducatif formel dans la commune de Copargo et au Nord-Bénin.",
     financement: '11000000.00 Fcfa'
   }
 ];
@@ -123,19 +123,6 @@ export default function ActionPage() {
     if (window.WOW) new window.WOW().init();
     window.scrollTo(0, 0);
 
-    // 1. Prepare Gallery Actions (Albums)
-    const groupedGallery = groupItemsBySection(galleryItems);
-    const galleryActions = Array.from(groupedGallery.entries()).map(([sectionName, items]) => ({
-      id: sectionName,
-      title: sectionName,
-      tag: items[0].categoryLabel,
-      img: items[0].img,
-      desc: items[0].desc.split('. (Image')[0].replace("Photo prise lors de l'activité: ", ""),
-      financement: 'N/A',
-      isGallery: true,
-      category: items[0].category
-    }));
-
     const API_URL = import.meta.env.VITE_API_URL || '';
     fetch(`${API_URL}/api/actions`)
       .then(res => {
@@ -153,16 +140,16 @@ export default function ActionPage() {
             desc: item.description || '',
             financement: 'N/A'
           }));
-          combined = [...normalizedActions, ...galleryActions];
+          combined = normalizedActions;
           dynamicActions = normalizedActions;
         } else {
-          combined = [...staticActions, ...galleryActions];
+          combined = staticActions;
         }
         setActionsList(combined);
       })
       .catch(() => {
         console.log("⚠️ API actions indisponible, utilisation des données statiques");
-        setActionsList([...staticActions, ...galleryActions]);
+        setActionsList(staticActions);
       });
 
     fetch(`${API_URL}/api/testimonials`)
@@ -193,7 +180,7 @@ export default function ActionPage() {
         className="container-fluid position-relative d-flex align-items-center justify-content-center text-white py-5 shadow-sm"
         style={{
           minHeight: '400px',
-          background: 'linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-tertiary) 100%)',
+          background: "linear-gradient(135deg, rgba(40,100,174,0.92) 0%, rgba(39,176,116,0.92) 100%), url('/motif-logo.png') center/cover",
           paddingTop: '120px',
           paddingBottom: '60px',
           overflow: 'hidden'
@@ -293,7 +280,7 @@ export default function ActionPage() {
             className="col-lg-6"
             style={{
               minHeight: '50vh',
-              background: `url('/optimized/action-1.webp') center/cover no-repeat`
+              background: `url('/optimized/action-1.webp?v=2') center/cover no-repeat`
             }}
           />
         </div>
@@ -435,7 +422,7 @@ export default function ActionPage() {
             className="col-lg-6"
             style={{
               minHeight: '50vh',
-              background: `url('/optimized/action-3.webp') center/cover no-repeat`
+              background: `url('/optimized/action-3.webp?v=2') center/cover no-repeat`
             }}
           />
         </div>

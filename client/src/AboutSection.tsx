@@ -60,6 +60,7 @@ const sans = '"Inter", system-ui, sans-serif';
 
 export default function AboutSection() {
   const [statsVisible, setStatsVisible] = useState(false);
+  const [apiActions, setApiActions] = useState<any[]>([]);
   const statsRef = useRef<HTMLDivElement>(null);
   const count1 = useCountUp(15000, 2000, statsVisible);
   const count2 = useCountUp(50, 2000, statsVisible);
@@ -75,14 +76,26 @@ export default function AboutSection() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const API_URL = import.meta.env.VITE_API_URL || '';
+    fetch(`${API_URL}/api/actions`)
+      .then(res => res.ok ? res.json() : [])
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setApiActions(data);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   // ── Styles ──────────────────────────────────────────────────────────────────
   const labelStyle: React.CSSProperties = {
-    display: 'flex', alignItems: 'center', gap: '12px',
-    fontSize: '10.5px', fontWeight: 700, letterSpacing: '3px', textTransform: 'uppercase',
-    color: cobaltBright, marginBottom: '14px', fontFamily: sans,
+    display: 'flex', alignItems: 'center', gap: '16px',
+    fontSize: '11px', fontWeight: 700, letterSpacing: '3px', textTransform: 'uppercase',
+    color: cobaltBright, marginTop: '24px', marginBottom: '24px', fontFamily: sans,
   };
   const labelBeforeStyle: React.CSSProperties = {
-    content: "''", width: '32px', height: '2px', background: gold,
+    content: "''", width: '40px', height: '2px', background: gold,
     display: 'inline-block', flexShrink: 0,
   };
 
@@ -95,10 +108,12 @@ export default function AboutSection() {
           {/* Centered header */}
           <div style={{ textAlign: 'center', marginBottom: '56px' }}>
             <div style={{ ...labelStyle, justifyContent: 'center' }}>
-              <span style={labelBeforeStyle}></span>Notre origine<span style={labelBeforeStyle}></span>
+              <span style={labelBeforeStyle}></span>
+              <span style={{ margin: '0 16px' }}>Notre origine</span>
+              <span style={labelBeforeStyle}></span>
             </div>
             <h2 style={{ fontFamily: cond, fontSize: 'clamp(38px,5vw,62px)', fontWeight: 900, lineHeight: .95, textTransform: 'uppercase', letterSpacing: '-1px', color: cobalt }}>
-              Notre histoire : une conviction née à Parakou
+              Une conviction née à Parakou
             </h2>
           </div>
 
@@ -108,9 +123,9 @@ export default function AboutSection() {
             {/* Image (même hauteur que le bloc de texte) */}
             <div style={{ height: '100%', minHeight: '380px', background: sable, borderRadius: '24px', border: `1px solid ${border}`, overflow: 'hidden', boxShadow: '0 15px 35px rgba(39, 100, 174, 0.12)' }}>
               <img
-                src="/optimized/about.webp"
-                alt="Équipe Busola avec cadre"
-                style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%', display: 'block' }}
+                src="/optimized/about.webp?v=3"
+                alt="Équipe Busola"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
                loading="lazy" decoding="async" />
             </div>
 
@@ -146,16 +161,16 @@ export default function AboutSection() {
       </section>
 
       {/* ── SLOGAN SECTION ────────────────────────────────────────────────────── */}
-      <section style={{ padding: 'clamp(60px,8vh,100px) clamp(1.5rem,5vw,3rem)', background: sable, fontFamily: sans }}>
+      <section style={{ padding: 'clamp(60px,8vh,100px) clamp(1rem,4vw,2.5rem)', background: sable, fontFamily: sans }}>
         <div style={{
-          maxWidth: '900px',
+          maxWidth: '1100px',
           margin: 'auto',
           background: 'linear-gradient(135deg, #2864ae 0%, #1e4b83 50%, #27b074 100%), url(/images/motif-logo-54.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          borderRadius: '24px',
+          borderRadius: '28px',
           border: '2px solid rgba(255,255,255,0.15)',
-          padding: 'clamp(50px,8vh,90px) clamp(30px,5vw,60px)',
+          padding: 'clamp(50px,8vh,90px) clamp(20px,4vw,50px)',
           textAlign: 'center',
           position: 'relative',
           overflow: 'hidden',
@@ -166,35 +181,31 @@ export default function AboutSection() {
 
           <h2 style={{
             fontFamily: cond,
-            fontSize: 'clamp(40px, 6.5vw, 72px)',
+            fontSize: 'clamp(42px, 6.8vw, 84px)',
             fontWeight: 900,
             fontStyle: 'italic',
             textTransform: 'uppercase',
             color: '#ffffff',
-            lineHeight: 0.95,
-            letterSpacing: '-2px',
-            marginBottom: '24px',
+            lineHeight: 1.05,
+            letterSpacing: '-1.5px',
+            marginBottom: '28px',
             position: 'relative',
             zIndex: 1
           }}>
-            <span style={{
-              color: '#f89d2a',
-              fontStyle: 'italic'
-            }}>LA PAIX </span> COMMENCE<br />
-            QUAND <br />
-            <span style={{
-              color: '#f89d2a',
-              fontStyle: 'italic'
-            }}>LA VIOLENCE </span>S'ARRÊTE
+            <span style={{ color: '#f89d2a', fontWeight: 900, fontStyle: 'italic', fontFamily: cond }}>LA PAIX</span>{' '}
+            <span style={{ color: '#ffffff', fontWeight: 900, fontStyle: 'italic', fontFamily: cond }}>COMMENCE</span><br />
+            <span style={{ color: '#ffffff', fontWeight: 900, fontStyle: 'italic', fontFamily: cond }}>QUAND</span><br />
+            <span style={{ color: '#f89d2a', fontWeight: 900, fontStyle: 'italic', fontFamily: cond }}>LA VIOLENCE</span>{' '}
+            <span style={{ color: '#ffffff', fontWeight: 900, fontStyle: 'italic', fontFamily: cond }}>S'ARRÊTE</span>
           </h2>
 
           <p style={{ 
-            color: 'rgba(255,255,255,.85)', 
-            fontSize: '17px', 
+            color: 'rgba(255,255,255,.9)', 
+            fontSize: '18px', 
             fontWeight: 500,
             fontStyle: 'italic', 
             lineHeight: 1.7, 
-            maxWidth: '550px', 
+            maxWidth: '650px', 
             margin: '0 auto', 
             position: 'relative', 
             zIndex: 1 
@@ -217,56 +228,42 @@ export default function AboutSection() {
               Nos axes stratégiques
             </h2>
             <p className="text-muted" style={{ fontSize: '1.05rem', lineHeight: '1.6' }}>
-              Cinq domaines d'intervention complémentaires pour un impact durable sur les communautés du nord-Bénin.
+              Quatre domaines d'intervention complémentaires pour un impact durable sur les communautés du nord-Bénin.
             </p>
           </div>
 
           <div className="row g-4 justify-content-center">
             {[
               {
-                title: "Santé Sexuelle & Reproductive",
-                desc: "Éducation complète à la sexualité, prévention des grossesses précoces, IST/VIH, accès aux services de santé adaptés pour les adolescentes et jeunes femmes de 10 à 24 ans.",
-                icon: <HeartPulse size={24} style={{ color: 'var(--brand-primary)' }} />,
-                bg: 'rgba(39, 100, 174, 0.08)',
-                borderColor: 'var(--brand-primary)'
-              },
-              {
-                title: "Prévention et lutte contre les VBG",
-                desc: "Sensibilisation, collecte de données, plaidoyer pour l'ouverture des centres CIPEC-VBG, formation des acteurs communautaires et leaders religieux.",
-                icon: <Scale size={24} style={{ color: 'var(--brand-secondary)' }} />,
+                title: "SANTÉ ET DROITS SEXUELS ET REPRODUCTIFS (SDSR)",
+                desc: "Garantir l'accès des adolescent(e)s jeunes et des femmes à une information complète et à des services de santé de qualité pour leur permettre de faire des choix libres et éclairés.",
+                icon: <HeartPulse size={24} style={{ color: 'var(--brand-secondary)' }} />,
                 bg: 'rgba(245, 159, 35, 0.08)',
                 borderColor: 'var(--brand-secondary)'
               },
               {
-                title: "Alphabétisation & Éducation",
-                desc: "Gestion de centres d'alphabétisation en langues locales (Yom, Dendi, Fulfuldé, Lopka) pour l'autonomisation des adultes dans les communes rurales.",
-                icon: <GraduationCap size={24} style={{ color: 'var(--brand-tertiary)' }} />,
-                bg: 'rgba(59, 177, 67, 0.08)',
-                borderColor: 'var(--brand-tertiary)'
-              },
-              {
-                title: "Cohésion Sociale & Paix",
-                desc: "Cadres de dialogue communautaire et intergénérationnel, prévention de la radicalisation et promotion du vivre-ensemble pacifique.",
-                icon: <Handshake size={24} style={{ color: 'var(--brand-primary)' }} />,
+                title: "PRÉVENTION ET RÉPONSE AUX VIOLENCES BASÉES SUR LE GENRE (VBG)",
+                desc: "Mettre en œuvre des programmes de prévention et de lutte contre les VBG, faciliter la prise en charge des survivantes et mener un plaidoyer pour des politiques de tolérance zéro.",
+                icon: <Scale size={24} style={{ color: 'var(--brand-primary)' }} />,
                 bg: 'rgba(39, 100, 174, 0.08)',
                 borderColor: 'var(--brand-primary)'
               },
               {
-                title: "Autonomisation Économique",
-                desc: "Formations aux activités génératrices de revenus (AGR), techniques de pépinière, gestion financière de base et accès aux micro-crédits.",
-                icon: <TrendingUp size={24} style={{ color: 'var(--brand-secondary)' }} />,
-                bg: 'rgba(245, 159, 35, 0.08)',
-                borderColor: 'var(--brand-secondary)'
-              },
-              {
-                title: "Plaidoyer & Communication",
-                desc: "Campagnes digitales, téléfilms éducatifs, théâtre communautaire, formation en plaidoyer pour amplifier la voix des sans-voix.",
-                icon: <Megaphone size={24} style={{ color: 'var(--brand-tertiary)' }} />,
+                title: "LEADERSHIP ET AUTONOMISATION",
+                desc: "Renforcer l'indépendance économique des femmes et des filles et promouvoir leur participation active à tous les niveaux de la prise de décision.",
+                icon: <TrendingUp size={24} style={{ color: 'var(--brand-tertiary)' }} />,
                 bg: 'rgba(59, 177, 67, 0.08)',
                 borderColor: 'var(--brand-tertiary)'
+              },
+              {
+                title: "PAIX ET JUSTICE CLIMATIQUE",
+                desc: "Renforcer le dialogue intercommunautaire autour des enjeux climatiques et promouvoir l'engagement des jeunes et des femmes pour une paix durable et équitable.",
+                icon: <Handshake size={24} style={{ color: 'var(--brand-secondary)' }} />,
+                bg: 'rgba(245, 159, 35, 0.08)',
+                borderColor: 'var(--brand-secondary)'
               }
             ].map((axe, i) => (
-              <div key={i} className="col-lg-4 col-md-6">
+              <div key={i} className="col-lg-6 col-md-6">
                 <div 
                   className="h-100 p-4 bg-white border shadow-sm transition-all"
                   style={{ 
@@ -316,8 +313,28 @@ export default function AboutSection() {
           </div>
 
           <div className="row g-4">
-            {[
+            {(apiActions.length > 0 ? apiActions.map((act, i) => {
+              const colors = ['var(--brand-primary)', 'var(--brand-secondary)', 'var(--brand-tertiary)'];
+              const icons = [
+                <FileText key="1" size={20} className="text-white" />,
+                <BookOpen key="2" size={20} className="text-white" />,
+                <Home key="3" size={20} className="text-white" />,
+                <Lightbulb key="4" size={20} className="text-white" />,
+                <HeartPulse key="5" size={20} className="text-white" />
+              ];
+              return {
+                id: act._id,
+                title: act.title,
+                desc: act.description,
+                partner: act.location ? `Lieu : ${act.location}` : (act.category || 'BUSOLA ONG'),
+                partnerLogos: (act.images && act.images.length > 0) ? [act.images[0]] : null,
+                headerBg: colors[i % colors.length],
+                themeColor: colors[i % colors.length],
+                icon: icons[i % icons.length]
+              };
+            }) : [
               {
+                id: '1',
                 title: "Programme RESPECT - Année 4",
                 desc: "Accroître la jouissance des droits de santé pour les adolescentes et jeunes femmes (10-24 ans). Données VBG, plaidoyer, téléfilm éducatif, ouverture CIPEC-VBG.",
                 partner: "Médecins du Monde / ROAJELF Bénin",
@@ -327,6 +344,7 @@ export default function AboutSection() {
                 icon: <FileText size={20} className="text-white" />
               },
               {
+                id: '2',
                 title: "PAGEDA II - Alphabétisation",
                 desc: "Renforcement de l'éducation non formelle dans la commune de Copargo. Reprise des cours, dotation en matériels pédagogiques, évaluation finale avec 100% de réussite.",
                 partner: "SIA N'SON ONG / Coopération Suisse",
@@ -336,6 +354,7 @@ export default function AboutSection() {
                 icon: <BookOpen size={20} className="text-white" />
               },
               {
+                id: '3',
                 title: "TEDIDJO 3 - \"Baani Gordo\"",
                 desc: "Espaces sûrs pour 1500 adolescentes à Nikki et Karimama. Santé reproductive, prévention VBG, leadership féminin. Durée : Août 2025 – Juillet 2026.",
                 partner: "CARE Bénin/Togo / FJSI",
@@ -345,6 +364,7 @@ export default function AboutSection() {
                 icon: <Home size={20} className="text-white" />
               },
               {
+                id: '4',
                 title: "Projet YES - Phase 3",
                 desc: "Bootcamp de 50 jeunes à Karigui et Fadama, théâtre communautaire, réseau d'ambassadeurs DSSR pour lutter contre les mariages précoces à Karimama.",
                 partner: "UNFPA Bénin / CARE Bénin-Togo",
@@ -354,6 +374,7 @@ export default function AboutSection() {
                 icon: <Lightbulb size={20} className="text-white" />
               },
               {
+                id: '5',
                 title: "Résilience des Jeunes de Matéri (RéJeM)",
                 desc: "Offrir aux jeunes de Matéri des alternatives concrètes et locales face aux activités illicites, en transformant les défis sécuritaires en opportunités de développement.",
                 partner: "Commune de Matéri / Partenaires locaux",
@@ -362,7 +383,7 @@ export default function AboutSection() {
                 themeColor: 'var(--brand-tertiary)',
                 icon: <HeartPulse size={20} className="text-white" />
               }
-            ].map((proj, i) => (
+            ]).map((proj, i) => (
               <div key={i} className="col-lg-4 col-md-6">
                 <div 
                   className="h-100 bg-white border shadow-sm transition-all overflow-hidden"

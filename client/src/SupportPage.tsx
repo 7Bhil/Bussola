@@ -23,7 +23,7 @@ export default function SupportPage() {
         className="container-fluid position-relative d-flex align-items-center justify-content-center text-white py-5 shadow-sm"
         style={{
           minHeight: '400px',
-          background: 'linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%)',
+          background: "linear-gradient(135deg, rgba(40,100,174,0.92) 0%, rgba(248,157,42,0.92) 100%), url('/motif-logo.png') center/cover",
           paddingTop: '120px',
           paddingBottom: '60px',
           overflow: 'hidden'
@@ -93,9 +93,9 @@ export default function SupportPage() {
 
           <div className="row gy-4 mb-5">
             {[
-              { amount: '5 000 FCFA', label: '1 kit de dignité menstruelle complet pour une collégienne' },
+              { amount: '10 000 FCFA', label: '1 kit de dignité menstruelle complet pour une collégienne' },
               { amount: '25 000 FCFA', label: '1 journée de formation en gestion pour une femme entrepreneure' },
-              { amount: '50 000 FCFA', label: 'Organisation d’une causerie sur les VBG pour 35 jeunes' }
+              { amount: '100 000 FCFA', label: 'Organisation d’une causerie sur les VBG' }
             ].map((item) => (
               <div className="col-md-4" key={item.amount}>
                 <div className="bg-white rounded-4 p-4 h-100 shadow-sm" style={{ border: '1px solid rgba(40,100,174,0.1)' }}>
