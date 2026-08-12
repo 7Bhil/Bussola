@@ -119,6 +119,9 @@ export default defineConfig({
       devOptions: {
         enabled: true,
         type: 'module',
+        // Désactive les glob patterns en dev pour éviter le warning
+        // "doesn't match any files" (dev-dist est vide au démarrage)
+        suppressWarnings: true,
       },
     }),
   ],

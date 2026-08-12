@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import App from './App'
 import './index.css'
 import AboutPage from './AboutPage'
@@ -18,6 +18,7 @@ import Chatbot from './Chatbot'
 import AlbumPage from './AlbumPage'
 import InstallPwaBanner from './InstallPwaBanner'
 import { registerSW } from 'virtual:pwa-register'
+import { useTraffic } from './useTraffic'
 
 // Enregistrement du Service Worker PWA avec rechargement automatique
 registerSW({
@@ -30,9 +31,16 @@ registerSW({
   },
 })
 
+// Composant interne pour activer le tracking (doit être enfant de BrowserRouter)
+function TrafficTracker() {
+  useTraffic()
+  return null
+}
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <BrowserRouter basename="/">
       <ScrollToTop />
+      <TrafficTracker />
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/about" element={<AboutPage />} />
