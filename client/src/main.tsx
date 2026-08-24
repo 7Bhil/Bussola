@@ -20,11 +20,13 @@ import InstallPwaBanner from './InstallPwaBanner'
 import { registerSW } from 'virtual:pwa-register'
 import { useTraffic } from './useTraffic'
 
-// Enregistrement du Service Worker PWA avec rechargement automatique
+// Enregistrement du Service Worker PWA
 registerSW({
   onNeedRefresh() {
-    // L'app a une nouvelle version — rechargement silencieux
-    window.location.reload()
+    // Éviter le rechargement automatique en dev (évite le double chargement de page)
+    if (!import.meta.env.DEV) {
+      window.location.reload()
+    }
   },
   onOfflineReady() {
     console.log('[PWA] Application prête pour une utilisation hors-ligne.')

@@ -1,49 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Image as ImageIcon } from 'lucide-react';
+import { Image as ImageIcon, ArrowLeft, FolderKanban, Layers } from 'lucide-react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import { galleryItems } from './galleryData';
 
-// ── LES 3 PROJETS FIXES (UI hardcodée — titre, image, couleur) ──
-// Leur slug (_id ici) correspond au champ `pillar` en base de données.
+// ── PROJETS DE SEED / FALLBACK (Si l'API est hors-ligne) ──
 const STATIC_PROJECTS = [
   {
+    _id: 'dssr',
     slug: 'dssr',
     title: 'DSSR et VBG',
     description: "Santé Sexuelle et Reproductive & Lutte contre les Violences Basées sur le Genre.",
     coverImage: '/optimized/project-1.webp',
-    color: '#2764ae'
+    color: '#2764ae',
+    pillar: 'dssr'
   },
   {
+    _id: 'paix',
     slug: 'paix',
     title: 'Paix et Cohésion Sociale',
     description: "Promotion du vivre-ensemble, prévention de la radicalisation et dialogue intergénérationnel.",
     coverImage: '/optimized/project-2.webp',
-    color: '#27b074'
+    color: '#27b074',
+    pillar: 'paix'
   },
   {
+    _id: 'leadership',
     slug: 'leadership',
     title: 'Leadership et Autonomisation',
     description: "Renforcement du pouvoir d'agir des femmes et des jeunes pour un impact communautaire durable.",
     coverImage: '/optimized/project-3.webp',
-    color: '#f89d2a'
+    color: '#f89d2a',
+    pillar: 'leadership'
   }
 ];
 
-// Slugs réservés aux 3 projets fixes (ne pas les afficher en double depuis la DB)
-const STATIC_SLUGS = new Set(STATIC_PROJECTS.map(p => p.slug));
-
-// Titres legacy à ignorer complètement
-const LEGACY_TITLES = new Set(['pageda', 'yes', 'tedidjo']);
-
-// Regroupe les items statiques de galleryData en albums par section
+// Groupement des items statiques en albums par section (fallback)
 const groupGalleryIntoAlbums = (items: any[]) => {
   const map = new Map<string, any>();
   items.forEach(item => {
     if (!map.has(item.section)) {
       map.set(item.section, {
-        _id: item.section,
+        _id: `static-${item.id}`,
         title: item.section,
         description: item.desc,
         category: item.category,
@@ -58,13 +57,15 @@ const groupGalleryIntoAlbums = (items: any[]) => {
 interface Action {
   _id: string;
   title: string;
-  description: string;
+  description?: string;
   images: string[];
-  project?: string;
+  project?: any; // ObjectId string or populated Project object
   category?: string;
+  status?: string;
+  location?: string;
 }
 
-interface DbProject {
+interface Project {
   _id: string;
   title: string;
   description: string;
@@ -72,12 +73,13 @@ interface DbProject {
   color?: string;
   order?: number;
   pillar?: string;
+  slug?: string;
 }
 
 export default function GalleryPage() {
   const { category } = useParams<{ category: string }>();
   const [dbActions, setDbActions] = useState<Action[]>([]);
-  const [dbProjects, setDbProjects] = useState<DbProject[]>([]);
+  const [dbProjects, setDbProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -91,234 +93,299 @@ export default function GalleryPage() {
           fetch(`${API_URL}/api/actions`),
           fetch(`${API_URL}/api/projects`)
         ]);
-        if (actionsRes.ok) setDbActions(await actionsRes.json());
-        if (projectsRes.ok) setDbProjects(await projectsRes.json());
+
+        if (actionsRes.ok) {
+          const actionsData = await actionsRes.json();
+          setDbActions(actionsData);
+        }
+
+        if (projectsRes.ok) {
+          const projectsData = await projectsRes.json();
+          if (Array.isArray(projectsData) && projectsData.length > 0) {
+            setDbProjects(projectsData);
+          } else {
+            setDbProjects(STATIC_PROJECTS);
+          }
+        } else {
+          setDbProjects(STATIC_PROJECTS);
+        }
       } catch (err) {
-        console.error('Erreur chargement galerie:', err);
+        console.error('Erreur de récupération dynamique de la galerie:', err);
+        setDbProjects(STATIC_PROJECTS);
       } finally {
         setLoading(false);
       }
     };
+
     fetchData();
     window.scrollTo(0, 0);
   }, []);
 
-  // Projets DB considérés comme "système" = ceux seedés avec un pillar connu
-  // (seuls eux alimentent les 3 cartes fixes de la galerie)
-  const systemPillarSlugs = new Set(STATIC_PROJECTS.map(p => p.slug));
+  // Liste complète des projets à afficher (Bases de données en priorité, ou fallback statique)
+  const projectsList = dbProjects.length > 0 ? dbProjects : STATIC_PROJECTS;
 
-  // Projets créés par l'admin = tous les non-legacy ET non-système
-  // Un projet avec un pillar mal configuré par accident est quand même affiché ici
-  const extraDbProjects = dbProjects
-    .filter(p => {
-      const title = p.title.trim().toLowerCase();
-      if (LEGACY_TITLES.has(title)) return false; // ignorer legacy
-      // Un projet est "système" seulement s'il a un pillar CONNU et que son titre
-      // correspond exactement à l'un des 3 projets hardcodés
-      const isSystem =
-        p.pillar && systemPillarSlugs.has(p.pillar) &&
-        STATIC_PROJECTS.some(s => s.title.trim().toLowerCase() === title);
-      return !isSystem;
-    })
-    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0) || a.title.localeCompare(b.title));
-
-  // ── Vue détail d'un projet ──
-  // `category` peut être un slug fixe ('dssr', 'paix', 'leadership')
-  // ou l'_id MongoDB d'un projet admin.
-
-  const selectedStatic = category ? STATIC_PROJECTS.find(p => p.slug === category) : null;
-  const selectedDb = category && !selectedStatic
-    ? dbProjects.find(p => p._id === category)
+  // ── Sélection du projet en vue détail ──
+  const selectedProject = category
+    ? projectsList.find(
+        p => p._id === category || p.pillar === category || p.slug === category
+      ) || STATIC_PROJECTS.find(p => p.slug === category || p._id === category)
     : null;
 
-  // Actions à afficher pour un projet fixe :
-  // on cherche le(s) projet(s) DB dont le champ `pillar` correspond au slug
-  const allStaticAlbums = groupGalleryIntoAlbums(galleryItems);
+  // ── Actions associées au projet sélectionné ──
+  let projectActions: any[] = [];
 
-  const actionsForStatic = selectedStatic
-    ? [
-        // Actions DB dont le projet est un projet SYSTÈME avec le bon pilier
-        ...dbActions.filter(a => {
-          if (!a.project) return false;
-          const dbProj = dbProjects.find(p => p._id === a.project);
-          if (!dbProj) return false;
-          const isSystem =
-            dbProj.pillar === selectedStatic.slug &&
-            STATIC_PROJECTS.some(s => s.title.trim().toLowerCase() === dbProj.title.trim().toLowerCase());
-          return isSystem;
-        }),
-        // Albums statiques (galleryData) de la même catégorie
-        ...allStaticAlbums.filter(a => a.category === selectedStatic.slug)
-      ]
-    : [];
+  if (selectedProject) {
+    // 1. Chercher les actions dynamiques (MongoDB) qui appartiennent à ce projet
+    const dynamicMatches = dbActions.filter(action => {
+      if (!action.project) return false;
 
-  // Actions à afficher pour un projet admin :
-  const actionsForDb = selectedDb
-    ? dbActions.filter(a => a.project === selectedDb._id)
-    : [];
+      // Si action.project est un objet populé
+      if (typeof action.project === 'object' && action.project !== null) {
+        return (
+          action.project._id === selectedProject._id ||
+          action.project.pillar === selectedProject.pillar ||
+          action.project.title?.toLowerCase() === selectedProject.title?.toLowerCase()
+        );
+      }
 
-  const filteredActions = selectedStatic ? actionsForStatic : actionsForDb;
+      // Si action.project est une chaîne (ID ou slug)
+      if (typeof action.project === 'string') {
+        return (
+          action.project === selectedProject._id ||
+          action.project === selectedProject.pillar ||
+          action.project === selectedProject.slug
+        );
+      }
 
-  // Infos d'affichage pour la vue détail
-  const detailTitle  = selectedStatic?.title  ?? selectedDb?.title  ?? '';
-  const detailColor  = selectedStatic?.color  ?? selectedDb?.color  ?? 'var(--brand-primary)';
-  const detailDesc   = selectedStatic?.description ?? selectedDb?.description ?? '';
+      return false;
+    });
+
+    projectActions = dynamicMatches;
+
+    // 2. Si aucune action en base de données, ajouter les albums statiques de secours
+    if (projectActions.length === 0) {
+      const allStaticAlbums = groupGalleryIntoAlbums(galleryItems);
+      const pillarKey = selectedProject.pillar || selectedProject.slug || selectedProject._id;
+      const staticMatches = allStaticAlbums.filter(a => a.category === pillarKey);
+      projectActions = staticMatches;
+    }
+  }
 
   const isDetailView = !!category;
-  const notFound     = isDetailView && !selectedStatic && !selectedDb;
+  const notFound = isDetailView && !selectedProject;
 
   return (
     <div className="wrapper">
       <Navbar />
 
-      {/* Premium Hero Header Banner */}
+      {/* Header Banner */}
       <div
         className="container-fluid position-relative d-flex align-items-center justify-content-center text-white py-5 shadow-sm"
         style={{
-          minHeight: '400px',
+          minHeight: '380px',
           background: 'linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%)',
           paddingTop: '120px',
-          paddingBottom: '60px',
+          paddingBottom: '50px',
           overflow: 'hidden'
         }}
       >
-        {/* Subtle decorative circles */}
-        <div className="position-absolute bg-white rounded-circle" style={{ width: '200px', height: '200px', top: '-100px', left: '-100px', opacity: 0.08 }}></div>
-        <div className="position-absolute bg-white rounded-circle" style={{ width: '300px', height: '300px', bottom: '-150px', right: '-150px', opacity: 0.08 }}></div>
-
         <div className="container text-center position-relative" style={{ zIndex: 2 }}>
-          {/* Breadcrumbs */}
           <nav aria-label="breadcrumb" className="mb-3">
             <ol className="breadcrumb justify-content-center mb-0 bg-transparent p-0">
               <li className="breadcrumb-item">
-                <Link to="/" className="text-white text-decoration-none opacity-75 hover-opacity-100 fw-medium" style={{ fontSize: '0.95rem' }}>Accueil</Link>
+                <Link to="/" className="text-white text-decoration-none opacity-75 hover-opacity-100 fw-medium">
+                  Accueil
+                </Link>
               </li>
-              <li className="breadcrumb-item active fw-bold text-warning" aria-current="page" style={{ fontSize: '0.95rem' }}>
-                Galerie d'impact
+              <li className="breadcrumb-item active fw-bold text-warning" aria-current="page">
+                Galerie des Projets
               </li>
             </ol>
           </nav>
 
-          <h1 className="display-4 fw-black text-uppercase text-white mb-3" style={{ letterSpacing: '2px', textShadow: '0 2px 10px rgba(0,0,0,0.15)' }}>
-            Galerie d'impact
+          <h1 className="display-4 fw-black text-uppercase text-white mb-2" style={{ letterSpacing: '1px' }}>
+            {selectedProject ? selectedProject.title : "Projets & Galerie d'impact"}
           </h1>
-          
-          <div className="mx-auto mb-4" style={{ width: '85px', height: '4px', backgroundColor: 'var(--brand-secondary)', borderRadius: '2px' }}></div>
 
-          <p className="lead text-white opacity-95 mx-auto" style={{ maxWidth: '850px', fontSize: '1.15rem', lineHeight: '1.7', textShadow: '0 1px 5px rgba(0,0,0,0.1)' }}>
-            Les moments forts de nos interventions sur le terrain.
+          <div className="mx-auto mb-3" style={{ width: '70px', height: '4px', backgroundColor: 'var(--brand-secondary)', borderRadius: '2px' }} />
+
+          <p className="lead text-white opacity-95 mx-auto" style={{ maxWidth: '800px', fontSize: '1.1rem' }}>
+            {selectedProject
+              ? selectedProject.description
+              : "Découvrez les grands projets de l'ONG Busola et les actions associées sur le terrain."}
           </p>
         </div>
       </div>
 
+      {/* Main Content */}
       <div className="container-fluid py-5 bg-white">
         <div className="container py-2">
 
-          {/* ── VUE LISTE DES PROJETS ── */}
+          {/* ── 1. VUE LISTE DE TOUS LES PROJETS ── */}
           {!isDetailView && (
             <>
-              <div className="text-center mx-auto mb-5">
-                <h2 className="fw-black mb-3 text-uppercase">Nos Projets</h2>
-                <div className="mx-auto mb-4" style={{ width: '60px', height: '4px', backgroundColor: 'var(--brand-primary)' }} />
+              <div className="text-center mx-auto mb-5" style={{ maxWidth: '700px' }}>
+                <span className="text-uppercase fw-bold text-primary tracking-wider small d-block mb-1">
+                  COMMUNAUTÉ & IMPACT
+                </span>
+                <h2 className="fw-black mb-3 text-uppercase text-dark" style={{ fontSize: '2.2rem' }}>
+                  Nos Projets Majeurs
+                </h2>
+                <p className="text-muted">
+                  Sélectionnez un projet pour explorer l'ensemble des actions, photos et programmes réalisés sur le terrain.
+                </p>
+                <div className="mx-auto mt-3" style={{ width: '60px', height: '3px', backgroundColor: 'var(--brand-primary)' }} />
               </div>
 
-              <div className="row g-4 justify-content-center">
-                {/* Les 3 projets fixes */}
-                {STATIC_PROJECTS.map(proj => (
-                  <div key={proj.slug} className="col-md-6 col-lg-4">
-                    <div
-                      className="card shadow-sm overflow-hidden cursor-pointer h-100 border-0 transition-all hover-up"
-                      onClick={() => navigate(`/galerie/${proj.slug}`)}
-                    >
-                      <div style={{ height: '260px', overflow: 'hidden' }}>
-                        <img src={proj.coverImage} alt={proj.title} className="w-100 h-100 object-cover transition-all hover-scale" />
-                      </div>
-                      <div className="card-body text-center p-4">
-                        <h3 className="fw-bold mb-3" style={{ color: proj.color }}>{proj.title}</h3>
-                        <p className="text-muted mb-4" style={{ fontSize: '0.95rem' }}>{proj.description}</p>
-                        <button className="btn btn-outline-primary rounded-pill px-4 fw-bold">Découvrir les actions</button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+              {loading ? (
+                <div className="text-center py-5 text-muted font-medium">
+                  <div className="spinner-border text-primary me-2" role="status" />
+                  Chargement des projets...
+                </div>
+              ) : (
+                <div className="row g-4 justify-content-center">
+                  {projectsList.map(proj => {
+                    // Compter combien d'actions sont liées à ce projet
+                    const countActions = dbActions.filter(a => {
+                      if (!a.project) return false;
+                      const projId = typeof a.project === 'object' ? a.project._id : a.project;
+                      return projId === proj._id || (proj.pillar && projId === proj.pillar);
+                    }).length;
 
-                {/* Projets créés par l'admin — dans la même grille */}
-                {!loading && extraDbProjects.map(proj => (
-                  <div key={proj._id} className="col-md-6 col-lg-4">
-                    <div
-                      className="card shadow-sm overflow-hidden cursor-pointer h-100 border-0 transition-all hover-up"
-                      onClick={() => navigate(`/galerie/${proj._id}`)}
-                    >
-                      <div style={{ height: '260px', overflow: 'hidden' }}>
-                        <img
-                          src={proj.coverImage || '/optimized/cta-2.webp'}
-                          alt={proj.title}
-                          className="w-100 h-100 object-cover transition-all hover-scale"
-                        />
+                    return (
+                      <div key={proj._id} className="col-md-6 col-lg-4">
+                        <div
+                          className="card shadow-sm overflow-hidden cursor-pointer h-100 border-0 transition-all hover-up bg-white rounded-4"
+                          onClick={() => navigate(`/galerie/${proj._id}`)}
+                          style={{ border: '1px solid #eaeaea' }}
+                        >
+                          <div className="position-relative" style={{ height: '240px', overflow: 'hidden' }}>
+                            <img
+                              src={proj.coverImage || '/optimized/project-1.webp'}
+                              alt={proj.title}
+                              className="w-100 h-100 object-cover transition-all hover-scale"
+                              onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/optimized/project-1.webp'; }}
+                            />
+                            {countActions > 0 && (
+                              <span className="badge bg-primary text-white position-absolute top-0 end-0 m-3 px-3 py-2 rounded-pill shadow-sm font-bold">
+                                {countActions} action{countActions > 1 ? 's' : ''}
+                              </span>
+                            )}
+                          </div>
+                          <div className="card-body text-center p-4 d-flex flex-column justify-content-between">
+                            <div>
+                              <h3 className="fw-bold mb-2" style={{ color: proj.color || 'var(--brand-primary)', fontSize: '1.3rem' }}>
+                                {proj.title}
+                              </h3>
+                              <p className="text-muted mb-4" style={{ fontSize: '0.92rem', lineHeight: '1.6' }}>
+                                {proj.description}
+                              </p>
+                            </div>
+                            <div>
+                              <button className="btn btn-outline-primary rounded-pill px-4 py-2 fw-bold text-uppercase text-xs tracking-wider">
+                                Voir les actions associées →
+                              </button>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <div className="card-body text-center p-4">
-                        <h3 className="fw-bold mb-3" style={{ color: proj.color || 'var(--brand-primary)' }}>{proj.title}</h3>
-                        <p className="text-muted mb-4" style={{ fontSize: '0.95rem' }}>{proj.description}</p>
-                        <button className="btn btn-outline-primary rounded-pill px-4 fw-bold">Découvrir les actions</button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+                    );
+                  })}
+                </div>
+              )}
             </>
           )}
 
-          {/* ── VUE PROJET INTROUVABLE ── */}
+          {/* ── 2. VUE PROJET INTROUVABLE ── */}
           {notFound && (
             <div className="text-center py-5">
               <ImageIcon size={48} className="text-muted mb-3 opacity-25" />
-              <p className="text-muted fs-5 mb-4">Ce projet est introuvable.</p>
-              <Link to="/galerie" className="btn btn-primary rounded-pill px-4">Retour à la galerie</Link>
+              <h3 className="fw-bold text-dark mb-2">Projet introuvable</h3>
+              <p className="text-muted mb-4">Le projet demandé n'existe pas ou a été déplacé.</p>
+              <Link to="/galerie" className="btn btn-primary rounded-pill px-4">
+                Retour à la liste des projets
+              </Link>
             </div>
           )}
 
-          {/* ── VUE DÉTAIL D'UN PROJET ── */}
-          {isDetailView && !notFound && (
+          {/* ── 3. VUE DÉTAIL D'UN PROJET ET SES ACTIONS ── */}
+          {isDetailView && !notFound && selectedProject && (
             <div>
-              {/* En-tête projet */}
+              {/* En-tête projet sélectionné */}
               <div
-                className="d-flex align-items-center justify-content-between mb-5 p-4 rounded-4 shadow-sm bg-light"
-                style={{ borderLeft: `8px solid ${detailColor}` }}
+                className="d-flex flex-col flex-md-row align-items-md-center justify-content-between mb-5 p-4 rounded-4 shadow-sm bg-light"
+                style={{ borderLeft: `8px solid ${selectedProject.color || 'var(--brand-primary)'}` }}
               >
                 <div>
-                  <h2 className="fw-black text-uppercase mb-1">{detailTitle}</h2>
-                  <p className="text-muted mb-0">{detailDesc || "Actions réalisées dans le cadre de ce projet."}</p>
+                  <div className="d-flex items-center gap-2 mb-1">
+                    <FolderKanban className="text-primary" size={20} />
+                    <span className="text-xs font-bold uppercase tracking-wider text-muted">Projet d'intervention</span>
+                  </div>
+                  <h2 className="fw-black text-uppercase mb-1 text-dark">{selectedProject.title}</h2>
+                  <p className="text-muted mb-0">{selectedProject.description}</p>
                 </div>
-                <Link to="/galerie" className="btn btn-secondary rounded-pill px-4">Retour</Link>
+                <Link to="/galerie" className="btn btn-outline-secondary rounded-pill px-4 mt-3 mt-md-0 fw-bold">
+                  <ArrowLeft size={16} className="me-2" /> Tous les projets
+                </Link>
               </div>
 
-              {/* Albums / actions */}
-              {loading && filteredActions.length === 0 ? (
-                <div className="text-center py-5">Chargement des albums...</div>
-              ) : filteredActions.length === 0 ? (
-                <div className="text-center py-5">
+              {/* Actions associées */}
+              <div className="mb-4">
+                <div className="d-flex align-items-center gap-2">
+                  <Layers className="text-primary" size={20} />
+                  <h3 className="fw-bold text-dark mb-0">Actions & Programmes associés</h3>
+                </div>
+                <p className="text-muted text-sm mt-1">
+                  Découvrez les albums photos et interventions de terrain rattachés à ce projet.
+                </p>
+              </div>
+
+              {loading ? (
+                <div className="text-center py-5">Chargement des actions...</div>
+              ) : projectActions.length === 0 ? (
+                <div className="text-center py-5 bg-light rounded-4 border p-5">
                   <ImageIcon size={48} className="text-muted mb-3 opacity-25" />
-                  <p className="text-muted fs-5">Aucun album photo disponible pour ce projet actuellement.</p>
+                  <h4 className="fw-bold text-slate-700 mb-2">Aucune action associée pour le moment</h4>
+                  <p className="text-muted max-w-md mx-auto mb-4">
+                    Les équipes sur le terrain ajouteront prochainement les photos et résumés d'intervention pour ce projet.
+                  </p>
+                  <Link to="/galerie" className="btn btn-primary rounded-pill px-4">
+                    Explorer d'autres projets
+                  </Link>
                 </div>
               ) : (
                 <div className="row g-4">
-                  {filteredActions.map((action, idx) => (
+                  {projectActions.map((action, idx) => (
                     <div key={action._id || idx} className="col-md-6 col-lg-4">
                       <Link
                         to={`/galerie/album/${action._id}`}
-                        className="card border-0 h-100 shadow-sm overflow-hidden text-decoration-none group bg-dark"
+                        className="card border-0 h-100 shadow-sm overflow-hidden text-decoration-none group bg-dark rounded-4"
                       >
-                        <div className="position-relative" style={{ height: '280px' }}>
+                        <div className="position-relative" style={{ height: '260px' }}>
                           <img
-                            src={(action.images[0] || '/optimized/cta-2.webp').replace('/large/', '/thumbs/')}
+                            src={(action.images && action.images.length > 0 ? action.images[0] : '/optimized/cta-2.webp').replace('/large/', '/thumbs/')}
                             alt={action.title}
-                            className="w-100 h-100 object-cover opacity-75 transition-all hover-scale"
+                            className="w-100 h-100 object-cover opacity-80 transition-all hover-scale"
+                            onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/optimized/cta-2.webp'; }}
                           />
-                          <div className="position-absolute bottom-0 start-0 w-100 p-4" style={{ background: 'linear-gradient(transparent, rgba(0,0,0,0.9))' }}>
-                            <h5 className="fw-bold text-white mb-1" style={{ fontSize: '1.2rem', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+                          <div
+                            className="position-absolute bottom-0 start-0 w-100 p-4"
+                            style={{ background: 'linear-gradient(transparent, rgba(0,0,0,0.9))' }}
+                          >
+                            {action.category && (
+                              <span className="badge bg-tertiary text-white mb-2 text-uppercase text-[10px]">
+                                {action.category}
+                              </span>
+                            )}
+                            <h5
+                              className="fw-bold text-white mb-2"
+                              style={{ fontSize: '1.15rem', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}
+                            >
                               {action.title}
                             </h5>
-                            <span className="badge rounded-pill bg-primary">{action.images.length} photos</span>
+                            <span className="badge rounded-pill bg-primary px-3 py-1 font-bold">
+                              {action.images?.length || 1} photo{(action.images?.length || 1) > 1 ? 's' : ''}
+                            </span>
                           </div>
                         </div>
                       </Link>
@@ -331,6 +398,7 @@ export default function GalleryPage() {
 
         </div>
       </div>
+
       <Footer />
     </div>
   );
