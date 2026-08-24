@@ -20,6 +20,12 @@ import InstallPwaBanner from './InstallPwaBanner'
 import { registerSW } from 'virtual:pwa-register'
 import { useTraffic } from './useTraffic'
 
+// Signature développeurs
+console.log(
+  "%c🚀 Conçu & développé par CHITOU Bhilal (https://7bhil.vercel.app) & HOUGUE Jolidon (https://portfolio-jolidon-v2.vercel.app/)",
+  "background: #2764ae; color: #ffffff; font-weight: bold; font-size: 11px; padding: 5px 10px; border-radius: 4px;"
+)
+
 // Enregistrement du Service Worker PWA
 registerSW({
   onNeedRefresh() {
