@@ -3,6 +3,8 @@ import { X, Upload, Quote, User, MapPin, Star, Check, Home, Activity, Archive } 
 import api from './api'
 import imageCompression from 'browser-image-compression'
 
+const RATINGS = [5, 4, 3, 2, 1]
+
 export default function TestimonialForm({ onSaved, onCancel, initial }) {
   const [saving, setSaving] = useState(false)
   const [uploading, setUploading] = useState(false)
@@ -18,250 +20,234 @@ export default function TestimonialForm({ onSaved, onCancel, initial }) {
     archived: initial?.archived !== undefined ? initial.archived : false
   })
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target
-    setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }))
-  }
+  const set = (name, value) => setFormData(p => ({ ...p, [name]: value }))
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0]
     if (!file) return
-
     setUploading(true)
     try {
-      const options = { maxSizeMB: 0.8, maxWidthOrHeight: 1280, useWebWorker: true }
-      const compressedFile = await imageCompression(file, options)
-      const base64 = await imageCompression.getDataUrlFromFile(compressedFile)
-      setFormData(prev => ({ ...prev, image: base64 }))
-    } catch (error) {
-      alert("Erreur lors de la compression de l'image.")
-    } finally {
-      setUploading(false)
-    }
+      const c = await imageCompression(file, { maxSizeMB: 0.5, maxWidthOrHeight: 800 })
+      const b64 = await imageCompression.getDataUrlFromFile(c)
+      set('image', b64)
+    } catch { alert("Erreur lors du traitement de la photo.") }
+    finally { setUploading(false) }
   }
 
   const save = async () => {
-    if (!formData.name.trim()) return alert("Le nom du témoin est obligatoire.")
+    if (!formData.name.trim()) return alert("Le nom est obligatoire.")
     if (!formData.role.trim()) return alert("Le rôle / statut est obligatoire.")
-    if (!formData.message.trim()) return alert("Le message est obligatoire.")
-
+    if (!formData.message.trim()) return alert("Le message de témoignage est obligatoire.")
     setSaving(true)
     try {
-      if (initial?._id) {
-        await api.patch(`/testimonials/${initial._id}`, formData)
-      } else {
-        await api.post('/testimonials', formData)
-      }
+      if (initial?._id) await api.patch(`/testimonials/${initial._id}`, formData)
+      else await api.post('/testimonials', formData)
       onSaved()
     } catch (e) {
-      const msg = e.response?.data?.details || e.response?.data?.message || "Erreur lors de l'enregistrement."
-      alert(msg)
-    } finally {
-      setSaving(false)
-    }
+      alert(e.response?.data?.details || e.response?.data?.message || "Erreur lors de l'enregistrement.")
+    } finally { setSaving(false) }
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 overflow-y-auto">
-      <div className="w-full max-w-3xl rounded-2xl bg-white shadow-2xl overflow-hidden border border-slate-200 animate-in fade-in zoom-in duration-150 my-auto">
+    <div className="modal-overlay">
+      <div className="modal-container-md">
 
-        {/* Modal Header */}
-        <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50 px-6 py-4">
+        {/* ── Fixed Header ── */}
+        <div className="modal-header">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-blue-50 text-[#2764ae]">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 text-[#2764ae]">
               <Quote size={20} />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-slate-900">
-                {initial?._id ? 'Modifier le témoignage' : 'Nouveau témoignage d’impact'}
-              </h3>
-              <p className="text-xs text-slate-500">Ajoutez le retour d'un bénéficiaire ou partenaire de l'ONG Busola.</p>
+              <h2 className="text-lg font-bold text-slate-900">
+                {initial?._id ? 'Modifier le témoignage' : "Nouveau témoignage d'impact"}
+              </h2>
+              <p className="text-xs font-medium text-slate-500">Récits de bénéficiaires & partenaires</p>
             </div>
           </div>
 
-          <button
-            onClick={onCancel}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition"
-          >
+          <button onClick={onCancel} className="rounded-xl p-2 text-slate-400 hover:bg-slate-200/80 hover:text-slate-700 transition">
             <X size={20} />
           </button>
         </div>
 
-        {/* Modal Form Body */}
-        <div className="p-6 space-y-5 max-h-[75vh] overflow-y-auto">
-          <div className="grid gap-4 sm:grid-cols-2">
+        {/* ── Scrollable Body ── */}
+        <div className="modal-body">
+          {/* Identity Section */}
+          <div className="space-y-4">
+            <p className="form-section-title">
+              <User size={15} />
+              <span>Identité du témoin</span>
+            </p>
 
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 flex items-center gap-1">
-                <User size={13} className="text-slate-400" />
-                <span>Nom complet / Prénom *</span>
-              </label>
-              <input
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Ex: Mariam K."
-                className="input-field w-full text-sm rounded-xl border-slate-200 py-2.5"
-                required
-              />
-            </div>
+            <div className="flex items-start gap-4">
+              {/* Photo Avatar */}
+              <div className="shrink-0">
+                {formData.image ? (
+                  <div className="relative group">
+                    <img src={formData.image} alt="Avatar" className="h-20 w-20 rounded-2xl object-cover border border-slate-300 shadow-sm" />
+                    <button
+                      type="button"
+                      onClick={() => set('image', '')}
+                      className="absolute -top-2 -right-2 rounded-full bg-rose-600 p-1 text-white shadow hover:bg-rose-700 transition"
+                    >
+                      <X size={12} />
+                    </button>
+                  </div>
+                ) : (
+                  <label className="flex h-20 w-20 cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 hover:border-[#2764ae] hover:bg-blue-50/40 transition">
+                    <Upload size={18} className="text-slate-400 mb-1" />
+                    <span className="text-[10px] font-bold text-slate-500 uppercase">Photo</span>
+                    <input type="file" accept="image/*" onChange={handleImageChange} className="hidden" disabled={uploading} />
+                  </label>
+                )}
+              </div>
 
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                Rôle / Titre / Statut *
-              </label>
-              <input
-                name="role"
-                value={formData.role}
-                onChange={handleChange}
-                placeholder="Ex: Bénéficiaire du projet DSSR"
-                className="input-field w-full text-sm rounded-xl border-slate-200 py-2.5"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 flex items-center gap-1">
-                <MapPin size={13} className="text-slate-400" />
-                <span>Localisation (Ville / Commune)</span>
-              </label>
-              <input
-                name="location"
-                value={formData.location}
-                onChange={handleChange}
-                placeholder="Ex: Parakou, Nord-Bénin"
-                className="input-field w-full text-sm rounded-xl border-slate-200 py-2.5"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 flex items-center gap-1">
-                <Star size={13} className="text-amber-400" />
-                <span>Évaluation (Étoiles)</span>
-              </label>
-              <select
-                name="rating"
-                value={formData.rating}
-                onChange={handleChange}
-                className="input-field w-full text-sm rounded-xl border-slate-200 py-2.5"
-              >
-                <option value={5}>⭐⭐⭐⭐⭐ (5/5)</option>
-                <option value={4}>⭐⭐⭐⭐ (4/5)</option>
-                <option value={3}>⭐⭐⭐ (3/5)</option>
-                <option value={2}>⭐⭐ (2/5)</option>
-                <option value={1}>⭐ (1/5)</option>
-              </select>
-            </div>
-
-            <div className="sm:col-span-2">
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                Message / Témoignage *
-              </label>
-              <textarea
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                placeholder="Racontez le témoignage de l'intervenant ou du bénéficiaire..."
-                className="input-field w-full h-32 text-sm rounded-xl border-slate-200 py-2"
-                required
-              />
-            </div>
-
-            {/* Options d'affichage */}
-            <div className="sm:col-span-2 space-y-2 border-t border-slate-100 pt-3">
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
-                Options d'affichage sur le site public
-              </label>
-
-              <div className="grid gap-2 sm:grid-cols-3">
-                <label className="flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 bg-slate-50 cursor-pointer hover:bg-slate-100/70 transition">
+              <div className="flex-1 space-y-3">
+                <div>
+                  <label className="field-label flex items-center justify-between">
+                    <span>Nom complet / Prénom</span>
+                    <span className="text-rose-500 font-bold">* Requis</span>
+                  </label>
                   <input
-                    type="checkbox"
-                    name="showOnHome"
-                    checked={formData.showOnHome}
-                    onChange={handleChange}
-                    className="h-4 w-4 rounded border-slate-300 text-[#2764ae] focus:ring-[#2764ae]"
+                    value={formData.name}
+                    onChange={e => set('name', e.target.value)}
+                    className="input-field font-bold"
+                    placeholder="Ex: Mariam K."
                   />
-                  <span className="text-xs font-bold text-slate-800">Page d'accueil</span>
-                </label>
-
-                <label className="flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 bg-slate-50 cursor-pointer hover:bg-slate-100/70 transition">
+                </div>
+                <div>
+                  <label className="field-label flex items-center justify-between">
+                    <span>Rôle / Titre / Statut</span>
+                    <span className="text-rose-500 font-bold">* Requis</span>
+                  </label>
                   <input
-                    type="checkbox"
-                    name="showOnActions"
-                    checked={formData.showOnActions}
-                    onChange={handleChange}
-                    className="h-4 w-4 rounded border-slate-300 text-[#2764ae] focus:ring-[#2764ae]"
+                    value={formData.role}
+                    onChange={e => set('role', e.target.value)}
+                    className="input-field"
+                    placeholder="Ex: Bénéficiaire du projet DSSR"
                   />
-                  <span className="text-xs font-bold text-slate-800">Page Actions</span>
-                </label>
-
-                <label className="flex items-center gap-2.5 p-3 rounded-xl border border-rose-200 bg-rose-50/50 cursor-pointer hover:bg-rose-100/50 transition">
-                  <input
-                    type="checkbox"
-                    name="archived"
-                    checked={formData.archived}
-                    onChange={handleChange}
-                    className="h-4 w-4 rounded border-rose-300 text-rose-600 focus:ring-rose-500"
-                  />
-                  <span className="text-xs font-bold text-rose-800">Archiver (Masquer)</span>
-                </label>
+                </div>
               </div>
             </div>
 
-            {/* Photo du témoin */}
-            <div className="sm:col-span-2 border-t border-slate-100 pt-4 mt-2">
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                Photo du témoin (Optionnel)
+            <div>
+              <label className="field-label flex items-center gap-1.5 text-slate-800">
+                <MapPin size={14} className="text-[#2764ae]" />
+                <span>Localisation (Ville / Commune)</span>
               </label>
+              <input
+                value={formData.location}
+                onChange={e => set('location', e.target.value)}
+                className="input-field"
+                placeholder="Ex: Parakou, Nord-Bénin"
+              />
+            </div>
+          </div>
 
-              {formData.image ? (
-                <div className="relative group w-32 h-32 overflow-hidden rounded-2xl border border-slate-200 bg-slate-900">
-                  <img src={formData.image} alt="Prévisualisation" className="w-full h-full object-cover opacity-90" />
-                  <button
-                    type="button"
-                    onClick={() => setFormData(prev => ({ ...prev, image: '' }))}
-                    className="absolute top-2 right-2 bg-rose-600 hover:bg-rose-700 text-white rounded-full p-1 shadow-md transition"
-                    title="Supprimer la photo"
-                  >
-                    <X size={14} />
-                  </button>
-                </div>
-              ) : (
-                <label className="flex flex-col items-center justify-center h-28 w-full cursor-pointer rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 hover:bg-slate-100/70 transition">
-                  <Upload size={22} className="text-slate-400 mb-1" />
-                  <span className="text-xs font-bold text-slate-600">Ajouter une photo de profil</span>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    className="hidden"
-                    disabled={uploading}
-                  />
-                </label>
-              )}
+          {/* Message & Rating Section */}
+          <div className="space-y-4 pt-2">
+            <p className="form-section-title">
+              <Quote size={15} />
+              <span>Message & Évaluation</span>
+            </p>
+
+            <div>
+              <label className="field-label flex items-center justify-between">
+                <span>Récit / Témoignage</span>
+                <span className="text-rose-500 font-bold">* Requis</span>
+              </label>
+              <textarea
+                value={formData.message}
+                onChange={e => set('message', e.target.value)}
+                rows={4}
+                className="textarea-field"
+                placeholder="Racontez le vécu, l'impact ou le témoignage du bénéficiaire..."
+              />
             </div>
 
+            <div>
+              <label className="field-label flex items-center gap-1.5 text-slate-800">
+                <Star size={14} className="text-amber-500" />
+                <span>Évaluation (Note sur 5)</span>
+              </label>
+              <div className="flex items-center gap-2 mt-1">
+                {RATINGS.map(r => (
+                  <button
+                    key={r}
+                    type="button"
+                    onClick={() => set('rating', r)}
+                    className="p-1 hover:scale-110 transition"
+                  >
+                    <Star
+                      size={24}
+                      className={formData.rating >= r ? 'text-amber-400 fill-amber-400' : 'text-slate-300'}
+                    />
+                  </button>
+                )).reverse()}
+                <span className="ml-2 text-sm font-bold text-slate-800">{formData.rating} / 5 étoiles</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Visibility Controls Section */}
+          <div className="space-y-3 pt-2">
+            <p className="form-section-title">
+              <Home size={15} />
+              <span>Visibilité sur le site public</span>
+            </p>
+
+            <div className="space-y-2">
+              {[
+                { key: 'showOnHome', icon: Home, label: "Afficher sur la page d'accueil", desc: "Positionné dans le carrousel de témoignages de l'accueil", activeClass: 'border-[#2764ae] bg-blue-50/80 text-blue-950 ring-2 ring-blue-400/20' },
+                { key: 'showOnActions', icon: Activity, label: "Afficher sur la page Actions", desc: "Affiché sur la page présentant les programmes", activeClass: 'border-emerald-500 bg-emerald-50/80 text-emerald-950 ring-2 ring-emerald-400/20' },
+                { key: 'archived', icon: Archive, label: 'Archiver (Masquer partout)', desc: 'Le témoignage sera masqué sur tout le site', activeClass: 'border-rose-500 bg-rose-50/80 text-rose-950 ring-2 ring-rose-400/20' },
+              ].map(({ key, icon: Icon, label, desc, activeClass }) => {
+                const checked = formData[key]
+                return (
+                  <label
+                    key={key}
+                    className={`flex cursor-pointer items-center gap-3.5 rounded-xl border p-3.5 transition-all ${
+                      checked ? activeClass : 'border-slate-300 bg-white hover:bg-slate-100 text-slate-700'
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={e => set(key, e.target.checked)}
+                      className="sr-only"
+                    />
+                    <div className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-lg border-2 transition ${
+                      checked ? 'border-current bg-current text-white' : 'border-slate-400 bg-white'
+                    }`}>
+                      {checked && <Check size={12} className="stroke-[3]" />}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <Icon size={14} className="shrink-0" />
+                        <span className="text-xs font-bold">{label}</span>
+                      </div>
+                      <p className="text-[11px] font-normal text-slate-500 mt-0.5">{desc}</p>
+                    </div>
+                  </label>
+                )
+              })}
+            </div>
           </div>
         </div>
 
-        {/* Modal Footer */}
-        <div className="flex items-center justify-end gap-3 border-t border-slate-100 bg-slate-50 px-6 py-4">
-          <button
-            onClick={onCancel}
-            className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 transition"
-          >
-            Annuler
-          </button>
-          
-          <button
-            onClick={save}
-            disabled={saving || uploading}
-            className="btn-primary inline-flex items-center gap-2 bg-[#2764ae] hover:bg-[#1f5291] text-white px-5 py-2 text-xs font-bold rounded-xl shadow-sm transition"
-          >
-            <Check size={16} />
-            <span>{saving ? 'Enregistrement...' : (initial?._id ? 'Sauvegarder' : 'Créer')}</span>
-          </button>
+        {/* ── Fixed Footer ── */}
+        <div className="modal-footer">
+          <p className="text-xs font-semibold text-slate-500">
+            {uploading ? '⏳ Traitement de la photo...' : 'Témoignage ONG Busola'}
+          </p>
+          <div className="flex gap-3">
+            <button onClick={onCancel} className="btn-secondary">Annuler</button>
+            <button onClick={save} disabled={saving || uploading} className="btn-primary">
+              <Check size={16} />
+              <span>{saving ? 'Enregistrement...' : initial?._id ? 'Enregistrer les modifications' : 'Créer le témoignage'}</span>
+            </button>
+          </div>
         </div>
 
       </div>
