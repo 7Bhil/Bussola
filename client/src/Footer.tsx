@@ -117,8 +117,15 @@ const Footer: React.FC = () => {
           <div className="col-md-6 text-center text-md-start mb-3 mb-md-0">
             <span className="text-white-50 small">© {new Date().getFullYear()} <span className="text-secondary fw-bold">ONG BUSOLA</span>. Tous droits réservés.</span>
             <div className="mt-1">
-              <span className="text-white-50" style={{ fontSize: '0.75rem' }}>
-                Conçu et développé par <a href="https://7bhil.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-secondary text-decoration-none fw-bold">Bhilal CHITOU</a> & <a href="https://jolidonhoungue.pages.dev/" target="_blank" rel="noopener noreferrer" className="text-secondary text-decoration-none fw-bold">HOUNGUE Jolidon</a>
+              <span className="text-white-50" style={{ fontSize: '0.8rem' }}>
+                Conçu et développé par{' '}
+                <a href="https://7bhil.vercel.app" target="_blank" rel="noopener noreferrer" className="text-warning text-decoration-none fw-bold hover-opacity-100">
+                  CHITOU Bhilal
+                </a>
+                {' '}&amp;{' '}
+                <a href="https://portfolio-jolidon-v2.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-warning text-decoration-none fw-bold hover-opacity-100">
+                  HOUGUE Jolidon
+                </a>
               </span>
             </div>
           </div>
