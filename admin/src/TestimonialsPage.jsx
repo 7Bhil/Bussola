@@ -51,6 +51,8 @@ export default function TestimonialsPage() {
   )
 
   const pages = Math.max(1, Math.ceil(filtered.length / perPage))
+  const shown = filtered.slice((page - 1) * perPage, page * perPage)
+
   if (editing) {
     return (
       <div className="page-shell">
