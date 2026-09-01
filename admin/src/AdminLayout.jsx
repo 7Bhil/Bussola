@@ -32,17 +32,38 @@ export default function AdminLayout({ children }) {
     navigate('/login')
   }
 
-  const navItems = [
-    { path: '/', label: 'Dashboard', hint: 'Vue générale' },
-    { path: '/settings', label: '🎨 Apparence & CMS', hint: 'Style & contenu dynamique' },
-    { path: '/news', label: 'Actualités', hint: 'Articles et annonces' },
-    { path: '/projects', label: 'Projets', hint: 'Piliers de l\'ONG' },
-    { path: '/actions', label: 'Actions', hint: 'Programmes terrain' },
-    { path: '/testimonials', label: 'Témoignages', hint: "Retours d'impact" },
-    { path: '/messages', label: 'Messages', hint: 'Contact public' },
-    { path: '/subscribers', label: 'Abonnés', hint: 'Newsletter' },
-    { path: '/users', label: 'Utilisateurs', hint: 'Gestion d\'accès' },
-    { path: '/profile', label: 'Mon Profil', hint: 'Sécurité et compte' },
+  const navCategories = [
+    {
+      title: 'Aperçu & CMS',
+      items: [
+        { path: '/', label: 'Dashboard', icon: LayoutDashboard },
+        { path: '/settings', label: 'Apparence & CMS', icon: Sparkles },
+        { path: '/traffic', label: 'Analytics Trafic', icon: Activity },
+      ]
+    },
+    {
+      title: 'Contenus',
+      items: [
+        { path: '/news', label: 'Actualités', icon: Newspaper },
+        { path: '/projects', label: 'Projets', icon: FolderKanban },
+        { path: '/actions', label: 'Actions', icon: BarChart3 },
+        { path: '/testimonials', label: 'Témoignages', icon: Quote },
+      ]
+    },
+    {
+      title: 'Interactions',
+      items: [
+        { path: '/messages', label: 'Messages', icon: Mail },
+        { path: '/subscribers', label: 'Abonnés', icon: Users },
+      ]
+    },
+    {
+      title: 'Administration',
+      items: [
+        { path: '/users', label: 'Utilisateurs', icon: ShieldCheck },
+        { path: '/profile', label: 'Mon Profil', icon: UserCheck },
+      ]
+    }
   ]
 
   const allItems = navCategories.flatMap(c => c.items)
