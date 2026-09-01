@@ -14,6 +14,7 @@ import PrivateRoute from './routes/PrivateRoute'
 import AdminLayout from './AdminLayout'
 import ProfilePage from './ProfilePage'
 import SiteSettingsPage from './SiteSettingsPage'
+import TrafficPage from './TrafficPage'
 import api from './api'
 import './index.css'
 
