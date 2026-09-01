@@ -17,6 +17,12 @@ import SiteSettingsPage from './SiteSettingsPage'
 import api from './api'
 import './index.css'
 
+// Signature développeurs
+console.log(
+  "%c🚀 Busola Admin — Conçu & développé par CHITOU Bhilal (https://7bhil.vercel.app) & HOUGUE Jolidon (https://portfolio-jolidon-v2.vercel.app/)",
+  "background: #0f172a; color: #38bdf8; font-weight: bold; font-size: 11px; padding: 5px 10px; border-radius: 4px;"
+)
+
 function Root() {
 	const [user, setUser] = useState(null)
 
@@ -39,6 +45,7 @@ function Root() {
 				<Route path="/subscribers" element={<PrivateRoute><AdminLayout><SubscribersPage /></AdminLayout></PrivateRoute>} />
 				<Route path="/users" element={<PrivateRoute><AdminLayout><UsersPage /></AdminLayout></PrivateRoute>} />
 				<Route path="/profile" element={<PrivateRoute><AdminLayout><ProfilePage /></AdminLayout></PrivateRoute>} />
+				<Route path="/traffic" element={<PrivateRoute><AdminLayout><TrafficPage /></AdminLayout></PrivateRoute>} />
 			</Routes>
 		</BrowserRouter>
 	)

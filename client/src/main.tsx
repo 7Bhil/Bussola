@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import App from './App'
 import './index.css'
 import AboutPage from './AboutPage'
@@ -20,21 +20,36 @@ import InstallPwaBanner from './InstallPwaBanner'
 import { registerSW } from 'virtual:pwa-register'
 import { SiteProvider } from './SiteContext'
 
-// Enregistrement du Service Worker PWA avec rechargement automatique
+// Signature développeurs
+console.log(
+  "%c🚀 Conçu & développé par CHITOU Bhilal (https://7bhil.vercel.app) & HOUGUE Jolidon (https://portfolio-jolidon-v2.vercel.app/)",
+  "background: #2764ae; color: #ffffff; font-weight: bold; font-size: 11px; padding: 5px 10px; border-radius: 4px;"
+)
+
+// Enregistrement du Service Worker PWA
 registerSW({
   onNeedRefresh() {
-    // L'app a une nouvelle version — rechargement silencieux
-    window.location.reload()
+    // Éviter le rechargement automatique en dev (évite le double chargement de page)
+    if (!import.meta.env.DEV) {
+      window.location.reload()
+    }
   },
   onOfflineReady() {
     console.log('[PWA] Application prête pour une utilisation hors-ligne.')
   },
 })
 
+// Composant interne pour activer le tracking (doit être enfant de BrowserRouter)
+function TrafficTracker() {
+  useTraffic()
+  return null
+}
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <SiteProvider>
     <BrowserRouter basename="/">
       <ScrollToTop />
+      <TrafficTracker />
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/about" element={<AboutPage />} />

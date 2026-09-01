@@ -29,7 +29,6 @@ const Footer: React.FC = () => {
       setNewsletterStatus({ type: 'error', message: 'Erreur de connexion au serveur.' });
     }
 
-    // Reset status after 5 seconds
     setTimeout(() => setNewsletterStatus({ type: null, message: '' }), 5000);
   };
 
@@ -78,6 +77,15 @@ const Footer: React.FC = () => {
             <p className="mb-3 d-flex align-items-start"><MapPin className="me-3 text-secondary" size={20} /> <span>Parakou, Quartier Arafat, <br />République du Bénin</span></p>
             <p className="mb-3 d-flex align-items-center"><Phone className="me-3 text-secondary" size={20} /> +229 01 90 44 46 90</p>
             <p className="mb-3 d-flex align-items-center"><a href="mailto:ongbusola@gmail.com" className="text-white-50 text-decoration-none"><Mail className="me-3 text-secondary" size={20} /> ongbusola@gmail.com</a></p>
+            
+            <div className="mt-4 pt-3 border-top border-secondary" style={{ opacity: 0.8 }}>
+              <span className="text-white-50 d-block mb-1" style={{ fontSize: '0.75rem' }}>Développement :</span>
+              <span className="text-white-50" style={{ fontSize: '0.75rem' }}>
+                <a href="https://7bhil.vercel.app" target="_blank" rel="noopener noreferrer" className="text-white-50 text-decoration-none fw-medium hover-text-white">CHITOU Bhilal</a>
+                {' '}&amp;{' '}
+                <a href="https://portfolio-jolidon-v2.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-white-50 text-decoration-none fw-medium hover-text-white">HOUGUE Jolidon</a>
+              </span>
+            </div>
           </div>
           <div className="col-lg-2 col-md-6">
             <h4 className="text-white fw-bold mb-4">Navigation</h4>
@@ -116,11 +124,6 @@ const Footer: React.FC = () => {
         <div className="row">
           <div className="col-md-6 text-center text-md-start mb-3 mb-md-0">
             <span className="text-white-50 small">© {new Date().getFullYear()} <span className="text-secondary fw-bold">ONG BUSOLA</span>. Tous droits réservés.</span>
-            <div className="mt-1">
-              <span className="text-white-50" style={{ fontSize: '0.75rem' }}>
-                Conçu et développé par <a href="https://7bhil.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-secondary text-decoration-none fw-bold">Bhilal CHITOU</a> & <a href="https://jolidonhoungue.pages.dev/" target="_blank" rel="noopener noreferrer" className="text-secondary text-decoration-none fw-bold">HOUNGUE Jolidon</a>
-              </span>
-            </div>
           </div>
           <div className="col-md-6 text-center text-md-end">
             <div className="footer-menu small">
