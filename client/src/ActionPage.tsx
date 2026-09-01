@@ -5,6 +5,7 @@ import Footer from './Footer';
 import { Plus, Image as ImageIcon } from 'lucide-react';
 import { galleryItems } from './galleryData';
 import { groupItemsBySection } from './galleryUtils';
+import { useSiteSettings } from './SiteContext';
 
 export const staticActions = [
   {
@@ -170,6 +171,12 @@ export default function ActionPage() {
       });
 
   }, []);
+
+  const { settings } = useSiteSettings();
+  const steps = settings?.actionsPage?.steps || [];
+  const step1 = steps[0] || {};
+  const step2 = steps[1] || {};
+  const step3 = steps[2] || {};
 
   return (
     <div className="wrapper" style={{ fontFamily: cond }}>

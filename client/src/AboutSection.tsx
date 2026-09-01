@@ -21,6 +21,7 @@ import {
   Trees,
   Users
 } from 'lucide-react';
+import { useSiteSettings } from './SiteContext';
 
 // ─── Animated Counter Hook ────────────────────────────────────────────────────
 function useCountUp(target: number, duration = 2000, trigger: boolean) {
@@ -99,6 +100,9 @@ export default function AboutSection() {
     display: 'inline-block', flexShrink: 0,
   };
 
+  const { settings } = useSiteSettings();
+  const aboutData = settings.about;
+
   return (
     <>
       {/* ── 1. NOTRE HISTOIRE ────────────────────────────────────────────────── */}
@@ -109,11 +113,11 @@ export default function AboutSection() {
           <div style={{ textAlign: 'center', marginBottom: '56px' }}>
             <div style={{ ...labelStyle, justifyContent: 'center' }}>
               <span style={labelBeforeStyle}></span>
-              <span style={{ margin: '0 16px' }}>Notre origine</span>
+              <span style={{ margin: '0 16px' }}>{aboutData.storyTitle || 'Notre origine'}</span>
               <span style={labelBeforeStyle}></span>
             </div>
             <h2 style={{ fontFamily: cond, fontSize: 'clamp(38px,5vw,62px)', fontWeight: 900, lineHeight: .95, textTransform: 'uppercase', letterSpacing: '-1px', color: cobalt }}>
-              Une conviction née à Parakou
+              {aboutData.storySubtitle || 'Une conviction née à Parakou'}
             </h2>
           </div>
 
@@ -123,7 +127,7 @@ export default function AboutSection() {
             {/* Image (même hauteur que le bloc de texte) */}
             <div style={{ height: '100%', minHeight: '380px', background: sable, borderRadius: '24px', border: `1px solid ${border}`, overflow: 'hidden', boxShadow: '0 15px 35px rgba(39, 100, 174, 0.12)' }}>
               <img
-                src="/optimized/about.webp?v=3"
+                src={aboutData.imageUrl || "/optimized/about.webp?v=4"}
                 alt="Équipe Busola"
                 style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
                loading="lazy" decoding="async" />
@@ -132,10 +136,11 @@ export default function AboutSection() {
             {/* Texte */}
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <p style={{ fontSize: '15.5px', color: muted, lineHeight: 1.85, marginBottom: '20px' }}>
-                Créée en 2020 à Parakou, BUSOLA est le fruit d'un engagement citoyen et associatif porté par des femmes et des jeunes acteurs du développement, convaincus que les réponses aux défis sociaux devaient être locales, inclusives et ancrées dans les communautés.
+                {aboutData.textParagraph1 || "Créée en 2020 à Parakou, BUSOLA est le fruit d'un engagement citoyen et associatif..."}
               </p>
               <p style={{ fontSize: '15.5px', color: muted, lineHeight: 1.85, marginBottom: '20px' }}>
-                Le nom <strong>Busola</strong>, qui signifie <strong>augmenter le prestige</strong> en yoruba, incarne notre vocation : accompagner chaque individu vers un avenir où il dispose pleinement du pouvoir d'agir, de décider et de transformer positivement sa communauté. Nous sommes une organisation née du terrain, pour le terrain, guidée par la promesse de : Unir, Eduquer, Protéger et Autonomiser.              </p>
+                {aboutData.textParagraph2 || "Le nom Busola, qui signifie augmenter le prestige en yoruba, incarne notre vocation..."}
+              </p>
               <p style={{ fontSize: '15.5px', color: muted, lineHeight: 1.85, marginBottom: '28px' }}>
                 En 6 ans d'existence, nous avons prouvé qu'une ONG jeune, locale et engagée peut porter des projets à impact réel, mobiliser des partenaires de confiance et transformer des vies concrètes dans les communes les plus éloignées du Bénin.
               </p>

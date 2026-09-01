@@ -18,6 +18,7 @@ import Chatbot from './Chatbot'
 import AlbumPage from './AlbumPage'
 import InstallPwaBanner from './InstallPwaBanner'
 import { registerSW } from 'virtual:pwa-register'
+import { SiteProvider } from './SiteContext'
 
 // Enregistrement du Service Worker PWA avec rechargement automatique
 registerSW({
@@ -31,6 +32,7 @@ registerSW({
 })
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
+  <SiteProvider>
     <BrowserRouter basename="/">
       <ScrollToTop />
       <Routes>
@@ -51,4 +53,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <Chatbot />
       <InstallPwaBanner />
     </BrowserRouter>
+  </SiteProvider>
 )

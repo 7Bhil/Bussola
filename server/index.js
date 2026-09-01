@@ -12,6 +12,8 @@ const actionRoutes = require('./routes/actionRoutes');
 const projectRoutes = require('./routes/projectRoutes');
 const formRoutes = require('./routes/formRoutes');
 const testimonialRoutes = require('./routes/testimonialRoutes');
+const siteSettingsRoutes = require('./routes/siteSettingsRoutes');
+const seedDefaultAdmin = require('./utils/seedDefaultAdmin');
 
 dotenv.config();
 
@@ -69,7 +71,10 @@ app.use('/api/', globalLimiter);
 // Database connection
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/busola';
 mongoose.connect(MONGODB_URI)
-  .then(() => console.log('Connecté à MongoDB'))
+  .then(() => {
+    console.log('Connecté à MongoDB');
+    seedDefaultAdmin();
+  })
   .catch(err => console.error('Erreur de connexion MongoDB:', err));
 
 // --- Utilisation des Routes ---
@@ -78,6 +83,7 @@ app.use('/api/news', newsRoutes);
 app.use('/api/actions', actionRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/testimonials', testimonialRoutes);
+app.use('/api', siteSettingsRoutes);
 app.use('/api', formRoutes); // Newsletter et Contact
 
 app.get('/', (req, res) => {
